@@ -21,7 +21,7 @@ export default class Storage {
   }
 
   read(key) {
-    console.log(statSync(this.file(key)).size === 0);
+    // console.log(statSync(this.file(key)).size === 0);
     if (readFileSync(this.file(key)).toString() === '') {
       return '';
     }
@@ -29,7 +29,7 @@ export default class Storage {
   }
 
   write(key, data) {
-    console.log('123', this.read(key));
+    // console.log('123', this.read(key));
     return writeFileSync(this.file(key), JSON.stringify({ ...this.read(key), ...data }));
   }
 

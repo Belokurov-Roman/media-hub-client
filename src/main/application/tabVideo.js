@@ -1,12 +1,12 @@
 import { dialog } from 'electron';
 import path from 'path';
-import psList from 'ps-list';
+
 import Storage from './storage';
 
 export default class VideoLogic {
   constructor() {
-    this.id = 0;
     this.storage = new Storage();
+    this.id = (+Object.keys(this.storage.get('pathVideo')).slice(-1) + 1);
   }
 
   async getPathVideo(win) {
@@ -17,13 +17,19 @@ export default class VideoLogic {
       ],
       properties: ['openFile'],
     });
-    console.log(await psList());
 
-    // console.log(this.storage.get('pathVideo'));
-    console.log(path.basename(this.files.filePaths[0]));
-    this.storage.set('pathVideo', { [this.id]: this.files.filePaths[0] });
-    this.countId();
+    // console.log('path-vidio', this.storage.get('pathVideo'));
+    // console.log(path.basename(this.files.filePaths[0]));
+    this.writeVideoPathToStorage();
+
     return this.files.filePaths[0] ? this.files.filePaths[0] : null;
+  }
+
+  writeVideoPathToStorage() {
+    if (!Object.values(this.storage.get('pathVideo')).includes(this.files.filePaths[0])) {
+      this.storage.set('pathVideo', { [this.id]: this.files.filePaths[0] });
+      this.countId();
+    }
   }
 
   countId() {

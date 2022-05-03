@@ -11,7 +11,6 @@ module.exports = {
             presets: ['@babel/react', '@babel/preset-env'],
             plugins: ['@babel/transform-runtime'],
           },
-
         },
         {
           test: /\.svg$/,
