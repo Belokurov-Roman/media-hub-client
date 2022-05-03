@@ -1,0 +1,50 @@
+{
+  "name": "MediaHub",
+  "version": "0.1.0",
+  "description": "MediaHub application build with Electron",
+  "author": {
+    "name": "Danil",
+    "email": ""
+  },
+  "repository": {},
+  "dependencies": {
+    "@babel/runtime": "^7.17.9",
+    "electron": "^18.2.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "ps-list": "^8.1.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/plugin-transform-runtime": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.5",
+    "bozon": "1.2.9",
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "jest": "28.0.3",
+    "react-svg-loader": "^3.0.3",
+    "sass": "^1.51.0",
+    "sass-loader": "^12.6.0",
+    "spectron": "19.0.0",
+    "webpack": "^5.72.0"
+  },
+  "build": {
+    "appId": "com.electron.mediahub",
+    "win": {
+      "publish": null
+    },
+    "mac": {
+      "publish": null,
+      "category": "your.app.category.type"
+    }
+  }
+}

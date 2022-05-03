@@ -1,0 +1,23 @@
+.navbar {
+    background-color: #190061;
+    padding: 28px 24px 12px 60px;
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+
+
+.links-nav-bar {
+    margin-right: 116px;
+    display: flex;
+    align-items: flex-start;
+}
+.link {
+    color: white;
+    width: 103px;
+}
+.link:not(:last-of-type) {
+
+    margin-right: 28px;
+}

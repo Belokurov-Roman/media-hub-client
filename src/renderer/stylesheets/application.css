@@ -1,0 +1,23 @@
+ html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.titleBar {
+   position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  line-height: 30px;
+  width: 100%;
+  background-color: #190061;
+  color: #5b5454;
+  text-align: center;
+  -webkit-app-region: drag;
+}
