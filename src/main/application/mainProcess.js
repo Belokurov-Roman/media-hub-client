@@ -17,8 +17,8 @@ export default class MainProcess {
     this.win = new BrowserWindow({
       width: 1000,
       height: 600,
-      minWidth: 520,
-      minHeight: 250,
+      minWidth: 1000,
+      minHeight: 600,
       backgroundColor: '#000000',
       titleBarStyle: 'hidden',
       center: true,
@@ -27,16 +27,18 @@ export default class MainProcess {
         contextIsolation: false,
         enableRemoteModule: true,
         webSecurity: false,
+        preload: path.join(app.getAppPath(), 'preload', 'index.js'),
       },
     });
-    // preload: path.join(app.getAppPath(), 'preload', 'index.js'),
+    // ,
 
     this.win.loadFile('renderer/index.html');
 
     this.win.webContents.on('did-finish-load', () => {
+      console.log(this.storage.get('pathVideo'));
       this.win.webContents.send('dataApp', { pathVideo: this.storage.get('pathVideo') });
     });
-
+    this.win.webContents.openDevTools({ mode: 'detach' });
     this.win.on('closed', () => {
       this.win = null;
     });

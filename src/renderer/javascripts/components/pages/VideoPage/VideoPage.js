@@ -29,6 +29,10 @@ const initialState = {
   audio: false,
 };
 
+window.getPathVideo((_, data) => {
+  console.log('123', data);
+});
+
 function VideoPage() {
   const videoExtensions = ['.mp4', '.mov', '.avi', '.mkv', '.webm', '.m4v'];
   const [state, setState] = useState(initialState);
@@ -36,10 +40,15 @@ function VideoPage() {
   const [videoPath, setVideoPath] = useState({});
 
   useEffect(() => {
-    ipcRenderer.on('dataApp', (data) => {
-      console.log('123', data);
-      // setVideoPath(data);
+    console.log('USEEFECT');
+    window.getPathVideo((_, data) => {
+      console.log(data);
     });
+    // ipcRenderer.on('dataApp', (_, data) => {
+    //   console.log('123', data);
+    //   console.log('=====>>>>>>');
+    // setVideoPath(data);
+    // });
   });
 
   const videoRef = useRef(null);

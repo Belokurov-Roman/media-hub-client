@@ -1,4 +1,4 @@
-// import { ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
 //
 // window.subscribeForEntries = (callback) => {
 //   ipcRenderer.on('dataApp', callback);
@@ -8,3 +8,8 @@
 //   const pathFile = await ipcRenderer.invoke('select-file');
 //   return pathFile;
 // };
+
+window.getPathVideo = (callback) => {
+  console.log('preload');
+  ipcRenderer.on('dataApp', callback);
+};

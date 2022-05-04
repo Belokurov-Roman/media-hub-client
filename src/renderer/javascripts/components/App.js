@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import NavBar from './header/NavBar/NavBar';
+import NavBar from './static/header/NavBar/NavBar';
 import VideoPage from './pages/VideoPage/VideoPage';
 import GamePage from './pages/GamePage/GamePage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import Footer from './static/footer/Footer/Footer';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/game" element={<GamePage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

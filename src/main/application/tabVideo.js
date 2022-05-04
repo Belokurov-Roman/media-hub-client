@@ -17,19 +17,24 @@ export default class VideoLogic {
       ],
       properties: ['openFile'],
     });
-
+    this.nameVideo = path.basename(this.files.filePaths[0]);
     // console.log('path-vidio', this.storage.get('pathVideo'));
-    // console.log(path.basename(this.files.filePaths[0]));
+    // const asd = this.storage.get('pathVideo').forEach((el) => console.log(Object.values(el)));
     this.writeVideoPathToStorage();
-
+    console.log(this.findPath());
     return this.files.filePaths[0] ? this.files.filePaths[0] : null;
   }
 
   writeVideoPathToStorage() {
-    if (!Object.values(this.storage.get('pathVideo')).includes(this.files.filePaths[0])) {
-      this.storage.set('pathVideo', { [this.id]: this.files.filePaths[0] });
+    if (!this.findPath()) {
+      this.storage.set('pathVideo', { [this.id]: { name: this.nameVideo, path: this.files.filePaths[0] } });
       this.countId();
     }
+  }
+
+  findPath() {
+    return this.storage.get('pathVideo')
+      .find((el) => Object.values(el).findIndex((name) => name.path === this.files.filePaths[0]));
   }
 
   countId() {
