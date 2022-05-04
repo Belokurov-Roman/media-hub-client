@@ -1,6 +1,6 @@
 import path from 'path';
 import {
-  mkdirSync, existsSync, readFileSync, writeFileSync, statSync,
+  mkdirSync, existsSync, readFileSync, writeFileSync,
 } from 'fs';
 import { app } from 'electron';
 
@@ -21,7 +21,6 @@ export default class Storage {
   }
 
   read(key) {
-    console.log(statSync(this.file(key)).size === 0);
     if (readFileSync(this.file(key)).toString() === '') {
       return '';
     }
@@ -29,14 +28,13 @@ export default class Storage {
   }
 
   write(key, data) {
-    console.log('123', this.read(key));
-    return writeFileSync(this.file(key), JSON.stringify({ ...this.read(key), ...data }));
+    return writeFileSync(this.file(key), JSON.stringify([...this.read(key), { ...data }]));
   }
 
   file(key) {
     const file = path.join(this.directory, `${key}.json`);
     if (!existsSync(file)) {
-      writeFileSync(file, '', { flag: 'wx' });
+      writeFileSync(file, '[]', { flag: 'wx' });
     }
     return file;
   }

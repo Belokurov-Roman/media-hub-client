@@ -1,56 +1,24 @@
-// import React from 'react';
-//
-// import { Link } from 'react-router-dom';
-// import LinkFromPage from '../../common/LinkFromPage/LinkFromPage';
-//
-// import './navBar.css';
-//
-// function NavBar() {
-//   return (
-//     <div className="navBar">
-//       <img
-//         alt=""
-//         className="logoMedia"
-//         src="https://static.overlay-tech.com/assets/78b2e054-e877-4557-a9f4-06a5da7aa1b1.svg"
-//       />
-//       <div className="flexWrapperOne">
-//         <Link className="linlMedia" to="/">Медиа</Link>
-//         <div className="divingLine" />
-//       </div>
-//       <Link className="linkGame" to="/game">Игры</Link>
-//       <Link className="linkProfile" to="/profile">Профиль</Link>
-//     </div>
-//   );
-// }
-// export default NavBar;
-
 import React from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
-import LogotipIcon from 'LogotipMediaHub.svg';
+import LogotipIcon from 'LogoTest.svg';
 
 function NavBar() {
   return (
     <div className="navbar">
+      <LogotipIcon className="Logo" viewBox="0 0 1100 265.86" />
       <div className="links-nav-bar">
-        <div className="link">
-          <Link className="linlMedia" to="/">Медиа</Link>
-
-        </div>
-        <div className="link">
-          ИГРЫ
-        </div>
-        <div className="link">
-          ПРОФИЛЬ
-        </div>
+        <Link className="link TextLinks" to="/">МЕДИА</Link>
+        <Link className="link TextLinks" to="/">ИГРЫ</Link>
+        <Link className="link TextLinks" to="/">ПРОФИЛЬ</Link>
       </div>
-      <div className="link">ВЫХОД</div>
     </div>
   );
 }
+// <Link className="link" to="/">ВЫХОД</Link>
 
 export default NavBar;
-
+// <div className="link" />
 // const NavBar = () => {
 //     return (
 //         <div className={styles.navBar}>

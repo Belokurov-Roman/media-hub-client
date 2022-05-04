@@ -1,12 +1,12 @@
 import { dialog } from 'electron';
 import path from 'path';
-import psList from 'ps-list';
+
 import Storage from './storage';
 
 export default class VideoLogic {
   constructor() {
-    this.id = 0;
     this.storage = new Storage();
+    this.id = (+Object.keys(this.storage.get('pathVideo')).slice(-1) + 1);
   }
 
   async getPathVideo(win) {
@@ -17,13 +17,24 @@ export default class VideoLogic {
       ],
       properties: ['openFile'],
     });
-    console.log(await psList());
-
-    // console.log(this.storage.get('pathVideo'));
-    console.log(path.basename(this.files.filePaths[0]));
-    this.storage.set('pathVideo', { [this.id]: this.files.filePaths[0] });
-    this.countId();
+    this.nameVideo = path.basename(this.files.filePaths[0]);
+    // console.log('path-vidio', this.storage.get('pathVideo'));
+    // const asd = this.storage.get('pathVideo').forEach((el) => console.log(Object.values(el)));
+    this.writeVideoPathToStorage();
+    console.log(this.findPath());
     return this.files.filePaths[0] ? this.files.filePaths[0] : null;
+  }
+
+  writeVideoPathToStorage() {
+    if (!this.findPath()) {
+      this.storage.set('pathVideo', { [this.id]: { name: this.nameVideo, path: this.files.filePaths[0] } });
+      this.countId();
+    }
+  }
+
+  findPath() {
+    return this.storage.get('pathVideo')
+      .find((el) => Object.values(el).findIndex((name) => name.path === this.files.filePaths[0]));
   }
 
   countId() {
