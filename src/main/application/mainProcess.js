@@ -19,7 +19,7 @@ export default class MainProcess {
       height: 600,
       minWidth: 1000,
       minHeight: 600,
-      backgroundColor: '#000000',
+      // backgroundColor: '#000000',
       titleBarStyle: 'hidden',
       center: true,
       webPreferences: {
