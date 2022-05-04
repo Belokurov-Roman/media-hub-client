@@ -9,8 +9,9 @@ function NavBar() {
       <LogotipIcon className="Logo" viewBox="0 0 1100 265.86" />
       <div className="links-nav-bar">
         <Link className="link TextLinks" to="/">МЕДИА</Link>
-        <Link className="link TextLinks" to="/">ИГРЫ</Link>
-        <Link className="link TextLinks" to="/">ПРОФИЛЬ</Link>
+        <Link className="link TextLinks" to="/game">ИГРЫ</Link>
+        <Link className="link TextLinks" to="/profile">ПРОФИЛЬ</Link>
+        <Link className="link TextLinks" to="/registration">РЕГИСТРАЦИЯ</Link>
       </div>
     </div>
   );
