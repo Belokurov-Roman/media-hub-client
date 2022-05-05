@@ -36,6 +36,7 @@ export default class Storage {
     if (!existsSync(file)) {
       writeFileSync(file, '[]', { flag: 'wx' });
     }
+    console.log(file);
     return file;
   }
 }

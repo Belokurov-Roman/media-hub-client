@@ -1,8 +1,7 @@
 import psList from 'ps-list';
+import Storage from './storage';
 
 const { dialog, shell } = require('electron');
-
-import Storage from './storage';
 
 export default class GameLogic {
   constructor() {
@@ -10,20 +9,6 @@ export default class GameLogic {
   }
 
   async openPath (path) {
-
-    // async function difference() {
-    //   const obj = {};
-    //   const list = await psList();
-    //   list.forEach((el) => { obj[el.name] = el; });
-    //   console.log(list.length, Object.keys(obj).length);
-    //   setInterval(async () => {
-    //     const newProcs = [];
-    //     const listPosle = await psList();
-    //     listPosle.forEach((el) => (obj[el.name] ? obj[el.name] = el : newProcs.push(el)));
-    //     console.table(newProcs);
-    //   }, 1000);
-    // }
-    // await difference();
 
     const uniqueProcs = {};
 
@@ -53,11 +38,17 @@ export default class GameLogic {
     }, 1000);
   }
 
-  async openPathFromDialog (win) {
-    // console.log(psList());
-    const result = await dialog.showOpenDialog(win);
-    console.log(result);
-    shell.openPath(result.filePaths[0]);
-    return result.filePaths[0];
+  // async openPathFromDialog (win) {
+  //   const result = await dialog.showOpenDialog(win);
+  //   console.log(result);
+  //   shell.openPath(result.filePaths[0]);
+  //   return result.filePaths[0];
+  // }
+
+  setGame (game) {
+    console.log('Helo!', game);
+    game.forEach((el) => {
+      this.storage.set('gameInfo', { [el.name] : { name: this.nameVideo, path: this.files.filePaths[0] } })
+    })
   }
 }

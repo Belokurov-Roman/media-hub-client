@@ -50,10 +50,9 @@ export default class MainProcess {
   }
 
   subscribeForAppGame() {
-    ipcMain.handle('open-game-from-dialog', () => this.gameLogic.openPathFromDialog(this.win))
-    ipcMain.handle('open-game-from-path', async (e, path) => {
-      console.log(path);
-      this.gameLogic.openPath(path)})
+    // ipcMain.handle('open-game-from-dialog', () => this.gameLogic.openPathFromDialog(this.win))
+    ipcMain.handle('open-game-from-path', async (e, path) => this.gameLogic.openPath(path))
+    ipcMain.on('set-game', (e, games) => this.gameLogic.setGame(games))
   }
 
   subscribeForAppEvents() {

@@ -1,7 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import getProcesses from '../../../../../redux/thunk/yourThunk';
 
 // import { useSelector, useDispatch } from 'react-redux';
 // import getProcesses from '../../../redux/thunk/yourThunk';
@@ -12,53 +10,56 @@ const { ipcRenderer } = electron;
 
 function GamePage() {
 
-  const [path, setPath] = useState('net putya');
   const [drag, setDrag] = useState(false);
   const [onZone, setOnZone] = useState(false);
   const [files, setFiles] = useState([]);
   const [time, setTime] = useState('');
-  const { processes } = useSelector((state) => state);
-  const dispatch = useDispatch()
 
   async function process() {
-    dispatch(getProcesses())
-    console.log(processes);
   }
 
   function handleButton1() {
     ipcRenderer.invoke('open-game-from-dialog')
       .then((res) => setPath(res));
   }
+
   function handleButton2(path) {
     setTime(`${new Date()}`);
     ipcRenderer.invoke('open-game-from-path', path);
   }
-  function DropHandler(event) {
+
+  async function DropHandler(event) {
     event.preventDefault();
     event.stopPropagation();
     const f = [...files, ...event.dataTransfer.files];
     const obj = {};
     f.forEach((el) => { obj[el.name] = el; });
     setFiles([...Object.values(obj)]);
+    console.log('this files', files);
+    const filesToSend = [...Object.values(obj)].map((el) => { return { name: el.name, path: el.path }})
+    ipcRenderer.send('set-game', filesToSend)
   }
+
   function startDragHandler() {
     setDrag(true);
   }
+
   function onDropHandler(event) {
     event.preventDefault();
     event.stopPropagation();
     setOnZone(true);
   }
+
   function offDropHandler(event) {
     event.preventDefault();
     event.stopPropagation();
     setOnZone(false);
     setDrag(false);
   }
+
   return (
     <div onDragEnter={(e) => startDragHandler(e)}>
       <button type="button" onClick={handleButton1}>Run file</button>
-      <p>{path}</p>
       {drag
         ? (
           <div
@@ -74,7 +75,7 @@ function GamePage() {
           </div>
         )
         : ''}
-      {files.map((el) => <button type="button" onClick={() => handleButton2(el.path)}>{el.name}</button>)}
+      {files.map((el) => <button key={el.name} type="button" onClick={() => handleButton2(el.path)}>{el.name}</button>)}
       <button type="button" onClick={() => process()}>processes</button>
       <div>{`${time}`}</div>
     </div>
