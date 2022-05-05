@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import psList from 'ps-list';
+import { useSelector, useDispatch } from 'react-redux';
+import getProcesses from '../../../../../redux/thunk/yourThunk';
 
 // import { useSelector, useDispatch } from 'react-redux';
 // import getProcesses from '../../../redux/thunk/yourThunk';
@@ -16,10 +17,12 @@ function GamePage() {
   const [onZone, setOnZone] = useState(false);
   const [files, setFiles] = useState([]);
   const [time, setTime] = useState('');
-  // const { processes } = useSelector((state) => state);
+  const { processes } = useSelector((state) => state);
+  const dispatch = useDispatch()
 
   async function process() {
-    console.log(await psList());
+    dispatch(getProcesses())
+    console.log(processes);
   }
 
   function handleButton1() {
