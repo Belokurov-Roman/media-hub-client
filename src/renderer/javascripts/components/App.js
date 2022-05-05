@@ -5,10 +5,11 @@ import VideoPage from './pages/VideoPage/VideoPage';
 import GamePage from './pages/GamePage/GamePage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import Footer from './static/footer/Footer/Footer';
+import './App.css';
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <NavBar />
       <Routes>
         <Route path="/" element={<VideoPage />} />

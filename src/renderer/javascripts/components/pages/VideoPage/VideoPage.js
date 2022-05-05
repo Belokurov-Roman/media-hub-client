@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-// import { ipcRenderer } from 'electron';
-// import BaseReactPlayer from 'react-player/base';
 import ListVideo from '../../videos/ListVideo/ListVideo';
+import PlayerVideo from '../../videos/PlayerVideo/PlayerVideo';
+import './VideoPage.css';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
@@ -67,14 +67,19 @@ function VideoPage() {
     }
   };
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div className="VideoPage">
       <ListVideo upload={upload} />
-      <video id="videoPlayer" className="video" ref={videoRef} style={{ display: 'flex', width: '500px', height: '400px' }}>
-        <track kind="subtitles" src={state.subtitleSrc} />
-      </video>
-      <button type="button" onClick={() => play()}>{playHover ? 'Плей' : 'Пауза'}</button>
+      <PlayerVideo videoRef={videoRef} />
     </div>
   );
 }
 
 export default VideoPage;
+
+// <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+//   <ListVideo upload={upload} />
+//   <video id="videoPlayer" className="video" ref={videoRef} style={{ display: 'flex', width: '500px', height: '400px' }}>
+//     <track kind="subtitles" src={state.subtitleSrc} />
+//   </video>
+//   <button type="button" onClick={() => play()}>{playHover ? 'Плей' : 'Пауза'}</button>
+// </div>
