@@ -1,6 +1,6 @@
-import React from 'react';
-import { useState } from 'react';
-import psList from 'ps-list';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import getProcesses from '../../../../../redux/thunk/yourThunk';
 
 // import { useSelector, useDispatch } from 'react-redux';
 // import getProcesses from '../../../redux/thunk/yourThunk';
@@ -10,16 +10,17 @@ const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
 function GamePage() {
-
   const [path, setPath] = useState('net putya');
   const [drag, setDrag] = useState(false);
   const [onZone, setOnZone] = useState(false);
   const [files, setFiles] = useState([]);
   const [time, setTime] = useState('');
-  // const { processes } = useSelector((state) => state);
+  const { processes } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   async function process() {
-    console.log(await psList());
+    dispatch(getProcesses());
+    console.log(processes);
   }
 
   function handleButton1() {
