@@ -8,6 +8,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import Footer from './static/footer/Footer/Footer';
 import store from '../../../redux/store/store';
+import AuthPage from './pages/AuthPage/AuthPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/game" element={<GamePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/registration" element={<RegistrationPage />} />
+          <Route path="/auth" element={<AuthPage />} />
         </Routes>
         <Footer />
       </Provider>
