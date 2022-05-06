@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import Storage from './storage';
 import VideoLogic from './tabVideo';
-import GameLogic from './tabGame'
+import GameLogic from './tabGame';
 
 export default class MainProcess {
   constructor() {
@@ -50,10 +50,11 @@ export default class MainProcess {
   }
 
   subscribeForAppGame() {
-    ipcMain.handle('open-game-from-dialog', () => this.gameLogic.openPathFromDialog(this.win))
+    ipcMain.handle('open-game-from-dialog', () => this.gameLogic.openPathFromDialog(this.win));
     ipcMain.handle('open-game-from-path', async (e, path) => {
       console.log(path);
-      this.gameLogic.openPath(path)})
+      this.gameLogic.openPath(path);
+    });
   }
 
   subscribeForAppEvents() {
