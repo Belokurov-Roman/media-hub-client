@@ -31,6 +31,10 @@ export default class Storage {
     return writeFileSync(this.file(key), JSON.stringify([...this.read(key), { ...data }]));
   }
 
+  rewrite(key, data) {
+    return writeFileSync(this.file(key), JSON.stringify([...data]));
+  }
+
   file(key) {
     const file = path.join(this.directory, `${key}.json`);
     if (!existsSync(file)) {

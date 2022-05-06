@@ -1,29 +1,21 @@
-import React from 'react';
-import { useState } from 'react';
-
-// import { useSelector, useDispatch } from 'react-redux';
-// import getProcesses from '../../../redux/thunk/yourThunk';
+import React, { useState, useEffect } from 'react';
 import './GamePage.css';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
 function GamePage() {
-
   const [drag, setDrag] = useState(false);
   const [onZone, setOnZone] = useState(false);
   const [files, setFiles] = useState([]);
   const [time, setTime] = useState('');
 
-  async function process() {
-  }
+  useEffect(() => {
+    ipcRenderer.invoke('get-games-data')
+      .then((res) => setFiles(res));
+  }, []);
 
-  function handleButton1() {
-    ipcRenderer.invoke('open-game-from-dialog')
-      .then((res) => setPath(res));
-  }
-
-  function handleButton2(path) {
+  function handleButton(path) {
     setTime(`${new Date()}`);
     ipcRenderer.invoke('open-game-from-path', path);
   }
@@ -35,9 +27,9 @@ function GamePage() {
     const obj = {};
     f.forEach((el) => { obj[el.name] = el; });
     setFiles([...Object.values(obj)]);
-    console.log('this files', files);
-    const filesToSend = [...Object.values(obj)].map((el) => { return { name: el.name, path: el.path }})
-    ipcRenderer.send('set-game', filesToSend)
+
+    const filesToSend = [...Object.values(obj)].map((el) => ({ name: el.name, path: el.path }));
+    ipcRenderer.send('set-game-data', filesToSend);
   }
 
   function startDragHandler() {
@@ -59,7 +51,6 @@ function GamePage() {
 
   return (
     <div onDragEnter={(e) => startDragHandler(e)}>
-      <button type="button" onClick={handleButton1}>Run file</button>
       {drag
         ? (
           <div
@@ -75,7 +66,7 @@ function GamePage() {
           </div>
         )
         : ''}
-      {files.map((el) => <button key={el.name} type="button" onClick={() => handleButton2(el.path)}>{el.name}</button>)}
+      {files.map((el) => <button key={el.name} type="button" onClick={() => handleButton(el.path)}>{el.name}</button>)}
       <button type="button" onClick={() => process()}>processes</button>
       <div>{`${time}`}</div>
     </div>

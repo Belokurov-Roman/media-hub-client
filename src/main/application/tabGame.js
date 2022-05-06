@@ -1,36 +1,52 @@
 import psList from 'ps-list';
 import Storage from './storage';
 
-const { dialog, shell } = require('electron');
+const { shell } = require('electron');
 
 export default class GameLogic {
   constructor() {
     this.storage = new Storage();
+    this.start = 0;
+    this.end = 0;
   }
 
-  async openPath (path) {
+  async openPath(path) {
+    this.start = this.getTimeStampInSeconds();
+    const procsBefore = await this.getActualUniqueProcs();
+    shell.openPath(path);
+    await this.spyOnLaunchedRpoc(procsBefore);
+  }
 
+  getTimeStampInSeconds() {
+    const date = new Date();
+    const houres = +date.getHours();
+    const minutes = +date.getMinutes();
+    const seconds = +date.getSeconds();
+    return houres * 60 * 60 + minutes * 60 + seconds;
+  }
+
+  async getActualUniqueProcs() {
     const uniqueProcs = {};
-
     const procsBeforeLaunch = await psList();
     procsBeforeLaunch.forEach((el) => { uniqueProcs[el.name] = el; });
     console.log(procsBeforeLaunch.length, Object.keys(uniqueProcs).length);
+    return uniqueProcs;
+  }
 
-    shell.openPath(path);
-
+  async spyOnLaunchedRpoc(procsBefore) {
     setTimeout(async () => {
       const newProcs = [];
       const procAfterLauch = await psList();
-      procAfterLauch.forEach((el) => (uniqueProcs[el.name] ? uniqueProcs[el.name] = el : newProcs.push(el)));
+      procAfterLauch.forEach((el) => (procsBefore[el.name] ? '' : newProcs.push(el)));
       console.table(newProcs);
-  
-      const pid = newProcs.filter((el) => el.ppid === 1)[0].pid;
-      console.log(pid);
-      const searchNewProcs = setInterval(async () => {
-        const tryList = await psList()
+      const { pid } = newProcs.filter((el) => el.ppid === 1)[0];
+
+      const spiPID = setInterval(async () => {
+        const tryList = await psList();
         if (!tryList.find((el) => el.pid === pid)) {
           console.log('Программа больше не работает');
-          clearInterval(searchNewProcs)
+          this.showTime();
+          clearInterval(spiPID);
         } else {
           console.log('Программа еще работает');
         }
@@ -38,17 +54,17 @@ export default class GameLogic {
     }, 1000);
   }
 
-  // async openPathFromDialog (win) {
-  //   const result = await dialog.showOpenDialog(win);
-  //   console.log(result);
-  //   shell.openPath(result.filePaths[0]);
-  //   return result.filePaths[0];
-  // }
+  showTime() {
+    this.end = this.getTimeStampInSeconds();
+    console.log('Proga rabotala: ', (this.end - this.start), ' sec');
+    return this.start - this.end;
+  }
 
-  setGame (game) {
-    console.log('Helo!', game);
-    game.forEach((el) => {
-      this.storage.set('gameInfo', { [el.name] : { name: this.nameVideo, path: this.files.filePaths[0] } })
-    })
+  setGame(game) {
+    this.storage.rewrite('gameInfo', game);
+  }
+
+  getData() {
+    return this.storage.read('gameInfo');
   }
 }
