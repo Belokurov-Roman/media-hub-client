@@ -2,8 +2,8 @@ import { app, BrowserWindow } from 'electron';
 import path from 'path';
 
 export default class ModalWindowAdd {
-  constructor() {
-
+  startWin(win) {
+    app.whenReady().then(() => this.createModalWindow(win));
   }
 
   createModalWindow(win) {
@@ -11,9 +11,10 @@ export default class ModalWindowAdd {
       {
         width: 400,
         height: 200,
-        parent: win,
         modal: true,
         title: 'Модальное окно',
+        backgroundColor: '#000000',
+
         webPreferences: {
           nodeIntegration: true,
           contextIsolation: false,
@@ -23,6 +24,14 @@ export default class ModalWindowAdd {
         },
       },
     );
+    // file:///Users/danakusev/Desktop/media-hub-test-version/media_hub/builds/development/file:/true
+
     this.winModal.loadFile('renderer/index.html');
+
+    this.winModal.on('closed', () => {
+      this.winModal.webContents.send('createModal', false);
+
+      this.winModal = null;
+    });
   }
 }

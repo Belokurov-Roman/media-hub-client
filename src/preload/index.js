@@ -10,6 +10,13 @@ import { ipcRenderer } from 'electron';
 // };
 
 window.getPathVideo = (callback) => {
-  console.log('preload');
   ipcRenderer.on('dataApp', callback);
 };
+
+window.modalWindow = (callback) => {
+  ipcRenderer.on('createModal', callback);
+};
+
+// window.deleteOneVideo = (callback) => {
+//   ipcRenderer.on('delete-path-video', callback);
+// };

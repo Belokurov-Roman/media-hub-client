@@ -10,6 +10,9 @@ window.getPathVideo((_, data) => {
 
 window.onload = (entries) => {
   const container = document.getElementById('root');
+  const modalWindow = document.getElementById('modalWindow');
+  const rootWindow = createRoot(modalWindow);
+
   const root = createRoot(container);
   root.render(
     <BrowserRouter>

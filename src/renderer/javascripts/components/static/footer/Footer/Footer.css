@@ -2,6 +2,7 @@
     background-color: #190061;
     width: 100%;
     height: 100px;
+    display: flex;
 }
 
 .footerContent{

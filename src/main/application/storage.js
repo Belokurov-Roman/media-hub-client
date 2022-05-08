@@ -28,7 +28,7 @@ export default class Storage {
   }
 
   write(key, data) {
-    return writeFileSync(this.file(key), JSON.stringify([...this.read(key), { ...data }]));
+    return writeFileSync(this.file(key), JSON.stringify([...this.get(key), { ...data }]));
   }
 
   rewrite(key, data) {
