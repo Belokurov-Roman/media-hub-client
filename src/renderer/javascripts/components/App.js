@@ -9,6 +9,7 @@ import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import Footer from './static/footer/Footer/Footer';
 import store from '../../../redux/store/store';
 import AuthPage from './pages/AuthPage/AuthPage';
+import FriendsPage from './pages/FriendsPage/FriendsPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/friends" element={<FriendsPage />} />
         </Routes>
         <Footer />
       </Provider>

@@ -1,36 +1,17 @@
 // import axios from 'axios';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import THUNK_addUser from '../../../../../redux/thunk/userTunks';
 
 function AuthPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const error = useSelector((store) => store.error);
+  const dispatch = useDispatch();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:3001/users/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-      console.log(response.status);
-      if (response.status === 401) {
-        setError('Этот email занят');
-      }
-      if (response.status === 500) {
-        setError('Вы не заполнили все поля');
-      }
-    } catch (err) {
-      setError(err);
-      console.log('============================', err);
-      // console.log(name, email, password);
-    }
+    dispatch(THUNK_addUser(email, password));
   }
 
   return (
