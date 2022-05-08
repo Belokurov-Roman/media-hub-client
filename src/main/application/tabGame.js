@@ -10,11 +10,21 @@ export default class GameLogic {
     this.end = 0;
   }
 
-  async openPath(path) {
+  setGame(game) {
+    this.storage.rewrite('gameInfo', game);
+  }
+
+  getData() {
+    // console.log('This is ==========>', app.getFileIcon());
+    return this.storage.read('gameInfo');
+  }
+
+  async openPath(path, name) {
     this.start = this.getTimeStampInSeconds();
     const procsBefore = await this.getActualUniqueProcs();
+    // console.log(fileIcon('path', 32));
     shell.openPath(path);
-    await this.spyOnLaunchedRpoc(procsBefore);
+    await this.spyOnLaunchedRpoc(procsBefore, name);
   }
 
   getTimeStampInSeconds() {
@@ -33,7 +43,7 @@ export default class GameLogic {
     return uniqueProcs;
   }
 
-  async spyOnLaunchedRpoc(procsBefore) {
+  async spyOnLaunchedRpoc(procsBefore, programName) {
     setTimeout(async () => {
       const newProcs = [];
       const procAfterLauch = await psList();
@@ -45,7 +55,7 @@ export default class GameLogic {
         const tryList = await psList();
         if (!tryList.find((el) => el.pid === pid)) {
           console.log('Программа больше не работает');
-          this.showTime();
+          this.updateTime(programName);
           clearInterval(spiPID);
         } else {
           console.log('Программа еще работает');
@@ -54,17 +64,9 @@ export default class GameLogic {
     }, 1000);
   }
 
-  showTime() {
+  updateTime(programName) {
     this.end = this.getTimeStampInSeconds();
-    console.log('Proga rabotala: ', (this.end - this.start), ' sec');
+    this.storage.updateOne('gameInfo', programName, 'totalTime', (this.end - this.start));
     return this.start - this.end;
-  }
-
-  setGame(game) {
-    this.storage.rewrite('gameInfo', game);
-  }
-
-  getData() {
-    return this.storage.read('gameInfo');
   }
 }
