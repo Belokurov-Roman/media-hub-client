@@ -35,6 +35,20 @@ export default class Storage {
     return writeFileSync(this.file(key), JSON.stringify([...data]));
   }
 
+  updateOne(key, elName, kluch, znachenie) {
+    const updatedArr = this.read(key).map((el) => {
+      if (el.name === elName) {
+        if (el.totalTime) {
+          return { ...el, [kluch]: el[kluch] + znachenie };
+        }
+        return { ...el, [kluch]: znachenie };
+      }
+      return el;
+    });
+    console.log(updatedArr);
+    this.rewrite(key, updatedArr);
+  }
+
   file(key) {
     const file = path.join(this.directory, `${key}.json`);
     if (!existsSync(file)) {

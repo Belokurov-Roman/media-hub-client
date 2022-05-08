@@ -31,6 +31,7 @@ function App() {
       </Routes>
       <Footer createWindowAdd={createWindowAdd} />
     </div>
+
   );
 }
 

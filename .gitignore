@@ -3,6 +3,13 @@ node_modules
 builds
 packages
 bower_components
+
 .idea
 ./idea
 ../.idea
+
+.DS_store
+./.DS_store
+../.DS_store
+../../.DS_store
+../../../.DS_store
