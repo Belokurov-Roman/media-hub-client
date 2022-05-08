@@ -16,10 +16,10 @@ module.exports = {
           test: /\.svg$/,
           loader: 'react-svg-loader',
         },
-        {
-          test: /\.cpp$/,
-          loader: 'cpp-portable-loader?emitMapFile',
-        },
+        // {
+        //   test: /\.cpp$/,
+        //   loader: 'cpp-portable-loader?emitMapFile',
+        // },
       ],
     },
   },
