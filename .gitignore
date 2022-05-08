@@ -13,3 +13,7 @@ bower_components
 ../.DS_store
 ../../.DS_store
 ../../../.DS_store
+
+package-lock.json
+./package-lock.json
+../.package-lock.json
