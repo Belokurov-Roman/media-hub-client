@@ -1,15 +1,17 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
-import fs from 'fs';
 import Storage from './storage';
 import VideoLogic from './tabVideo';
 import GameLogic from './tabGame';
+import ModalWindowAdd from './modalWindowAdd';
 
 export default class MainProcess {
   constructor() {
     this.storage = new Storage();
     this.videoLogic = new VideoLogic();
     this.gameLogic = new GameLogic();
+    this.modalWindowAdd = new ModalWindowAdd();
+    this.subscribeForCreateModalWin();
     this.subscribeForAppGame();
     this.subscribeForAppVideo();
     this.subscribeForAppEvents();
@@ -22,7 +24,7 @@ export default class MainProcess {
       height: 600,
       minWidth: 1000,
       minHeight: 600,
-      // backgroundColor: '#000000',
+      backgroundColor: '#000000',
       titleBarStyle: 'hidden',
       center: true,
       webPreferences: {
@@ -37,7 +39,8 @@ export default class MainProcess {
     this.win.loadFile('renderer/index.html');
 
     this.win.webContents.on('did-finish-load', () => {
-      console.log(this.storage.get('pathVideo'));
+      this.win.webContents.send('createModal', false);
+
       this.win.webContents.send('dataApp', { pathVideo: this.storage.get('pathVideo') });
     });
     this.win.webContents.openDevTools({ mode: 'detach' });
@@ -46,8 +49,17 @@ export default class MainProcess {
     });
   }
 
+  subscribeForCreateModalWin() {
+    ipcMain.on('create-win-add', () => {
+      this.win.webContents.send('createModal', true);
+      this.modalWindowAdd.startWin(this.win);
+    });
+  }
+
   subscribeForAppVideo() {
     ipcMain.handle('select-video', () => this.videoLogic.getPathVideo(this.win));
+    ipcMain.handle('get-path-video', () => this.storage.get('pathVideo'));
+    ipcMain.on('context-menu-delete', (_, id) => console.log(id));
   }
 
   subscribeForAppGame() {

@@ -3,3 +3,52 @@
     width: 30%;
     background-color: #0C0032;
 }
+
+.ContainerList{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.inputSearch{
+    width: 80%;
+    color: white;
+    background-color: #240090;
+    outline: none;
+    border: none;
+}
+
+.NameList{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    height: 1px;
+    flex-grow: 1;
+    overflow: scroll;
+}
+
+.OneList{
+    margin: 4px;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+}
+
+.OneList:hover{
+    background-color: #190061;
+    border-radius: 3px;
+    border-bottom: 1px solid #190061;
+}
+
+.OneList:active{
+    background-color: #0C0032 ;
+    border-bottom: 1px solid #0C0032;
+
+
+}
+
+
+
+.ControlListGroup{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
