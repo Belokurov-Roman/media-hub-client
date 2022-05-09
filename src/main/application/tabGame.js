@@ -4,27 +4,57 @@ import path from 'path';
 import fs from 'fs';
 import { app } from 'electron';
 import os from 'os';
+import axios from 'axios';
 import Storage from './storage';
 
 const { shell } = require('electron');
 
 export default class GameLogic {
   constructor() {
+    this.window = 0;
     this.storage = new Storage();
     this.start = 0;
     this.end = 0;
   }
 
-  setGame(files) {
+  setWindow(win) {
+    this.window = win;
+  }
+
+  async setGame(files) {
     this.storage.rewrite('gameInfo', files);
-    files.forEach((el) => {
+
+    files.forEach(async (el) => {
       const newPath = path.join(app.getPath('userData'), `storage/${el.name}`);
-      if (el.path !== newPath) {
-        this.moveFile(el.path, newPath);
-        this.storage.updateOne('gameInfo', el.name, 'path', newPath);
+      if (!el.info || el.path !== newPath) {
+        const update = {};
+        if (!el.info) {
+          update.info = await this.twitchAPI(el.name);
+        }
+        if (el.path !== newPath) {
+          this.moveFile(el.path, newPath);
+          update.path = newPath;
+        }
+        this.storage.updateSeveral('gameInfo', el.name, update);
       }
     });
+
     return this.storage.read('gameInfo');
+  }
+
+  async twitchAPI(name) {
+    const url = 'https://api.igdb.com/v4/games/';
+    const body = `fields *; where name = "${name.split('.')[0]}";`;
+    const response = await axios.post(url, body, {
+      headers: {
+        'Client-ID': 'r7h88359qgey2cc60n1dk96qfv9b13',
+        Authorization: 'Bearer 6qdmzmereash08y4fb4yw6x4scthps',
+      },
+    })
+      .catch((error) => {
+        console.log(error, '<======');
+      });
+    return response;
   }
 
   moveFile(oldPath, newPath) {
@@ -40,7 +70,6 @@ export default class GameLogic {
 
   deleteGame(_path, name) {
     const desktopDir = path.join(os.homedir(), 'Desktop');
-    console.log('====>', desktopDir);
     this.moveFile(_path, `${desktopDir}/${name}`);
     this.storage.delete('gameInfo', name);
     return this.storage.read('gameInfo');
@@ -77,15 +106,14 @@ export default class GameLogic {
       console.table(newProcs);
       const { pid } = newProcs.filter((el) => el.ppid === 1)[0];
 
-      const spiPID = setInterval(async () => {
+      const spyPID = setInterval(async () => {
         const tryList = await psList();
         if (!tryList.find((el) => el.pid === pid)) {
           console.log('Программа больше не работает');
+          clearInterval(spyPID);
           this.updateTime(programName);
-          clearInterval(spiPID);
-        } else {
-          console.log('Программа еще работает');
         }
+        console.log('Программа еще работает');
       }, 3000);
     }, 1000);
   }
@@ -93,6 +121,6 @@ export default class GameLogic {
   updateTime(programName) {
     this.end = this.getTimeStampInSeconds();
     this.storage.updateOne('gameInfo', programName, 'totalTime', (this.end - this.start));
-    return this.start - this.end;
+    this.window.webContents.send('updatedData', this.storage.read('gameInfo'));
   }
 }

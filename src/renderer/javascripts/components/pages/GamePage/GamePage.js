@@ -6,17 +6,18 @@ import './GamePage.css';
 import { Context } from '../../../context/GameContext';
 
 // const icon = await app.getFileIcon(iconPath, { size: 'large' })
-// Говорят нельзя запускать Си в браузере
 
-// console.log(fileIcon);
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
 function GamePage() {
   const { files, setFiles, getFiles } = useContext(Context);
-
   const [drag, setDrag] = useState(false);
   const [onZone, setOnZone] = useState(false);
+
+  ipcRenderer.on('updatedData', (e, data) => {
+    setFiles(data);
+  });
 
   useEffect(() => {
     getFiles();
