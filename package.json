@@ -9,6 +9,7 @@
   "repository": {},
   "dependencies": {
     "@babel/runtime": "^7.17.9",
+    "@iconify/iconify": "^2.2.1",
     "bluebird": "^3.7.2",
     "cpp-portable-loader": "^0.5.5",
     "electron": "^18.2.0",

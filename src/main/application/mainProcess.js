@@ -51,7 +51,7 @@ export default class MainProcess {
 
   subscribeForCreateModalWin() {
     ipcMain.on('create-win-add', () => {
-      this.win.webContents.send('createModal', true);
+      // this.win.webContents.send('createModal', true);
       this.modalWindowAdd.startWin(this.win);
     });
   }

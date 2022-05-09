@@ -26,7 +26,7 @@ export default class ModalWindowAdd {
     );
     // file:///Users/danakusev/Desktop/media-hub-test-version/media_hub/builds/development/file:/true
 
-    this.winModal.loadFile('renderer/index.html');
+    this.winModal.loadURL('file:///Users/danakusev/Desktop/media-hub-test-version/media_hub/builds/development/renderer/index.html?modalWin=true');
 
     this.winModal.on('closed', () => {
       this.winModal.webContents.send('createModal', false);

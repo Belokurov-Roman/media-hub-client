@@ -2,6 +2,8 @@ import {
   dialog, ipcRenderer, Menu, MenuItem,
 } from 'electron';
 import path from 'path';
+import * as http from 'http';
+import fs from 'fs';
 
 import Storage from './storage';
 
@@ -22,9 +24,6 @@ export default class VideoLogic {
     });
     // this.extensionVideo = path.getExtension(this.files.filePaths[0]);
     this.nameVideo = path.basename(this.files.filePaths[0]);
-    console.log(this.findPath());
-    console.log(this.findPath() === -1);
-
     this.writeVideoPathToStorage();
 
     return this.files.filePaths[0] ? this.files.filePaths[0] : null;
