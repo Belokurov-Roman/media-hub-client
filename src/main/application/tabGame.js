@@ -3,6 +3,7 @@ import psList from 'ps-list';
 import path from 'path';
 import fs from 'fs';
 import { app } from 'electron';
+import os from 'os';
 import Storage from './storage';
 
 const { shell } = require('electron');
@@ -29,7 +30,7 @@ export default class GameLogic {
   moveFile(oldPath, newPath) {
     fs.rename(oldPath, newPath, (err) => {
       if (err) throw err;
-      console.log('Successfully moved');
+      console.log('Successfully moved to', newPath);
     });
   }
 
@@ -38,7 +39,9 @@ export default class GameLogic {
   }
 
   deleteGame(_path, name) {
-    this.moveFile(_path, `/Users/mmm/Desktop/${name}`);
+    const desktopDir = path.join(os.homedir(), 'Desktop');
+    console.log('====>', desktopDir);
+    this.moveFile(_path, `${desktopDir}/${name}`);
     this.storage.delete('gameInfo', name);
     return this.storage.read('gameInfo');
   }

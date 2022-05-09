@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useContext } from 'react';
-import fileIcon from 'extract-file-icon';
+// import fileIcon from 'extract-file-icon';
 import GameCard from '../../common/GameCard/GameCard';
 import './GamePage.css';
 import { Context } from '../../../context/GameContext';
@@ -8,7 +8,7 @@ import { Context } from '../../../context/GameContext';
 // const icon = await app.getFileIcon(iconPath, { size: 'large' })
 // Говорят нельзя запускать Си в браузере
 
-console.log(fileIcon);
+// console.log(fileIcon);
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 

@@ -16,10 +16,6 @@ module.exports = {
           test: /\.svg$/,
           loader: 'react-svg-loader',
         },
-        // {
-        //   test: /\.cpp$/,
-        //   loader: 'cpp-portable-loader?emitMapFile',
-        // },
       ],
     },
   },
@@ -28,5 +24,13 @@ module.exports = {
   },
   main: {
     entry: './src/main/index.js',
+    // module: {
+    //   rules: [
+    //     {
+    //       test: /\.cpp$/,
+    //       loader: 'cpp-portable-loader?emitMapFile',
+    //     },
+    //   ],
+    // },
   },
 };
