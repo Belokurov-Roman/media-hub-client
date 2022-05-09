@@ -65,7 +65,8 @@ export default class MainProcess {
   subscribeForAppGame() {
     ipcMain.handle('open-game-from-path', async (e, p, n) => this.gameLogic.openPath(p, n));
     ipcMain.handle('get-games-data', () => this.gameLogic.getData());
-    ipcMain.on('set-game-data', (e, games) => this.gameLogic.setGame(games));
+    ipcMain.handle('set-game-data', (e, files) => this.gameLogic.setGame(files));
+    ipcMain.handle('delete-game', (e, p, n) => this.gameLogic.deleteGame(p, n));
   }
 
   subscribeForAppEvents() {

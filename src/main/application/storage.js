@@ -35,6 +35,13 @@ export default class Storage {
     return writeFileSync(this.file(key), JSON.stringify([...data]));
   }
 
+  delete(key, data) {
+    return writeFileSync(
+      this.file(key),
+      JSON.stringify([...this.get(key)].filter((el) => el.name !== data)),
+    );
+  }
+
   updateOne(key, elName, kluch, znachenie) {
     const updatedArr = this.read(key).map((el) => {
       if (el.name === elName) {

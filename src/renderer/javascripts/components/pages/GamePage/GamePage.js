@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-nested-ternary */
+import React, { useState, useEffect, useContext } from 'react';
 import GameCard from '../../common/GameCard/GameCard';
 import './GamePage.css';
-import GameContextProvider from '../../../context/GameContext';
+import { Context } from '../../../context/GameContext';
 
 // const icon = await app.getFileIcon(iconPath, { size: 'large' })
 // const fileIcon = require('extract-file-icon');
@@ -11,13 +12,13 @@ const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
 function GamePage() {
+  const { files, setFiles, getFiles } = useContext(Context);
+
   const [drag, setDrag] = useState(false);
   const [onZone, setOnZone] = useState(false);
-  const [files, setFiles] = useState([]);
 
   useEffect(() => {
-    ipcRenderer.invoke('get-games-data')
-      .then((res) => setFiles(res));
+    getFiles();
   }, []);
 
   function startDragHandler() {
@@ -43,39 +44,45 @@ function GamePage() {
     const f = [...files, ...event.dataTransfer.files];
     const obj = {};
     f.forEach((el) => { obj[el.name] = el; });
-    setFiles([...Object.values(obj)]);
+    const filesToSend = [...Object.values(obj)].map((el) => (
+      { name: el.name, path: el.path, totalTime: el.totalTime }));
+    setFiles(filesToSend);
 
-    const filesToSend = [...Object.values(obj)].map((el) => ({ name: el.name, path: el.path }));
-    ipcRenderer.send('set-game-data', filesToSend);
+    ipcRenderer.invoke('set-game-data', filesToSend)
+      .then((res) => setFiles(res));
   }
 
   return (
-    <GameContextProvider>
-      <div onDragEnter={(e) => startDragHandler(e)}>
-        <h2>Hello, world!</h2>
-        {drag
-          ? (
-            <div
-              onDragLeave={(e) => offDropHandler(e)}
-              onDragOver={(e) => onDropHandler(e)}
-              onDrop={(e) => {
-                DropHandler(e);
-                offDropHandler(e);
-              }}
-              className={`dropZone ${onZone ? 'onDropZone' : 'offDropZone'}`}
-            >
-              Перетащи сюда файл
-            </div>
-          )
-          : ''}
-        { files ? files.map((el) => (
+    <div
+      onDragEnter={(e) => startDragHandler(e)}
+    >
+      <h1
+        style={{ color: 'white' }}
+      >
+        Ваши файлы:
+      </h1>
+      {drag
+        ? (
+          <div
+            onDragOver={(e) => onDropHandler(e)}
+            onDragLeave={(e) => offDropHandler(e)}
+            onDrop={(e) => {
+              DropHandler(e);
+              offDropHandler(e);
+            }}
+            className={`dropZone ${onZone ? 'onDropZone' : 'offDropZone'}`}
+          >
+            Перетащи сюда файл
+          </div>
+        )
+        : files ? files.map((el) => (
           <GameCard
             key={el.name}
             el={el}
           />
-        )) : ''}
-      </div>
-    </GameContextProvider>
+        ))
+          : ''}
+    </div>
 
   );
 }

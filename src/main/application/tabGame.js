@@ -1,4 +1,8 @@
+/* eslint-disable class-methods-use-this */
 import psList from 'ps-list';
+import path from 'path';
+import fs from 'fs';
+import { app } from 'electron';
 import Storage from './storage';
 
 const { shell } = require('electron');
@@ -10,20 +14,39 @@ export default class GameLogic {
     this.end = 0;
   }
 
-  setGame(game) {
-    this.storage.rewrite('gameInfo', game);
-  }
-
-  getData() {
-    // console.log('This is ==========>', app.getFileIcon());
+  setGame(files) {
+    this.storage.rewrite('gameInfo', files);
+    files.forEach((el) => {
+      const newPath = path.join(app.getPath('userData'), `storage/${el.name}`);
+      if (el.path !== newPath) {
+        this.moveFile(el.path, newPath);
+        this.storage.updateOne('gameInfo', el.name, 'path', newPath);
+      }
+    });
     return this.storage.read('gameInfo');
   }
 
-  async openPath(path, name) {
+  moveFile(oldPath, newPath) {
+    fs.rename(oldPath, newPath, (err) => {
+      if (err) throw err;
+      console.log('Successfully moved');
+    });
+  }
+
+  getData() {
+    return this.storage.read('gameInfo');
+  }
+
+  deleteGame(_path, name) {
+    this.moveFile(_path, `/Users/mmm/Desktop/${name}`);
+    this.storage.delete('gameInfo', name);
+    return this.storage.read('gameInfo');
+  }
+
+  async openPath(_path, name) {
     this.start = this.getTimeStampInSeconds();
     const procsBefore = await this.getActualUniqueProcs();
-    // console.log(fileIcon('path', 32));
-    shell.openPath(path);
+    shell.openPath(_path);
     await this.spyOnLaunchedRpoc(procsBefore, name);
   }
 
