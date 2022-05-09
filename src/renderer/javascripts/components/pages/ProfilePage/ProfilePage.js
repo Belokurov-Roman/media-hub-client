@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
-
 function ProfilePage() {
   const id = useSelector((store) => store.user.id);
   const [input, setInput] = useState('');
