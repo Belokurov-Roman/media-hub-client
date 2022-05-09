@@ -1,6 +1,7 @@
 import React from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
 import LogotipIcon from 'LogoTest.svg';
 
 function NavBar({ searchParams }) {
@@ -12,6 +13,7 @@ function NavBar({ searchParams }) {
         <Link className="link TextLinks" to="/game">ИГРЫ</Link>
         <Link onClick={searchParams} className="link TextLinks" to="/true">ПРОФИЛЬ</Link>
         <Link className="link TextLinks" to="/registration">РЕГИСТРАЦИЯ</Link>
+        <Link className="link TextLinks" to="/auth">АВТОРИЗАЦИЯ</Link>
       </div>
     </div>
   );
