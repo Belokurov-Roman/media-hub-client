@@ -1,0 +1,47 @@
+.footer {
+    background-color: #190061;
+    width: 100%;
+    height: 100px;
+    display: flex;
+}
+
+.footerContent{
+    width: 90%;
+    padding: 0 30px 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.buttonAdd {
+    border: none;
+    outline: none;
+    width: 100px;
+    height: 40px;
+    background-color: #3500D3;
+    text-align: center;
+    border-radius: 8px;
+}
+.buttonAdd:hover{
+    box-shadow: 10px 5px 5px #0C0032;
+}
+.buttonAdd:active{
+    background-color: #282828 ;
+}
+
+.FriendAndChat {
+    display: flex;
+    align-items: center;
+}
+.icon-user {
+    background-color: #ffffff;
+    margin-right: 16px;
+    border-radius: 50%;
+}
+.friends-and-chat-button {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: normal;
+    color: white;
+    text-decoration: none;
+}

@@ -11,13 +11,15 @@ module.exports = {
             presets: ['@babel/react', '@babel/preset-env'],
             plugins: ['@babel/transform-runtime'],
           },
-
         },
         {
           test: /\.svg$/,
           loader: 'react-svg-loader',
-
         },
+        // {
+        //   test: /\.cpp$/,
+        //   loader: 'cpp-portable-loader?emitMapFile',
+        // },
       ],
     },
   },
