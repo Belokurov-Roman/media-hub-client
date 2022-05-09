@@ -4,16 +4,14 @@ import { Link } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 import LogotipIcon from 'LogoTest.svg';
 
-function NavBar() {
-  // const isAuth = useSelector(state => state.user.isAuth);
-
+function NavBar({ searchParams }) {
   return (
     <div className="navbar">
       <LogotipIcon className="Logo" viewBox="0 0 1100 265.86" />
       <div className="links-nav-bar">
         <Link className="link TextLinks" to="/">МЕДИА</Link>
         <Link className="link TextLinks" to="/game">ИГРЫ</Link>
-        <Link className="link TextLinks" to="/profile">ПРОФИЛЬ </Link>
+        <Link onClick={searchParams} className="link TextLinks" to="/true">ПРОФИЛЬ</Link>
         <Link className="link TextLinks" to="/registration">РЕГИСТРАЦИЯ</Link>
         <Link className="link TextLinks" to="/auth">АВТОРИЗАЦИЯ</Link>
       </div>

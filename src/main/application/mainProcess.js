@@ -3,12 +3,15 @@ import path from 'path';
 import Storage from './storage';
 import VideoLogic from './tabVideo';
 import GameLogic from './tabGame';
+import ModalWindowAdd from './modalWindowAdd';
 
 export default class MainProcess {
   constructor() {
     this.storage = new Storage();
     this.videoLogic = new VideoLogic();
     this.gameLogic = new GameLogic();
+    this.modalWindowAdd = new ModalWindowAdd();
+    this.subscribeForCreateModalWin();
     this.subscribeForAppGame();
     this.subscribeForAppVideo();
     this.subscribeForAppEvents();
@@ -21,7 +24,7 @@ export default class MainProcess {
       height: 600,
       minWidth: 1000,
       minHeight: 600,
-      // backgroundColor: '#000000',
+      backgroundColor: '#000000',
       titleBarStyle: 'hidden',
       center: true,
       webPreferences: {
@@ -36,7 +39,8 @@ export default class MainProcess {
     this.win.loadFile('renderer/index.html');
 
     this.win.webContents.on('did-finish-load', () => {
-      console.log(this.storage.get('pathVideo'));
+      this.win.webContents.send('createModal', false);
+
       this.win.webContents.send('dataApp', { pathVideo: this.storage.get('pathVideo') });
     });
     this.win.webContents.openDevTools({ mode: 'detach' });
@@ -45,16 +49,24 @@ export default class MainProcess {
     });
   }
 
+  subscribeForCreateModalWin() {
+    ipcMain.on('create-win-add', () => {
+      this.win.webContents.send('createModal', true);
+      this.modalWindowAdd.startWin(this.win);
+    });
+  }
+
   subscribeForAppVideo() {
     ipcMain.handle('select-video', () => this.videoLogic.getPathVideo(this.win));
+    ipcMain.handle('get-path-video', () => this.storage.get('pathVideo'));
+    ipcMain.on('context-menu-delete', (_, id) => console.log(id));
   }
 
   subscribeForAppGame() {
-    ipcMain.handle('open-game-from-dialog', () => this.gameLogic.openPathFromDialog(this.win));
-    ipcMain.handle('open-game-from-path', async (e, path) => {
-      console.log(path);
-      this.gameLogic.openPath(path);
-    });
+    ipcMain.handle('open-game-from-path', async (e, p, n) => this.gameLogic.openPath(p, n));
+    ipcMain.handle('get-games-data', () => this.gameLogic.getData());
+    ipcMain.handle('set-game-data', (e, files) => this.gameLogic.setGame(files));
+    ipcMain.handle('delete-game', (e, p, n) => this.gameLogic.deleteGame(p, n));
   }
 
   subscribeForAppEvents() {

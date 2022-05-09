@@ -28,7 +28,32 @@ export default class Storage {
   }
 
   write(key, data) {
-    return writeFileSync(this.file(key), JSON.stringify([...this.read(key), { ...data }]));
+    return writeFileSync(this.file(key), JSON.stringify([...this.get(key), { ...data }]));
+  }
+
+  rewrite(key, data) {
+    return writeFileSync(this.file(key), JSON.stringify([...data]));
+  }
+
+  delete(key, data) {
+    return writeFileSync(
+      this.file(key),
+      JSON.stringify([...this.get(key)].filter((el) => el.name !== data)),
+    );
+  }
+
+  updateOne(key, elName, kluch, znachenie) {
+    const updatedArr = this.read(key).map((el) => {
+      if (el.name === elName) {
+        if (el.totalTime) {
+          return { ...el, [kluch]: el[kluch] + znachenie };
+        }
+        return { ...el, [kluch]: znachenie };
+      }
+      return el;
+    });
+    console.log(updatedArr);
+    this.rewrite(key, updatedArr);
   }
 
   file(key) {
@@ -36,6 +61,7 @@ export default class Storage {
     if (!existsSync(file)) {
       writeFileSync(file, '[]', { flag: 'wx' });
     }
+    console.log(file);
     return file;
   }
 }
