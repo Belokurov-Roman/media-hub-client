@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
+import {
+  Card, ListGroup, ListGroupItem,
+} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function ProfilePage() {
+  const navigate = useNavigate();
   const id = useSelector((store) => store.user.id);
   const [input, setInput] = useState('');
   async function getProfile() {
@@ -13,6 +17,9 @@ function ProfilePage() {
   }
 
   useEffect(() => { getProfile(); }, [setInput]);
+  const addChange = () => {
+    navigate('/profile/change');
+  };
 
   return (
     <Card style={{ width: '18rem', color: 'white' }}>
@@ -30,6 +37,8 @@ function ProfilePage() {
       </ListGroup>
       <Card.Body>
         <Card.Link href="https://ru.wikipedia.org/wiki/%D0%90%D1%80%D0%B0%D0%BC%D0%B8%D1%81">Арамис</Card.Link>
+
+        <button type="submit" onClick={addChange}>Изменить профиль</button>
 
       </Card.Body>
     </Card>

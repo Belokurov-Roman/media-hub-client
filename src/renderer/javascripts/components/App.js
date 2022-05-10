@@ -14,6 +14,7 @@ import './App.css';
 import ModalWindowAdd from './pages/ModalWindowAdd/ModalWindowAdd';
 import GameContextProvider from '../context/GameContext';
 import ChatLogic from './pages/Chat/ChatLogic';
+import ChangePage from './pages/ChangePage/ChangePage';
 
 function App() {
   function createWindowAdd() {
@@ -46,6 +47,8 @@ function App() {
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/friends" element={<FriendsPage />} />
           <Route path="/friends/chat" element={<ChatLogic />} />
+          <Route path="/profile/change" element={<ChangePage />} />
+
         </Routes>
         <Footer createWindowAdd={createWindowAdd} />
       </GameContextProvider>
