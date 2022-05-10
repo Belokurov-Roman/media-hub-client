@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable class-methods-use-this */
 import psList from 'ps-list';
 import path from 'path';
@@ -24,21 +25,30 @@ export default class GameLogic {
   async setGame(files) {
     this.storage.rewrite('gameInfo', files);
 
-    files.forEach(async (el) => {
+    let filesWithInfo = files.map((el) => {
+      if (!el.info) { return (this.twitchAPI(el.name)); }
+      return el;
+    });
+    filesWithInfo = await Promise.all(filesWithInfo);
+
+    files.forEach((el, ind) => {
       const newPath = path.join(app.getPath('userData'), `storage/${el.name}`);
-      if (!el.info || el.path !== newPath) {
-        const update = {};
-        if (!el.info) {
-          update.info = await this.twitchAPI(el.name);
-        }
-        if (el.path !== newPath) {
-          this.moveFile(el.path, newPath);
-          update.path = newPath;
-        }
-        this.storage.updateSeveral('gameInfo', el.name, update);
+      const update = {};
+      if (!el.info) {
+        console.log('Добавляем информацию для', el.name);
+        const info = filesWithInfo[ind];
+        info ? update.info = info : update.info = 'Не нашлось информации';
       }
+      if (el.path !== newPath) {
+        console.log('Переносим файл');
+        this.moveFile(el.path, newPath);
+        update.path = newPath;
+      }
+      console.log('Обновляем');
+      this.storage.updateSeveral('gameInfo', el.name, update);
     });
 
+    console.log('Отправляю на фронт');
     return this.storage.read('gameInfo');
   }
 
@@ -54,7 +64,7 @@ export default class GameLogic {
       .catch((error) => {
         console.log(error, '<======');
       });
-    return response;
+    return response.data[0] || '';
   }
 
   moveFile(oldPath, newPath) {

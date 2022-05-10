@@ -9,7 +9,10 @@ function GameContextProvider({ children }) {
 
   const getFiles = () => {
     ipcRenderer.invoke('get-games-data')
-      .then((res) => setFiles(res));
+      .then((res) => {
+        setFiles(res);
+        console.log(res, ' <= Гружу со старта');
+      });
   };
 
   const handleStart = (path, name) => {

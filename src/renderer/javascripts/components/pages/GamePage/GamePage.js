@@ -17,6 +17,7 @@ function GamePage() {
 
   ipcRenderer.on('updatedData', (e, data) => {
     setFiles(data);
+    console.log(files, data, '<+----');
   });
 
   useEffect(() => {
@@ -47,22 +48,24 @@ function GamePage() {
     const obj = {};
     f.forEach((el) => { obj[el.name] = el; });
     const filesToSend = [...Object.values(obj)].map((el) => (
-      { name: el.name, path: el.path, totalTime: el.totalTime }));
+      {
+        name: el.name, path: el.path, totalTime: el.totalTime, info: el.info,
+      }));
     setFiles(filesToSend);
 
+    console.log(filesToSend, '<---------');
     ipcRenderer.invoke('set-game-data', filesToSend)
-      .then((res) => setFiles(res));
+      .then((res) => {
+        console.log(res);
+        setFiles(res);
+      });
   }
 
   return (
     <div
+      className="GamePage"
       onDragEnter={(e) => startDragHandler(e)}
     >
-      <h1
-        style={{ color: 'white' }}
-      >
-        Ваши файлы:
-      </h1>
       {drag
         ? (
           <div
@@ -77,13 +80,19 @@ function GamePage() {
             Перетащи сюда файл
           </div>
         )
-        : files ? files.map((el) => (
+        : files?.length ? files.map((el) => (
           <GameCard
             key={el.name}
             el={el}
           />
         ))
-          : ''}
+          : (
+            <h1
+              style={{ color: 'white' }}
+            >
+              Вы еще не добавили никаких игр:
+            </h1>
+          )}
     </div>
 
   );
