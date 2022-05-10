@@ -15,7 +15,7 @@ function ProfilePage() {
   useEffect(() => { getProfile(); }, [setInput]);
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: '18rem', color: 'white' }}>
       <Card.Img variant="top" src={input.avatar} style={{ width: '16rem' }} />
       <Card.Body>
         <Card.Title>{input.name}</Card.Title>

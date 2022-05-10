@@ -1,34 +1,25 @@
 // import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import addUser from '../../../../../redux/action/userAction';
 
 function RegistrationPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // React.useEffect(() => {
-  //   if (name === 'Jopa') console.log(name);
-  // }, [name]);
+  const { user } = useSelector((store) => store);
 
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   await axios.post('http://localhost:3001/users/signup', {
-  //     name: 'name',
-  //     email: 'email',
-  //     password: 'password',
-  //   })
-  //     .then((res) => {
-  //       console.log(res.status);
-  //       if (res.status === 401) {
-  //         setError('Этот email занят');
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       setError(err);
-  //       console.log(err);
-  //     });
-  // }
+  useEffect(() => {
+    console.log(user);
+    if (user) {
+      navigate('/game');
+    }
+  }, [user]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -44,6 +35,9 @@ function RegistrationPage() {
           password,
         }),
       });
+      if (response.ok) {
+        dispatch(addUser(response));
+      }
       console.log(response.status);
       if (response.status === 401) {
         setError('Этот email занят');

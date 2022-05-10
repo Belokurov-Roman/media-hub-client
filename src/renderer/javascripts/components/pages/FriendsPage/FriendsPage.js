@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import './friend.css';
 
 function FriendsPage() {
   const id = useSelector((store) => store.user.id);
   console.log(id);
   const [friends, setFriends] = useState('');
+  const navigate = useNavigate();
   async function friendsSubmit() {
     const response = await axios.get(`http://localhost:3001/friends/${id}`);
     console.log(response.data);
@@ -16,13 +19,16 @@ function FriendsPage() {
   useEffect(() => {
     friendsSubmit();
   }, []);
+  const setChat = () => {
+    navigate('/friends/chat');
+  };
 
   return (
     <>
       <h2>Friends</h2>
       {friends && friends.map((el) => (
-        <Card key={el.id} style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={el.avatar} style={{ width: '16rem' }} />
+        <Card className="friend" key={el.id} style={{ width: '18rem', color: 'white' }}>
+          <Card.Img variant="top" src={el.avatar} style={{ width: '18rem' }} />
           <Card.Body>
             <Card.Title>{el.name}</Card.Title>
             <Card.Text>
@@ -32,6 +38,7 @@ function FriendsPage() {
           <ListGroup className="list-group-flush">
             <ListGroupItem>{el.email}</ListGroupItem>
           </ListGroup>
+          <button type="submit" onClick={setChat}>Join a chat</button>
         </Card>
       )) }
     </>
