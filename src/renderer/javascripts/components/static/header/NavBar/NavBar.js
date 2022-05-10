@@ -3,14 +3,14 @@ import './NavBar.css';
 import { Link } from 'react-router-dom';
 import LogotipIcon from 'LogoTest.svg';
 
-function NavBar({ searchParams }) {
+function NavBar() {
   return (
     <div className="navbar">
       <LogotipIcon className="Logo" viewBox="0 0 1100 265.86" />
       <div className="links-nav-bar">
         <Link onClick={() => console.log(window.location.href)} className="link TextLinks" to="/">МЕДИА</Link>
         <Link onClick={() => console.log(window.location.href)} className="link TextLinks" to="/game">ИГРЫ</Link>
-        <Link onClick={searchParams} className="link TextLinks" to="/true">ПРОФИЛЬ</Link>
+        <Link className="link TextLinks" to="/true">ПРОФИЛЬ</Link>
         <Link className="link TextLinks" to="/registration">РЕГИСТРАЦИЯ</Link>
       </div>
     </div>

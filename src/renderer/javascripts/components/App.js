@@ -11,6 +11,7 @@ import Footer from './static/footer/Footer/Footer';
 import './App.css';
 import ModalWindowAdd from './pages/ModalWindowAdd/ModalWindowAdd';
 import GameContextProvider from '../context/GameContext';
+import WindowApp from './WindowApp/WindowApp';
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams('');
@@ -23,25 +24,30 @@ function App() {
     ipcRenderer.send('create-win-add');
   }
 
+  function renderWindow() {
+    switch (modalParams) {
+      case 'addVideo':
+        return (<ModalWindowAdd />);
+      case 'friends':
+        return (<ModalWindowAdd />);
+      case 'chat':
+        return (<ModalWindowAdd />);
+      case 'login':
+        return (<ModalWindowAdd />);
+      default:
+        return (<WindowApp createWindowAdd={createWindowAdd} />);
+    }
+  }
+
   return (
     <div className="App">
-      {modalParams === 'addVideo' ? <ModalWindowAdd /> : (
-        <GameContextProvider>
-          <NavBar searchParams={searchParams} />
-          <Routes>
-            <Route path="/" element={<VideoPage />} />
-            <Route path="/video" element={<VideoPage />} />
-            <Route path="/game" element={<GamePage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/111" element={<ModalWindowAdd />} />
-
-          </Routes>
-          <Footer createWindowAdd={createWindowAdd} />
-        </GameContextProvider>
-      )}
-
+      {renderWindow()}
     </div>
   );
 }
 
 export default App;
+
+// {modalParams === 'addVideo' ? renderWindow() : (
+//
+// )}

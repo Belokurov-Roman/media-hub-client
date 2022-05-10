@@ -73,7 +73,7 @@ export default class VideoLogic {
     if (this.storage.get('pathVideo').length === 0) {
       return 1;
     }
-    return (Object.values(...this.storage.get('pathVideo').slice(-1))[0]);
+    return (Object.values(...this.storage.get('pathVideo').slice(-1))[0] + 1);
   }
 
   countId() {

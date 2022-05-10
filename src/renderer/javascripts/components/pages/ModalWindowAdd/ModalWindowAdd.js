@@ -29,7 +29,6 @@ function ModalWindowAdd() {
     event.preventDefault();
     event.stopPropagation();
     setOnZone(true);
-    console.log('123');
   }
 
   function offDropHandler(event) {

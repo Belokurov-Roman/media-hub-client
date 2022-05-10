@@ -12,8 +12,7 @@ export default class ModalWindowAdd {
     this.gameLogic = new GameLogic();
     this.videoLogic = new VideoLogic();
     this.subscribeForAddFile();
-    this.createModalWindow(win);
-    // app.whenReady().then(() => );
+    app.whenReady().then(() => this.createModalWindow(win));
   }
 
   createModalWindow(win) {

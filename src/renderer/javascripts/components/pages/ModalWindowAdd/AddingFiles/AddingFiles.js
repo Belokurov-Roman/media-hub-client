@@ -5,7 +5,8 @@ function AddingFiles({
 }) {
   return (
     <div className="ModalWindowAdd">
-      <button type="button" onClick={callDialog} className="buttonAdd TextLinks">Выберете видео или игру или перетащите</button>
+      <h4>Добавление файла</h4>
+      <button type="button" onClick={callDialog} className="buttonAdd TextLinks AddingBut ">Выберете видео или игру или перетащите</button>
       <div
         onDragEnter={(e) => startDragHandler(e)}
       >

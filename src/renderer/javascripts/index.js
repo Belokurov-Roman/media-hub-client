@@ -14,6 +14,7 @@ window.onload = (entries) => {
   const root = createRoot(container);
   root.render(
     <BrowserRouter>
+      <div className="titleBar">Media Hub</div>
       <App entries={entries} tab="home" />
     </BrowserRouter>,
   );

@@ -1,38 +1,47 @@
 import React, { useState } from 'react';
 import { ipcRenderer } from 'electron';
-import { us } from 'yarn/lib/cli';
 import { useNavigate } from 'react-router-dom';
+import './ChangeAddFile.css';
+import { re } from '@babel/core/lib/vendor/import-meta-resolve';
 
 function ChangeAddFile({ currentFile, setCurrentFile }) {
   const [nameFile, setNameFile] = useState(currentFile.name);
   const [savedFile, setSavedFile] = useState('');
+  const [tag, setTag] = useState('');
   const navigate = useNavigate();
 
+  function changeTag(e) {
+    setTag(e.target.value);
+    setCurrentFile({ ...currentFile, tag: e.target.value });
+  }
+
   function changeName(e) {
-    console.log(currentFile);
     setNameFile(e.target.value);
     setCurrentFile({ ...currentFile, name: e.target.value });
   }
 
   function saveFile() {
-    ipcRenderer.invoke('save-video-file', currentFile)
-      .then((res) => {
-        if (res) {
-          ipcRenderer.send('video-added');
-        }
-      });
+    if (currentFile.name) {
+      ipcRenderer.invoke('save-video-file', currentFile)
+        .then((res) => {
+          if (res) {
+            ipcRenderer.send('video-added');
+          }
+        });
+    }
   }
   return (
-    <div>
-      <div>
-        <h4>Change name?</h4>
-        <input onChange={(e) => changeName(e)} value={nameFile} />
+    <div className="ModalWindowAdd styleThisBlock">
+      <h3>Подтвердите добавление</h3>
+      <div className="blockInputChange">
+        <span>Имя файла</span>
+        <input className="styleChange inputSearch" onChange={(e) => changeName(e)} value={nameFile} />
       </div>
-      <div>
-        <h4>Add tag?</h4>
-        <input placeholder="tag" />
+      <div className="blockInputChange">
+        <span>Добавить тег (не обязательно)</span>
+        <input onChange={(e) => changeTag(e)} className="styleChange inputSearch" placeholder="Введите тег (не обязательно)" />
       </div>
-      <button onClick={() => saveFile(nameFile)} type="button">Сохранить</button>
+      <button className="buttonAdd TextLinks AddingBut" onClick={() => saveFile(nameFile)} type="button">Сохранить</button>
     </div>
   );
 }
