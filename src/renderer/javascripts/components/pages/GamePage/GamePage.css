@@ -11,8 +11,7 @@
     color: gray;
   }
   .onDropZone {
-    background-color: rgb(231, 231, 231);
+      background-color: #190061;
+      border: 1px dashed #240090;
   }
-  .offDropZone {
-    background-color: white;
-  }
+

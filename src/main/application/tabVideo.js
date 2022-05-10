@@ -23,17 +23,24 @@ export default class VideoLogic {
       properties: ['openFile'],
     });
     // this.extensionVideo = path.getExtension(this.files.filePaths[0]);
-    this.nameVideo = path.basename(this.files.filePaths[0]);
-    this.writeVideoPathToStorage();
+    this.writeVideoPathToStorage(this.files.filePaths[0]);
 
     return this.files.filePaths[0] ? this.files.filePaths[0] : null;
   }
 
-  writeVideoPathToStorage() {
+  createFileVideo(file) {
+    this.nameVideo = path.basename(file);
+    this.addToStore = { id: this.id, name: this.nameVideo, path: file };
+    return this.addToStore;
+  }
+
+  writeVideoPathToStorage(file) {
     if (this.findPath() === -1) {
-      this.storage.set('pathVideo', { id: this.id, name: this.nameVideo, path: this.files.filePaths[0] });
       this.countId();
+      this.storage.set('pathVideo', file);
+      return true;
     }
+    return false;
   }
 
   findPath() {
@@ -66,7 +73,7 @@ export default class VideoLogic {
     if (this.storage.get('pathVideo').length === 0) {
       return 1;
     }
-    return (Object.values(...this.storage.get('pathVideo').slice(-1))[0] + 1);
+    return (Object.values(...this.storage.get('pathVideo').slice(-1))[0]);
   }
 
   countId() {

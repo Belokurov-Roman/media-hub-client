@@ -44,15 +44,20 @@ export default class MainProcess {
       this.win.webContents.send('dataApp', { pathVideo: this.storage.get('pathVideo') });
     });
     this.win.webContents.openDevTools({ mode: 'detach' });
-    this.win.on('closed', () => {
+    this.win.on('closed', (e) => {
+      e.preventDefault();
       this.win = null;
+      this.modalWindowAdd.winModal = null;
     });
   }
 
   subscribeForCreateModalWin() {
     ipcMain.on('create-win-add', () => {
-      // this.win.webContents.send('createModal', true);
-      this.modalWindowAdd.startWin(this.win);
+      if (!this.modalWindowAdd.winModal) {
+        this.modalWindowAdd.startWin(this.win);
+      } else {
+        this.modalWindowAdd.winModal.show();
+      }
     });
   }
 

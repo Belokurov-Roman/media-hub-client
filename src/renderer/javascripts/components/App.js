@@ -20,12 +20,12 @@ function App() {
     console.log(window.location.href);
     console.log(modalParams);
     // console.log('123123', modalParams === 'true');
-    // ipcRenderer.send('create-win-add');
+    ipcRenderer.send('create-win-add');
   }
 
   return (
     <div className="App">
-      {modalParams === 'true' ? <ModalWindowAdd /> : (
+      {modalParams === 'addVideo' ? <ModalWindowAdd /> : (
         <GameContextProvider>
           <NavBar searchParams={searchParams} />
           <Routes>
