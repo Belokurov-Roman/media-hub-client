@@ -17,7 +17,7 @@ function RegistrationPage() {
   useEffect(() => {
     console.log(user);
     if (user) {
-      navigate('/game');
+      navigate('/profile');
     }
   }, [user]);
 
@@ -36,7 +36,7 @@ function RegistrationPage() {
         }),
       });
       if (response.ok) {
-        dispatch(addUser(response));
+        dispatch(addUser(response.json()));
       }
       console.log(response.status);
       if (response.status === 401) {
