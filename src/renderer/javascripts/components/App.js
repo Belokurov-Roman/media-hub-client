@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import { Provider, useSelector } from 'react-redux';
 import NavBar from './static/header/NavBar/NavBar';
@@ -41,7 +41,7 @@ function App() {
           <Route path="/" element={<VideoPage />} />
           <Route path="/video" element={<VideoPage />} />
           <Route path="/game" element={<GamePage />} />
-          <Route path="/profile" element={userId ? <ProfilePage /> : <AuthPage />} />
+          <Route path="/profile" element={userId ? <ProfilePage /> : <Navigate to="/auth" />} />
           <Route path="/:modalView" element={<ModalWindowAdd />} />
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/auth" element={<AuthPage />} />
