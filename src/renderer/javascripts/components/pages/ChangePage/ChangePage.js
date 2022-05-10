@@ -30,6 +30,7 @@ function ChangePage() {
       <input name="password" onChange={(e) => setInput({ ...input, password: e.target.value })} value={input.password} />
       <input name="text" onChange={(e) => setInput({ ...input, description: e.target.value })} value={input.description} />
       <button type="submit">Сохранить</button>
+      <button type="submit">Выход</button>
     </form>
   );
 }
