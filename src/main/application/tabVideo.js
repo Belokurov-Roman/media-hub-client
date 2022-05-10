@@ -1,6 +1,4 @@
-import {
-  dialog, ipcRenderer, Menu, MenuItem,
-} from 'electron';
+import { dialog } from 'electron';
 import path from 'path';
 import * as http from 'http';
 import fs from 'fs';
@@ -10,8 +8,7 @@ import Storage from './storage';
 export default class VideoLogic {
   constructor() {
     this.storage = new Storage();
-    this.id = this.getLastId();
-    this.ctxMenu = new Menu();
+    this.id = (+Object.keys(this.storage.get('pathVideo')).slice(-1) + 1);
   }
 
   async getPathVideo(win) {
@@ -24,6 +21,7 @@ export default class VideoLogic {
     });
     // this.extensionVideo = path.getExtension(this.files.filePaths[0]);
     this.writeVideoPathToStorage(this.files.filePaths[0]);
+    this.nameVideo = path.basename(this.files.filePaths[0]);
 
     return this.files.filePaths[0] ? this.files.filePaths[0] : null;
   }

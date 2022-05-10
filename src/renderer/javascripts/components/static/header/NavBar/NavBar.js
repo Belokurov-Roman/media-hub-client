@@ -1,17 +1,19 @@
 import React from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
 import LogotipIcon from 'LogoTest.svg';
 
-function NavBar() {
+function NavBar({ searchParams }) {
   return (
     <div className="navbar">
       <LogotipIcon className="Logo" viewBox="0 0 1100 265.86" />
       <div className="links-nav-bar">
-        <Link onClick={() => console.log(window.location.href)} className="link TextLinks" to="/">МЕДИА</Link>
-        <Link onClick={() => console.log(window.location.href)} className="link TextLinks" to="/game">ИГРЫ</Link>
-        <Link className="link TextLinks" to="/true">ПРОФИЛЬ</Link>
+        <Link className="link TextLinks" to="/">МЕДИА</Link>
+        <Link className="link TextLinks" to="/game">ИГРЫ</Link>
+        <Link className="link TextLinks" to="/profile">ПРОФИЛЬ</Link>
         <Link className="link TextLinks" to="/registration">РЕГИСТРАЦИЯ</Link>
+        <Link className="link TextLinks" to="/auth">АВТОРИЗАЦИЯ</Link>
       </div>
     </div>
   );
