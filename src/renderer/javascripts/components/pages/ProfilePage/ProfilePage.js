@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
-import {
-  Card, ListGroup, ListGroupItem,
-} from 'react-bootstrap';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteUser } from '../../../../../redux/action/userAction';
 
 function ProfilePage() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [id, setId] = useState();
   try {
     setId(useSelector((store) => store.user.id));
