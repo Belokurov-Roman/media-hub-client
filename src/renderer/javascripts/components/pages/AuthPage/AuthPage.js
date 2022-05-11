@@ -32,10 +32,11 @@ function AuthPage() {
   }, [user]);
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log('132');
     dispatch(THUNK_addUser(email, password));
-    if (!error) {
-      ipcRenderer.send('close-win-aut');
-    }
+    // if (!error) {
+    //   // ipcRenderer.send('close-win-aut');
+    // }
   }
   // const addNavigate = () => {
   //   navigate(navigate('/game'));

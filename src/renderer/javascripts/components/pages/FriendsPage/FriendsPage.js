@@ -4,21 +4,30 @@ import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import './friend.css';
+import { ipcRenderer } from 'electron';
 
 function FriendsPage() {
-  const id = useSelector((store) => store.user.id);
-  console.log(id);
+  const [id, setId] = useState();
+  useSelector(async (store) => {
+    try {
+      setId(store.user.id);
+    } catch (error) {
+      const result = await ipcRenderer.invoke('get-user');
+      setId(result.id);
+    }
+  });
   const [friends, setFriends] = useState('');
   const navigate = useNavigate();
   async function friendsSubmit() {
-    const response = await axios.get(`http://localhost:3001/friends/${id}`);
-    console.log(response.data);
-    setFriends(response.data);
+    if (id) {
+      const response = await axios.get(`http://localhost:3001/friends/${id}`);
+      console.log(response.data);
+      setFriends(response.data);
+    }
   }
-  console.log('==========', friends);
   useEffect(() => {
     friendsSubmit();
-  }, []);
+  }, [id]);
   const setChat = () => {
     navigate('/friends/chat');
   };
