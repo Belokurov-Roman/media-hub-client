@@ -11,32 +11,26 @@ function ProfilePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [id, setId] = useState();
-  try {
-    setId(useSelector((store) => store.user.id));
-  } catch (e) {
-    ipcRenderer.invoke('get-user').then((res) => {
-      console.log(res.id);
-      setId(res.id);
-    });
-  }
+  useSelector(async (store) => {
+    try {
+      setId(store.user.id);
+    } catch (error) {
+      const result = await ipcRenderer.invoke('get-user');
+      setId(result.id);
+    }
+  });
   const [input, setInput] = useState('');
   async function getProfile() {
-    console.log(id);
+    console.log('profile', id);
     if (id) {
-      const response = await axios.get(`http://localhost:3001/users/${id}`);
-      console.log(response);
+      const response = await axios.get(`http://localhost:3001/users/find/${id}`);
+      console.log('profile', response);
       console.log(response.data.name);
       setInput(response.data);
     }
   }
-  async function logOut() {
-    const response = await axios.get('http://localhost:3001/users/logout');
-    console.log('====+++++++++++++++++++++++++++++++++++', response);
-    dispatch(deleteUser());
-    navigate('/auth');
-  }
 
-  useEffect(() => { getProfile(); }, [setInput]);
+  useEffect(() => { getProfile(); }, [id]);
   const addChange = () => {
     navigate('/profile/change');
   };
@@ -59,7 +53,7 @@ function ProfilePage() {
         <Card.Link href="https://ru.wikipedia.org/wiki/%D0%90%D1%80%D0%B0%D0%BC%D0%B8%D1%81">Арамис</Card.Link>
 
         <button type="submit" onClick={addChange}>Изменить профиль</button>
-        <button type="submit" onClick={logOut}>Выход</button>
+
       </Card.Body>
     </Card>
   );

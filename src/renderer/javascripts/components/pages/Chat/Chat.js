@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ScrollToBottom from 'react-scroll-to-bottom';
+import { ipcRenderer } from 'electron';
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
-  const id = useSelector((store) => store.user.id);
+  const [id, setId] = useState();
+  useSelector(async (store) => {
+    try {
+      setId(store.user.id);
+    } catch (error) {
+      const result = await ipcRenderer.invoke('get-user');
+      setId(result.id);
+    }
+  });
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
@@ -29,7 +38,7 @@ function Chat({ socket, username, room }) {
     socket.on('receive_message', (data) => {
       setMessageList((list) => [...list, data]);
     });
-  }, [socket]);
+  }, [socket, id]);
 
   return (
     <div className="chat-window">
