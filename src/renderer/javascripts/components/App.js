@@ -17,13 +17,6 @@ function App() {
   function createWindowAdd() {
     ipcRenderer.send('create-win-add');
   }
-  const userId = useSelector((store) => {
-    try {
-      return store.user.id;
-    } catch (error) {
-      return null;
-    }
-  });
 
   function renderWindow() {
     switch (modalParams) {

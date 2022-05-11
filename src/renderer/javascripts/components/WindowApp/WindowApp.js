@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import NavBar from '../static/header/NavBar/NavBar';
 import VideoPage from '../pages/VideoPage/VideoPage';
 import GamePage from '../pages/GamePage/GamePage';
@@ -13,6 +14,13 @@ import ChatLogic from '../pages/Chat/ChatLogic';
 import ChangePage from '../pages/ChangePage/ChangePage';
 
 function WindowApp({ createWindowAdd }) {
+  const userId = useSelector((store) => {
+    try {
+      return store.user.id;
+    } catch (error) {
+      return null;
+    }
+  });
   return (
     <GameContextProvider>
       <NavBar />
@@ -20,7 +28,7 @@ function WindowApp({ createWindowAdd }) {
         <Route path="/" element={<VideoPage />} />
         <Route path="/video" element={<VideoPage />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={userId ? <ProfilePage /> : ''} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/friends" element={<FriendsPage />} />
