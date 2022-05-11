@@ -2,11 +2,22 @@
   display: flex;
   height: 400px;
   justify-content: space-between;
+  background-image: linear-gradient(to top, #2d2e30, #2f3033, #323335, #343538, #37383b);
 }
 
 .list {
   width: 15%;
   height: 400px;
+  margin-left: 10px;
+  margin-top: 10px;
+  background-color: #2d2e30;
+  border-radius: 20px;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 10px 10px 15px #2a2b2c,
+              inset -10px -10px 10px #2e2f30;
 }
 
 .info{
