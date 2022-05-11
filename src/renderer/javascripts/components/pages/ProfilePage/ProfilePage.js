@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {
-  Card, ListGroup, ListGroupItem,
-} from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { ipcRenderer } from 'electron';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteUser } from '../../../../../redux/action/userAction';
@@ -10,12 +10,24 @@ import { deleteUser } from '../../../../../redux/action/userAction';
 function ProfilePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const id = useSelector((store) => store.user.id);
+  const [id, setId] = useState();
+  try {
+    setId(useSelector((store) => store.user.id));
+  } catch (e) {
+    ipcRenderer.invoke('get-user').then((res) => {
+      console.log(res.id);
+      setId(res.id);
+    });
+  }
   const [input, setInput] = useState('');
   async function getProfile() {
-    const response = await axios.get(`http://localhost:3001/users/find/${id}`);
-    console.log(response.data.name);
-    setInput(response.data);
+    console.log(id);
+    if (id) {
+      const response = await axios.get(`http://localhost:3001/users/${id}`);
+      console.log(response);
+      console.log(response.data.name);
+      setInput(response.data);
+    }
   }
   async function logOut() {
     const response = await axios.get('http://localhost:3001/users/logout');

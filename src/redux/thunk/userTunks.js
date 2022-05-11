@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { ipcRenderer } from 'electron';
 import addUser from '../action/userAction';
 import addError from '../action/errorAction';
 
@@ -19,6 +20,7 @@ const THUNK_addUser = (email, password) => async (dispatch) => {
       const result = await response.json();
       console.log('=================================', result);
       dispatch(addUser(result));
+      ipcRenderer.send('save-user', { ...result, online: true });
     }
     if (response.status === 401) {
       console.log(response.status);

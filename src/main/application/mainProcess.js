@@ -4,17 +4,19 @@ import Storage from './storage';
 import VideoLogic from './tabVideo';
 import GameLogic from './tabGame';
 import ModalWindowAdd from './modalWindowAdd';
+import ModalWindowAut from './modalWindowAut';
+import ModalWindowReg from './modalWindowReg';
 
 export default class MainProcess {
   constructor() {
     this.storage = new Storage();
     this.videoLogic = new VideoLogic();
     this.gameLogic = new GameLogic();
-    this.modalWindowAdd = new ModalWindowAdd();
     this.subscribeForCreateModalWin();
     this.subscribeForAppGame();
     this.subscribeForAppVideo();
     this.subscribeForAppEvents();
+    this.subscribeForUserLogic();
     app.whenReady().then(() => this.createWindow());
   }
 
@@ -44,15 +46,47 @@ export default class MainProcess {
       this.gameLogic.setWindow(this.win);
     });
     this.win.webContents.openDevTools({ mode: 'detach' });
-    this.win.on('closed', () => {
+    this.win.on('closed', (e) => {
+      e.preventDefault();
       this.win = null;
+      this.modalWindowAdd.winModal = null;
     });
+  }
+
+  subscribeForUserLogic() {
+    ipcMain.on('save-user', (_, data) => {
+      if (this.videoLogic.findPath('userData')) {
+        this.storage.setUser('userData', data);
+      }
+    });
+
+    ipcMain.handle('get-user', () => this.storage.get('userData')[0]);
+
+    ipcMain.on('leave-user', () => this.storage.rewriteUser('userData', { online: false }));
   }
 
   subscribeForCreateModalWin() {
     ipcMain.on('create-win-add', () => {
-      this.win.webContents.send('createModal', true);
+      this.modalWindowAdd = new ModalWindowAdd();
       this.modalWindowAdd.startWin(this.win);
+    });
+
+    ipcMain.on('create-win-aut', () => {
+      this.modalWindowAut = new ModalWindowAut();
+      this.modalWindowAut.createModalWindow();
+    });
+
+    ipcMain.on('close-win-aut', () => {
+      this.modalWindowAut.winModal.hide();
+    });
+
+    ipcMain.on('close-win-reg', () => {
+      this.modalWindowReg.winModal.hide();
+    });
+
+    ipcMain.on('create-win-reg', () => {
+      this.modalWindowReg = new ModalWindowReg();
+      this.modalWindowReg.createModalWindow();
     });
   }
 
@@ -83,48 +117,3 @@ export default class MainProcess {
     });
   }
 }
-
-// let win;
-// export function mainProcess() {
-//   const createWindow = () => {
-//     win = new BrowserWindow({
-//       width: 1000,
-//       height: 600,
-//       minWidth: 520,
-//       minHeight: 250,
-//       backgroundColor: '#0F292F',
-//       center: true,
-//
-//       webPreferences: {
-//         nodeIntegration: true,
-//         contextIsolation: false,
-//         enableRemoteModule: true,
-//         webSecurity: false,
-//       },
-//     });
-//
-//     win.loadFile('renderer/index.html');
-//
-//     win.webContents.openDevTools({ mode: 'detach' });
-//
-//     win.on('closed', () => {
-//       win = null;
-//     });
-//   };
-//
-//   app.whenReady().then(createWindow);
-//
-//   app.on('window-all-closed', () => {
-//     if (process.platform !== 'darwin') {
-//       app.quit();
-//     }
-//   });
-//
-//   app.on('activate', () => {
-//     if (BrowserWindow.getAllWindows().length === 0) {
-//       createWindow();
-//     }
-//   });
-// }
-//
-// export { win };

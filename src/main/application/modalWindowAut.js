@@ -6,7 +6,7 @@ import GameLogic from './tabGame';
 import VideoLogic from './tabVideo';
 import Storage from './storage';
 
-export default class ModalWindowAdd {
+export default class ModalWindowAut {
   startWin(win) {
     this.storage = new Storage();
     this.gameLogic = new GameLogic();
@@ -19,9 +19,9 @@ export default class ModalWindowAdd {
     this.winModal = new BrowserWindow(
       {
         width: 500,
-        height: 500,
+        height: 400,
         maxWidth: 500,
-        maxHeight: 500,
+        maxHeight: 400,
         modal: true,
         title: 'Модальное окно',
         backgroundColor: '#0C0032',
@@ -36,7 +36,7 @@ export default class ModalWindowAdd {
       },
     );
 
-    const indexPath = `file://${path.join(app.getAppPath(), '/renderer/index.html')}?modalWin=addVideo`;
+    const indexPath = `file://${path.join(app.getAppPath(), '/renderer/index.html')}?modalWin=autor`;
 
     this.winModal.loadURL(indexPath);
 
@@ -53,29 +53,6 @@ export default class ModalWindowAdd {
   }
 
   subscribeForAddFile() {
-    ipcMain.handle('call-dialog', async () => {
-      this.files = await dialog.showOpenDialog(this.winModal, {
-        filters: [
-          { name: 'Video', extensions: ['mp4', 'mkv', 'mov', 'avi'] },
-          { name: 'Audio', extensions: ['mp3', 'wav', 'ogg'] },
-          { extensions: ['app'] },
-        ],
-        properties: ['openFile'],
-      });
 
-      this.extensionVideo = path.extname(this.files.filePaths[0]);
-
-      if (this.extensionVideo === '.app') {
-        return this.gameLogic.setGame(this.files.filePaths);
-      }
-      return this.videoLogic.createFileVideo(this.files.filePaths[0]);
-    });
-
-    ipcMain.handle('save-video-file', (_, file) => this.videoLogic.writeVideoPathToStorage(file));
-
-    ipcMain.on('video-added', (e) => {
-      e.preventDefault();
-      this.winModal.hide();
-    });
   }
 }

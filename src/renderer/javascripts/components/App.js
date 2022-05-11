@@ -1,22 +1,20 @@
 import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import {
+  useSearchParams,
+} from 'react-router-dom';
 import { ipcRenderer } from 'electron';
-import { Provider, useSelector } from 'react-redux';
-import NavBar from './static/header/NavBar/NavBar';
-import VideoPage from './pages/VideoPage/VideoPage';
-import GamePage from './pages/GamePage/GamePage';
-import ProfilePage from './pages/ProfilePage/ProfilePage';
-import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
-import Footer from './static/footer/Footer/Footer';
-import AuthPage from './pages/AuthPage/AuthPage';
-import FriendsPage from './pages/FriendsPage/FriendsPage';
+import { useSelector } from 'react-redux';
 import './App.css';
 import ModalWindowAdd from './pages/ModalWindowAdd/ModalWindowAdd';
-import GameContextProvider from '../context/GameContext';
-import ChatLogic from './pages/Chat/ChatLogic';
-import ChangePage from './pages/ChangePage/ChangePage';
+import WindowApp from './WindowApp/WindowApp';
+import ModalWindowAut from './pages/ModalWindowAut/ModalWindowAut';
+import AuthPage from './pages/AuthPage/AuthPage';
+import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 
 function App() {
+  const [searchParams, setSearchParams] = useSearchParams('');
+  const modalParams = searchParams.get('modalWin');
+
   function createWindowAdd() {
     ipcRenderer.send('create-win-add');
   }
@@ -28,31 +26,27 @@ function App() {
     }
   });
 
-  function searchParams() {
-    const isModalView = new URL(location.href).searchParams.get('modalView');
+  function renderWindow() {
+    switch (modalParams) {
+      case 'addVideo':
+        return (<ModalWindowAdd />);
+      case 'friends':
+        return (<AuthPage />);
+      case 'chat':
+        return (<ModalWindowAdd />);
+      case 'autor':
+        console.log('here autor');
+        return (<AuthPage />);
+      case 'registr':
+        return (<RegistrationPage />);
+      default:
+        return (<WindowApp createWindowAdd={createWindowAdd} />);
+    }
   }
 
   return (
     <div className="App">
-
-      <GameContextProvider>
-        <NavBar searchParams={searchParams} />
-        <Routes>
-          <Route path="/" element={<VideoPage />} />
-          <Route path="/video" element={<VideoPage />} />
-          <Route path="/game" element={<GamePage />} />
-          <Route path="/profile" element={userId ? <ProfilePage /> : <Navigate to="/auth" />} />
-          <Route path="/:modalView" element={<ModalWindowAdd />} />
-          <Route path="/registration" element={<RegistrationPage />} />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/friends" element={<FriendsPage />} />
-          <Route path="/friends/chat" element={<ChatLogic />} />
-          <Route path="/profile/change" element={<ChangePage />} />
-
-        </Routes>
-        <Footer createWindowAdd={createWindowAdd} />
-      </GameContextProvider>
-
+      {renderWindow()}
     </div>
   );
 }
