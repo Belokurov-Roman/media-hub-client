@@ -40,8 +40,8 @@ export default class MainProcess {
 
     this.win.webContents.on('did-finish-load', () => {
       this.win.webContents.send('createModal', false);
-
       this.win.webContents.send('dataApp', { pathVideo: this.storage.get('pathVideo') });
+      this.gameLogic.setWindow(this.win);
     });
     this.win.webContents.openDevTools({ mode: 'detach' });
     this.win.on('closed', () => {

@@ -1,18 +1,50 @@
+.GamePage {
+  display: flex;
+  height: 400px;
+  justify-content: space-between;
+}
+
+.list {
+  width: 15%;
+  height: 400px;
+}
+
+.info{
+  width: 80%;
+  color:white;
+  height: 400px;
+  position: relative;
+  overflow-y: scroll;
+}
+
+.play {
+  position: fixed;
+  bottom: 105px;
+  width: 200px;
+  left: 400px;
+  }
+  
+  .delete {
+    position:absolute;
+    right: 5px;
+    top: 5px;
+  }
+
 .dropZone {
-    width: 90%;
-    height: 350px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    flex-direction: column;
-    border: 2px dashed gray;
-    color: gray;
-  }
-  .onDropZone {
-    background-color: rgb(231, 231, 231);
-  }
-  .offDropZone {
-    background-color: white;
-  }
+  width: 90%;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  color: gray;
+}
+.onDropZone {
+  background-color: rgb(231, 231, 231);
+}
+.offDropZone {
+  background-color: white;
+}
+

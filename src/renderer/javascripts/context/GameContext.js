@@ -6,10 +6,15 @@ const { ipcRenderer } = electron;
 export const Context = createContext();
 function GameContextProvider({ children }) {
   const [files, setFiles] = useState([]);
+  const [detail, setDetail] = useState(files[0]);
 
   const getFiles = () => {
     ipcRenderer.invoke('get-games-data')
-      .then((res) => setFiles(res));
+      .then((res) => {
+        setFiles(res);
+        setDetail(res[0]);
+        console.log(detail, ' <= Гружу со старта');
+      });
   };
 
   const handleStart = (path, name) => {
@@ -18,6 +23,7 @@ function GameContextProvider({ children }) {
   };
 
   const handleDelete = (path, name) => {
+    setDetail(files[0]);
     ipcRenderer.invoke('delete-game', path, name)
       .then((res) => setFiles(res));
   };
@@ -29,6 +35,8 @@ function GameContextProvider({ children }) {
       files,
       setFiles,
       getFiles,
+      detail,
+      setDetail,
     }}
     >
       {children}
