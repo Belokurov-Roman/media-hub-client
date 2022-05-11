@@ -11,13 +11,18 @@ const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
 function GamePage() {
-  const { files, setFiles, getFiles } = useContext(Context);
+  const {
+    files, setFiles, getFiles, detail, handleStart, handleDelete, setDetail,
+  } = useContext(Context);
   const [drag, setDrag] = useState(false);
   const [onZone, setOnZone] = useState(false);
 
   ipcRenderer.on('updatedData', (e, data) => {
     setFiles(data);
-    console.log(files, data, '<+----');
+    const ind = files.findIndex((el) => el.name === detail.name);
+    console.log(files[ind]);
+    setDetail(data[ind]);
+    console.log(files, data, '<-----+');
   });
 
   useEffect(() => {
@@ -63,7 +68,6 @@ function GamePage() {
 
   return (
     <div
-      className="GamePage"
       onDragEnter={(e) => startDragHandler(e)}
     >
       {drag
@@ -80,19 +84,44 @@ function GamePage() {
             Перетащи сюда файл
           </div>
         )
-        : files?.length ? files.map((el) => (
-          <GameCard
-            key={el.name}
-            el={el}
-          />
-        ))
-          : (
-            <h1
-              style={{ color: 'white' }}
-            >
-              Вы еще не добавили никаких игр:
-            </h1>
-          )}
+        : (
+          <div className="GamePage">
+            <div className="list">
+              {files?.length
+                ? files.map((el) => <GameCard key={el.name} el={el} />)
+                : <GameCard el={{ name: 'Перетащите игру в окно программы' }} />}
+            </div>
+            <div className="info">
+              <h1>{detail?.name?.split('.')[0]}</h1>
+              <button
+                className="play"
+                onClick={() => handleStart(detail?.path, detail?.name)}
+                type="button"
+              >
+                Play
+              </button>
+              <button
+                className="delete"
+                onClick={() => handleDelete(detail?.path, detail?.name)}
+                type="button"
+              >
+                Delete
+              </button>
+              { typeof detail?.info === 'object' ? (
+                <div>
+                  <h5>{detail.info.summary}</h5>
+                  {detail.info.game_engines?.length > 1
+                    ? <h5>Игровые движки:</h5> : <h5>Игровой движок:</h5>}
+                  {detail.info.game_engines?.map((engine) => <h4>{engine.name}</h4>) }
+                  <h5>{`Рейтинг: ${Math.round(+detail.info.rating) / 10}/10`}</h5>
+                  <h4>{`Всего времени в игре: ${detail.totalTime || 0} секунд`}</h4>
+                  {detail.info.screenshots?.map((id) => <img src={`https://images.igdb.com/igdb/image/upload/t_screenshot_med/${id.image_id}.jpg`} alt={id} />)}
+                </div>
+              )
+                : ''}
+            </div>
+          </div>
+        )}
     </div>
 
   );

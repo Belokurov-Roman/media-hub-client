@@ -53,18 +53,22 @@ export default class GameLogic {
   }
 
   async twitchAPI(name) {
-    const url = 'https://api.igdb.com/v4/games/';
-    const body = `fields *; where name = "${name.split('.')[0]}";`;
-    const response = await axios.post(url, body, {
-      headers: {
-        'Client-ID': 'r7h88359qgey2cc60n1dk96qfv9b13',
-        Authorization: 'Bearer 6qdmzmereash08y4fb4yw6x4scthps',
-      },
-    })
-      .catch((error) => {
-        console.log(error, '<======');
-      });
-    return response.data[0] || '';
+    const gameUrl = 'https://api.igdb.com/v4/games/';
+    const body = `fields summary, rating, screenshots.*, game_engines.*; where name = "${name.split('.')[0]}";`;
+
+    async function api(url, txt) {
+      const response = await axios.post(url, txt, {
+        headers: {
+          'Client-ID': 'r7h88359qgey2cc60n1dk96qfv9b13',
+          Authorization: 'Bearer 6qdmzmereash08y4fb4yw6x4scthps',
+        },
+      })
+        .catch((error) => {
+          console.log(error, '<======');
+        });
+      return response.data[0] || '';
+    }
+    return api(gameUrl, body);
   }
 
   moveFile(oldPath, newPath) {

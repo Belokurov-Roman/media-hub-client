@@ -45,7 +45,7 @@ export default class Storage {
   updateOne(key, elName, kluch, znachenie) {
     const updatedArr = this.read(key).map((el) => {
       if (el.name === elName) {
-        if (el.kluch) {
+        if (el[kluch]) {
           return { ...el, [kluch]: el[kluch] + znachenie };
         }
         return { ...el, [kluch]: znachenie };
