@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
 import LogotipIcon from 'LogoTest.svg';
+import { useSelector } from 'react-redux';
+import { ipcRenderer } from 'electron';
 
-function NavBar({ searchParams }) {
+function NavBar() {
+  const [user, setUser] = useState();
+  useSelector((store) => {
+    try {
+      setUser(store.user.id);
+    } catch (error) {
+      ipcRenderer.invoke('get-user')
+        .then((res) => setUser(res.online));
+    }
+  });
+
+  function checkOnline() {
+    if (!user) ipcRenderer.send('create-win-aut');
+  }
+
+  function getEndPoint() {
+    return window.location.href.replace('file://', '');
+  }
+
   return (
     <div className="navbar">
       <LogotipIcon className="Logo" viewBox="0 0 1100 265.86" />
       <div className="links-nav-bar">
         <Link className="link TextLinks" to="/">МЕДИА</Link>
         <Link className="link TextLinks" to="/game">ИГРЫ</Link>
-        <Link className="link TextLinks" to="/profile">ПРОФИЛЬ</Link>
-
+        <Link className="link TextLinks" onClick={checkOnline} to={user ? '/profile' : getEndPoint()}>ПРОФИЛЬ</Link>
       </div>
     </div>
   );
