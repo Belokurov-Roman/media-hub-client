@@ -3,8 +3,16 @@ import axios from 'axios';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
+import {
+  Card, ListGroup, ListGroupItem,
+} from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { deleteUser } from '../../../../../redux/action/userAction';
 
 function ProfilePage() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
   const [id, setId] = useState();
   try {
     setId(useSelector((store) => store.user.id));
@@ -24,8 +32,17 @@ function ProfilePage() {
       setInput(response.data);
     }
   }
+  async function logOut() {
+    const response = await axios.get('http://localhost:3001/users/logout');
+    console.log('====+++++++++++++++++++++++++++++++++++', response);
+    dispatch(deleteUser());
+    navigate('/auth');
+  }
 
-  useEffect(() => { getProfile(); }, [id]);
+  useEffect(() => { getProfile(); }, [setInput]);
+  const addChange = () => {
+    navigate('/profile/change');
+  };
 
   return (
     <Card style={{ width: '18rem', color: 'white' }}>
@@ -44,6 +61,8 @@ function ProfilePage() {
       <Card.Body>
         <Card.Link href="https://ru.wikipedia.org/wiki/%D0%90%D1%80%D0%B0%D0%BC%D0%B8%D1%81">Арамис</Card.Link>
 
+        <button type="submit" onClick={addChange}>Изменить профиль</button>
+        <button type="submit" onClick={logOut}>Выход</button>
       </Card.Body>
     </Card>
   );

@@ -16,8 +16,9 @@ function RegistrationPage() {
   const { user } = useSelector((store) => store);
 
   useEffect(() => {
+    console.log(user);
     if (user) {
-      navigate('/game');
+      navigate('/profile');
     }
   }, [user]);
 
@@ -74,6 +75,7 @@ function RegistrationPage() {
         </div>
         <button className="buttonAdd TextLinks AddingBut" type="submit">Зарегестрироваться</button>
       </form>
+      <p>{ error }</p>
     </div>
   );
 }
