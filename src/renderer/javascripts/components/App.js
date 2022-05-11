@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import './App.css';
 import ModalWindowAdd from './pages/ModalWindowAdd/ModalWindowAdd';
 import WindowApp from './WindowApp/WindowApp';
-import ModalWindowAut from './pages/ModalWindowAut/ModalWindowAut';
 import AuthPage from './pages/AuthPage/AuthPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 
