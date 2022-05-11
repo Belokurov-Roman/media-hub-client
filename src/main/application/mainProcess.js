@@ -6,6 +6,7 @@ import GameLogic from './tabGame';
 import ModalWindowAdd from './modalWindowAdd';
 import ModalWindowAut from './modalWindowAut';
 import ModalWindowReg from './modalWindowReg';
+import ModalWindowFriends from './modalWindowFriends';
 
 export default class MainProcess {
   constructor() {
@@ -66,6 +67,11 @@ export default class MainProcess {
   }
 
   subscribeForCreateModalWin() {
+    ipcMain.on('create-win-friend', () => {
+      this.ModalWindowFriends = new ModalWindowFriends();
+      this.ModalWindowFriends.startWin();
+    });
+
     ipcMain.on('create-win-add', () => {
       this.modalWindowAdd = new ModalWindowAdd();
       this.modalWindowAdd.startWin();

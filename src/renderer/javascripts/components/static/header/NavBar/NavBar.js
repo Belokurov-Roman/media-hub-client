@@ -7,6 +7,7 @@ import { ipcRenderer } from 'electron';
 
 function NavBar() {
   const [user, setUser] = useState();
+  const [link, setLink] = useState('');
   useSelector((store) => {
     try {
       setUser(store.user.id);
@@ -20,9 +21,21 @@ function NavBar() {
     if (!user) ipcRenderer.send('create-win-aut');
   }
 
+  useEffect(() => {
+    if (user) {
+      setLink('/profile');
+    } else {
+      const endPoint = window.location.href.replace('file://', '');
+      setLink(endPoint);
+    }
+  }, [user]);
   function getEndPoint() {
-    return window.location.href.replace('file://', '');
+
   }
+
+  useEffect(() => {
+
+  }, [user]);
 
   return (
     <div className="navbar">
@@ -30,7 +43,7 @@ function NavBar() {
       <div className="links-nav-bar">
         <Link className="link TextLinks" to="/">МЕДИА</Link>
         <Link className="link TextLinks" to="/game">ИГРЫ</Link>
-        <Link className="link TextLinks" onClick={checkOnline} to={user ? '/profile' : getEndPoint()}>ПРОФИЛЬ</Link>
+        <Link className="link TextLinks" onClick={checkOnline} to={link}>ПРОФИЛЬ</Link>
       </div>
     </div>
   );

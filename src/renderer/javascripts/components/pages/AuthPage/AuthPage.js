@@ -17,14 +17,6 @@ function AuthPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (emailError || passwordError) {
-  //     setFormValid(false);
-  //   } else {
-  //     setFormValid(true);
-  //   }
-  // }, [emailError, passwordError, formValid]);
-
   useEffect(() => {
     if (user) {
       navigate('/game');
@@ -34,9 +26,9 @@ function AuthPage() {
     e.preventDefault();
     console.log('132');
     dispatch(THUNK_addUser(email, password));
-    // if (!error) {
-    //   // ipcRenderer.send('close-win-aut');
-    // }
+    if (!error) {
+      ipcRenderer.send('close-win-aut');
+    }
   }
   // const addNavigate = () => {
   //   navigate(navigate('/game'));

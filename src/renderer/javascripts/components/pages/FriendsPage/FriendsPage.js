@@ -33,10 +33,10 @@ function FriendsPage() {
   };
 
   return (
-    <>
+    <div className="friend">
       <h2>Friends</h2>
       {friends && friends.map((el) => (
-        <Card className="friend" key={el.id} style={{ width: '18rem', color: 'white' }}>
+        <Card key={el.id} style={{ width: '18rem', color: 'white' }}>
           <Card.Img variant="top" src={el.avatar} style={{ width: '18rem' }} />
           <Card.Body>
             <Card.Title>{el.name}</Card.Title>
@@ -50,7 +50,7 @@ function FriendsPage() {
           <button type="submit" onClick={setChat}>Join a chat</button>
         </Card>
       )) }
-    </>
+    </div>
   );
 }
 

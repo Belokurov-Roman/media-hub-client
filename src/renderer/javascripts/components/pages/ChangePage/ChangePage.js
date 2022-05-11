@@ -31,7 +31,7 @@ function ChangePage() {
     }
   }
 
-  useEffect(() => { getProfile(); }, [id, input]);
+  useEffect(() => { getProfile(); }, [id]);
 
   // const {
   //   name, avatar, description, email, password, id,
