@@ -1,5 +1,5 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import NavBar from '../static/header/NavBar/NavBar';
@@ -19,12 +19,13 @@ ipcRenderer.on('navigate-app', (_, data) => {
 });
 
 function WindowApp({ createWindowAdd }) {
-  const userId = useSelector(async (store) => {
+  const [user, setUser] = useState();
+  useSelector((store) => {
     try {
-      return store.user.id;
+      setUser(store.user.id);
     } catch (error) {
-      const result = await ipcRenderer.invoke('get-user');
-      return result;
+      ipcRenderer.invoke('get-user')
+        .then((res) => setUser(res.online));
     }
   });
 
@@ -35,7 +36,7 @@ function WindowApp({ createWindowAdd }) {
         <Route path="/" element={<VideoPage />} />
         <Route path="/video" element={<VideoPage />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/profile" element={userId ? <ProfilePage /> : ''} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/friends" element={<FriendsPage />} />
