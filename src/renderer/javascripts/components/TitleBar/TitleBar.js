@@ -20,7 +20,7 @@ function TitleBar() {
           setOnline(res.online);
         });
     }());
-  });
+  }, [list]);
 
   function hideDropdownMenu() {
     setList({ displayMenu: false }, () => {
