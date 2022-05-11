@@ -6,7 +6,7 @@ import { ipcRenderer } from 'electron';
 function ChangePage() {
   // const [user, setUser] = useState('');
   const [input, setInput] = useState('');
-  const [id, setId] = useState();
+  const [id, setId] = useState('');
   useSelector(async (store) => {
     try {
       setId(store.user.id);
@@ -31,7 +31,7 @@ function ChangePage() {
     }
   }
 
-  useEffect(() => { getProfile(); }, [id, input]);
+  useEffect(() => { getProfile(); }, [id]);
 
   // const {
   //   name, avatar, description, email, password, id,
