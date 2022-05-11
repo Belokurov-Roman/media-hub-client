@@ -13,6 +13,7 @@ import AuthPage from '../pages/AuthPage/AuthPage';
 import FriendsPage from '../pages/FriendsPage/FriendsPage';
 import ChatLogic from '../pages/Chat/ChatLogic';
 import ChangePage from '../pages/ChangePage/ChangePage';
+import StreamPage from '../pages/StreamPage/StreamPage';
 
 ipcRenderer.on('navigate-app', (_, data) => {
   console.log(data);
@@ -42,6 +43,7 @@ function WindowApp({ createWindowAdd }) {
         <Route path="/friends" element={<FriendsPage />} />
         <Route path="/friends/chat" element={<ChatLogic />} />
         <Route path="/profile/change" element={<ChangePage />} />
+        <Route path="/stream" element={<StreamPage />} />
       </Routes>
       <Footer createWindowAdd={createWindowAdd} />
     </GameContextProvider>
