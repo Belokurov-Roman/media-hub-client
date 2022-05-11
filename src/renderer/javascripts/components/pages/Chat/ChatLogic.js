@@ -1,16 +1,17 @@
 import io from 'socket.io-client';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Chat from './Chat';
 import './style.css';
-import { useSelector } from 'react-redux';
 
 const socket = io.connect('http://localhost:3001');
 
 function ChatLogic() {
-  const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const [showChat, setShowChat] = useState(false);
   const { name } = useSelector((store) => store.user);
+  const [username, setUsername] = useState(name);
+  // const [input, setInput] = useState('');
 
   const joinRoom = () => {
     if (username !== '' && room !== '') {
@@ -26,11 +27,12 @@ function ChatLogic() {
           <h3>Join a chat</h3>
           <input
             type="text"
-            value={name}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Name..."
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
+            // onChange={(event) => {
+            //   setUsername(event.target.value);
+            // }}
           />
           <input
             type="text"
