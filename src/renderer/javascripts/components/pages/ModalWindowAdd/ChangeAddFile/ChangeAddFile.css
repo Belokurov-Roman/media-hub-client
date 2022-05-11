@@ -1,6 +1,10 @@
 .styleChange{
     width: 250px;
     height: 35px;
+    color: white;
+    background-color: #240090;
+    outline: none;
+    border: none;
 }
 
 .blockInputChange{

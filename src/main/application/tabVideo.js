@@ -33,7 +33,7 @@ export default class VideoLogic {
   }
 
   writeVideoPathToStorage(file) {
-    if (this.findPath() === -1) {
+    if (this.findPath('pathVideo') === -1) {
       this.countId();
       this.storage.set('pathVideo', file);
       return true;
@@ -41,8 +41,8 @@ export default class VideoLogic {
     return false;
   }
 
-  findPath() {
-    return this.storage.get('pathVideo')
+  findPath(key) {
+    return this.storage.get(key)
       .findIndex((el) => Object.values(el).find((name) => name === this.nameVideo));
   }
 

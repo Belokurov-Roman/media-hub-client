@@ -7,6 +7,10 @@ import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import ModalWindowAdd from '../pages/ModalWindowAdd/ModalWindowAdd';
 import Footer from '../static/footer/Footer/Footer';
 import GameContextProvider from '../../context/GameContext';
+import RegistrationPage from '../pages/RegistrationPage/RegistrationPage';
+import AuthPage from '../pages/AuthPage/AuthPage';
+import FriendsPage from '../pages/FriendsPage/FriendsPage';
+import ChatLogic from '../pages/Chat/ChatLogic';
 
 function WindowApp({ createWindowAdd }) {
   return (
@@ -17,8 +21,10 @@ function WindowApp({ createWindowAdd }) {
         <Route path="/video" element={<VideoPage />} />
         <Route path="/game" element={<GamePage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/111" element={<ModalWindowAdd />} />
-
+        <Route path="/registration" element={<RegistrationPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/friends" element={<FriendsPage />} />
+        <Route path="/friends/chat" element={<ChatLogic />} />
       </Routes>
       <Footer createWindowAdd={createWindowAdd} />
     </GameContextProvider>

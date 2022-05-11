@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ipcRenderer } from 'electron';
 import addUser from '../../../../../redux/action/userAction';
 
 function RegistrationPage() {
@@ -15,7 +16,6 @@ function RegistrationPage() {
   const { user } = useSelector((store) => store);
 
   useEffect(() => {
-    console.log(user);
     if (user) {
       navigate('/game');
     }
@@ -36,7 +36,11 @@ function RegistrationPage() {
         }),
       });
       if (response.ok) {
-        dispatch(addUser(response));
+        const result = await response.json();
+        dispatch(addUser(result));
+        console.log(result);
+        ipcRenderer.send('save-user', { ...result, online: true });
+        ipcRenderer.send('close-win-reg');
       }
       console.log(response.status);
       if (response.status === 401) {
@@ -53,14 +57,23 @@ function RegistrationPage() {
   }
 
   return (
-    <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <input onChange={(e) => setName(e.target.value)} type="text" name="name" placeholder="name" />
-        <input onChange={(e) => setEmail(e.target.value)} type="text" name="email" placeholder="email" />
-        <input onChange={(e) => setPassword(e.target.value)} type="text" name="password" placeholder="password" />
-        <button type="submit">Submit</button>
+    <div className="ModalWindowAdd styleThisBlock">
+      <form className="ModalWindowAdd styleThisBlock" onSubmit={(e) => handleSubmit(e)}>
+        <span>{ error }</span>
+        <div className="blockInputChange">
+          <span>Введите имя</span>
+          <input className="styleChange" onChange={(e) => setName(e.target.value)} type="text" name="name" placeholder="name" />
+        </div>
+        <div className="blockInputChange">
+          <span>Введите email</span>
+          <input className="styleChange" onChange={(e) => setEmail(e.target.value)} type="text" name="email" placeholder="email" />
+        </div>
+        <div className="blockInputChange">
+          <span>Введите пароль</span>
+          <input className="styleChange" onChange={(e) => setPassword(e.target.value)} type="text" name="password" placeholder="password" />
+        </div>
+        <button className="buttonAdd TextLinks AddingBut" type="submit">Зарегестрироваться</button>
       </form>
-      <p>{ error }</p>
     </div>
   );
 }

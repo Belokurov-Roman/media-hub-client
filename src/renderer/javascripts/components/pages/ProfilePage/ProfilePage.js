@@ -2,17 +2,30 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { ipcRenderer } from 'electron';
 
 function ProfilePage() {
-  const id = useSelector((store) => store.user.id);
+  const [id, setId] = useState();
+  try {
+    setId(useSelector((store) => store.user.id));
+  } catch (e) {
+    ipcRenderer.invoke('get-user').then((res) => {
+      console.log(res.id);
+      setId(res.id);
+    });
+  }
   const [input, setInput] = useState('');
   async function getProfile() {
-    const response = await axios.get(`http://localhost:3001/users/${id}`);
-    console.log(response.data.name);
-    setInput(response.data);
+    console.log(id);
+    if (id) {
+      const response = await axios.get(`http://localhost:3001/users/${id}`);
+      console.log(response);
+      console.log(response.data.name);
+      setInput(response.data);
+    }
   }
 
-  useEffect(() => { getProfile(); }, [setInput]);
+  useEffect(() => { getProfile(); }, [id]);
 
   return (
     <Card style={{ width: '18rem', color: 'white' }}>

@@ -2,9 +2,10 @@ import 'application.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import App from './components/App';
 import store from '../../redux/store/store';
+import TitleBar from './components/TitleBar/TitleBar';
 
 window.getPathVideo((_, data) => {
   console.log('123', data);
@@ -12,15 +13,18 @@ window.getPathVideo((_, data) => {
 
 window.onload = (entries) => {
   const container = document.getElementById('root');
-  const modalWindow = document.getElementById('modalWindow');
-  const rootWindow = createRoot(modalWindow);
 
   const root = createRoot(container);
   root.render(
-
     <Provider store={store}>
       <BrowserRouter>
-        <div className="titleBar">Media Hub</div>
+        <div className="titleBar">
+          <div className="titleContainer">
+            <div className="NameParamsLeft">Параметры</div>
+            <span>Media Hub</span>
+            <TitleBar />
+          </div>
+        </div>
         <App entries={entries} tab="home" />
       </BrowserRouter>
     </Provider>,

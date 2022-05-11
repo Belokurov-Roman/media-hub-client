@@ -1,8 +1,8 @@
+import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import React, { useState } from 'react';
 import Chat from './Chat';
 import './style.css';
-import { useSelector } from 'react-redux';
 
 const socket = io.connect('http://localhost:3001');
 
