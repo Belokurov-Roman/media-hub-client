@@ -3,6 +3,7 @@ import path from 'path';
 import * as http from 'http';
 import fs from 'fs';
 
+import axios from 'axios';
 import Storage from './storage';
 
 export default class VideoLogic {
@@ -80,11 +81,14 @@ export default class VideoLogic {
     this.id += 1;
   }
 
-  watchTogether(data, time) {
-    console.log(data, time);
+  async watchTogether(data, time) {
     // this.videoSize = fs.statSync(data).size;
     const stream = fs.createWriteStream(data);
     console.log(stream);
+
+    const response = await axios.post('http://localhost:3001/stream', {
+      stream,
+    });
 
     // console.log(this.videoSize);
     // console.log(this.videoSize);

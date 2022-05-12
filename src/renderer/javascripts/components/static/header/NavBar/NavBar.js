@@ -18,7 +18,7 @@ function NavBar() {
       setUser(store.user.id);
     } catch (error) {
       ipcRenderer.invoke('get-user')
-        .then((res) => setUser(res.online));
+        .then((res) => setUser(res?.online));
     }
   });
 
