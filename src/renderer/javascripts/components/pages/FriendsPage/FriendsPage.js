@@ -16,8 +16,19 @@ function FriendsPage() {
       setId(result.id);
     }
   });
+  const [users, setUsers] = useState('');
   const [friends, setFriends] = useState('');
   const navigate = useNavigate();
+
+  async function getAllUsers() {
+    if (id) {
+      const response = await axios.get('http://localhost:3001/users');
+      const allUsers = response.data.filter((el) => el.id !== id);
+      console.log(response.data);
+      setUsers(allUsers);
+    }
+  }
+
   async function friendsSubmit() {
     if (id) {
       const response = await axios.get(`http://localhost:3001/friends/${id}`);
@@ -33,24 +44,44 @@ function FriendsPage() {
   };
 
   return (
-    <>
-      <h2>Friends</h2>
-      {friends && friends.map((el) => (
-        <Card className="friend" key={el.id} style={{ width: '18rem', color: 'white' }}>
-          <Card.Img variant="top" src={el.avatar} style={{ width: '18rem' }} />
-          <Card.Body>
-            <Card.Title>{el.name}</Card.Title>
-            <Card.Text>
-              {el.description}
-            </Card.Text>
-          </Card.Body>
-          <ListGroup className="list-group-flush">
-            <ListGroupItem>{el.email}</ListGroupItem>
-          </ListGroup>
-          <button type="submit" onClick={setChat}>Join a chat</button>
-        </Card>
-      )) }
-    </>
+    <div className="allUsers">
+      <div>
+        <h2 style={{ color: 'white' }}>Все пользователи</h2>
+        {users && users.map((el) => (
+          <Card className="friend" key={el.id} style={{ width: '18rem', color: 'white' }}>
+            <Card.Img variant="top" src={el.avatar} style={{ width: '18rem' }} />
+            <Card.Body>
+              <Card.Title>{el.name}</Card.Title>
+              <Card.Text>
+                {el.description}
+              </Card.Text>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+              <ListGroupItem>{el.email}</ListGroupItem>
+            </ListGroup>
+            <button type="submit">Добавить в друзья</button>
+          </Card>
+        )) }
+      </div>
+      <div>
+        <h2 style={{ color: 'white' }}>Друзья</h2>
+        {friends && friends.map((el) => (
+          <Card className="friend" key={el.id} style={{ width: '18rem', color: 'white' }}>
+            <Card.Img variant="top" src={el.avatar} style={{ width: '18rem' }} />
+            <Card.Body>
+              <Card.Title>{el.name}</Card.Title>
+              <Card.Text>
+                {el.description}
+              </Card.Text>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+              <ListGroupItem>{el.email}</ListGroupItem>
+            </ListGroup>
+            <button type="submit" onClick={setChat}>Присоедениться к чату</button>
+          </Card>
+        )) }
+      </div>
+    </div>
   );
 }
 
