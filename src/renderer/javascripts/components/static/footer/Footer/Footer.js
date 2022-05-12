@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom';
 import { AiOutlineVideoCameraAdd } from 'react-icons/ai';
 import { BsChatTextFill } from 'react-icons/bs';
 import { Context } from '../../../../context/GameContext';
-import './Footer.css';
+import { ipcRenderer } from 'electron';
 
+import './Footer.css';
 function Footer({ createWindowAdd }) {
+  function createWindowFriends() {
+    ipcRenderer.send('create-win-friend');
+  }
   const { active } = useContext(Context);
 
   return (
@@ -22,7 +26,7 @@ function Footer({ createWindowAdd }) {
             </button>
           )
           : ''}
-        <Link className="friends-and-chat-button" to="/friends">
+        <Link className="friends-and-chat-button" onClick={createWindowFriends} to="/friends">
           Друзья и чат
           <h4>
             <BsChatTextFill style={{ marginLeft: '7px' }} />

@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './VideoPage.css';
+import { ipcRenderer } from 'electron';
 import ListVideo from '../../videos/ListVideo/ListVideo';
 import PlayerVideo from '../../videos/PlayerVideo/PlayerVideo';
-
-const electron = window.require('electron');
-const { ipcRenderer } = electron;
 
 // window.getPathVideo((_, data) => {
 //   console.log(data);
@@ -24,6 +22,7 @@ function VideoPage() {
 
   const upload = async () => {
     const currentFile = await ipcRenderer.invoke('select-video');
+    console.log(currentFile);
     setNewPath(currentFile);
     videoRef.current.src = currentFile;
   };
@@ -35,7 +34,7 @@ function VideoPage() {
   return (
     <div className="VideoPage">
       <ListVideo setNewPath={setNewPath} getPathVideo={getPathVideo} allPath={allPath} upload={upload} />
-      <PlayerVideo videoRef={videoRef} />
+      <PlayerVideo newPath={newPath} videoRef={videoRef} />
     </div>
   );
 }
