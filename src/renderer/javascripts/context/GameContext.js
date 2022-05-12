@@ -7,6 +7,7 @@ export const Context = createContext();
 function GameContextProvider({ children }) {
   const [files, setFiles] = useState([]);
   const [detail, setDetail] = useState(files[0]);
+  const [active, setActive] = useState('');
 
   const getFiles = () => {
     ipcRenderer.invoke('get-games-data')
@@ -37,6 +38,8 @@ function GameContextProvider({ children }) {
       getFiles,
       detail,
       setDetail,
+      active,
+      setActive,
     }}
     >
       {children}

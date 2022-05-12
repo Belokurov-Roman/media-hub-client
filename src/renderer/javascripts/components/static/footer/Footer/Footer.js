@@ -1,18 +1,33 @@
-import React from 'react';
-
-import './Footer.css';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AiOutlineVideoCameraAdd } from 'react-icons/ai';
+import { BsChatTextFill } from 'react-icons/bs';
+import { Context } from '../../../../context/GameContext';
+import './Footer.css';
 
 function Footer({ createWindowAdd }) {
+  const { active } = useContext(Context);
+
   return (
     <div className="footer">
       <div className="footerContent">
-        <button onClick={createWindowAdd} className="buttonAdd TextLinks" type="button">Добавить</button>
-        <div className="FriendAndChat">
-          <div className="icon-user" />
-          {/* <p className="friends-and-chat-button">Друзья и чат</p> */}
-          <Link className="friends-and-chat-button link" to="/friends">Друзья и чат</Link>
-        </div>
+        { active === 'ВИДЕО'
+          ? (
+            <button onClick={createWindowAdd} className="buttonAdd TextLinks" type="button">
+              <h4>
+                <AiOutlineVideoCameraAdd style={{ marginRight: '5px' }} />
+              </h4>
+              {' '}
+              Добавить
+            </button>
+          )
+          : ''}
+        <Link className="friends-and-chat-button" to="/friends">
+          Друзья и чат
+          <h4>
+            <BsChatTextFill style={{ marginLeft: '7px' }} />
+          </h4>
+        </Link>
       </div>
     </div>
   );

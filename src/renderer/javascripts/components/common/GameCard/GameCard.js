@@ -6,43 +6,15 @@ function GameCard({ el }) {
   const { setDetail, detail } = useContext(Context);
   const { name } = el;
 
+  console.log(detail?.name, name, '<=--------=<<<');
+
   return (
     <div
-      className="game"
-      onClick={() => {
-        setDetail(el);
-        console.log(detail);
-      }}
+      className={detail?.name === name ? 'game g-selected' : 'game'}
+      onClick={() => { setDetail(el); }}
     >
-      {name}
-      {/* <button
-        className="play"
-        onClick={() => handleStart(path, name)}
-        type="button"
-      >
-        Play
-      </button>
-      <button
-        className="delete"
-        onClick={() => handleDelete(path, name)}
-        type="button"
-      >
-        Delete
-      </button>
-      <h1>
-        totalTime:
-        {' '}
-        {totalTime}
-      </h1>
-      { info && (typeof info) === 'object'
-        ? (
-          <div>
-            <h5>{info.summary}</h5>
-            <h5>{`Rating:${Math.round(+info.rating) / 10}/10`}</h5>
-            {info.screenshots.map((id) => <img src={`https://images.igdb.com/igdb/image/upload/t_screenshot_med/${id.image_id}.jpg`} alt={id} />)}
-          </div>
-        )
-        : <h5>{info}</h5>} */}
+      <div style={{ padding: '0px 2px 0px 2px' }}>{name}</div>
+      {/* <div className={detail?.name === name ? 'b-selected' : 'border'} /> */}
     </div>
   );
 }
