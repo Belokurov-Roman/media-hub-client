@@ -3,14 +3,25 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Chat from './Chat';
 import './style.css';
+import { ipcRenderer } from 'electron';
 
 const socket = io.connect('http://localhost:3001');
 
 function ChatLogic() {
   const [room, setRoom] = useState('');
   const [showChat, setShowChat] = useState(false);
-  const { name } = useSelector((store) => store.user);
-  const [username, setUsername] = useState(name);
+  const [username, setUsername] = useState();
+  useSelector(async (store) => {
+    if (!username) {
+      try {
+        setUsername(store.user.name);
+      } catch (error) {
+        const result = await ipcRenderer.invoke('get-user');
+        setUsername(result.name);
+      }
+    }
+  });
+
   // const [input, setInput] = useState('');
 
   const joinRoom = () => {

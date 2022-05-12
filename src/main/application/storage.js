@@ -21,6 +21,7 @@ export default class Storage {
   }
 
   setUser(key, data) {
+    console.log(data);
     return writeFileSync(this.file(key), JSON.stringify([data]));
   }
 

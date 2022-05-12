@@ -68,7 +68,7 @@ export default class MainProcess {
   subscribeForCreateModalWin() {
     ipcMain.on('create-win-add', () => {
       this.modalWindowAdd = new ModalWindowAdd();
-      this.modalWindowAdd.startWin(this.win);
+      this.modalWindowAdd.startWin();
     });
 
     ipcMain.on('create-win-aut', () => {
@@ -78,6 +78,7 @@ export default class MainProcess {
 
     ipcMain.on('close-win-aut', () => {
       this.modalWindowAut.winModal.hide();
+      this.win.webContents.send('navigate-app', { test: true });
     });
 
     ipcMain.on('close-win-reg', () => {

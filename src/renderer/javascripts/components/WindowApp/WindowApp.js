@@ -1,6 +1,7 @@
-import { Route, Routes } from 'react-router-dom';
-import React from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { ipcRenderer } from 'electron';
 import NavBar from '../static/header/NavBar/NavBar';
 import VideoPage from '../pages/VideoPage/VideoPage';
 import GamePage from '../pages/GamePage/GamePage';
@@ -13,14 +14,21 @@ import FriendsPage from '../pages/FriendsPage/FriendsPage';
 import ChatLogic from '../pages/Chat/ChatLogic';
 import ChangePage from '../pages/ChangePage/ChangePage';
 
+ipcRenderer.on('navigate-app', (_, data) => {
+  console.log(data);
+});
+
 function WindowApp({ createWindowAdd }) {
-  const userId = useSelector((store) => {
+  const [user, setUser] = useState();
+  useSelector((store) => {
     try {
-      return store.user.id;
+      setUser(store.user.id);
     } catch (error) {
-      return null;
+      ipcRenderer.invoke('get-user')
+        .then((res) => setUser(res.online));
     }
   });
+
   return (
     <GameContextProvider>
       <NavBar />
@@ -28,7 +36,7 @@ function WindowApp({ createWindowAdd }) {
         <Route path="/" element={<VideoPage />} />
         <Route path="/video" element={<VideoPage />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/profile" element={userId ? <ProfilePage /> : ''} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/friends" element={<FriendsPage />} />

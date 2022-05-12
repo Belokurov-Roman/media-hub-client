@@ -15,7 +15,7 @@ export default class ModalWindowAdd {
     app.whenReady().then(() => this.createModalWindow(win));
   }
 
-  createModalWindow(win) {
+  createModalWindow() {
     this.winModal = new BrowserWindow(
       {
         width: 500,
