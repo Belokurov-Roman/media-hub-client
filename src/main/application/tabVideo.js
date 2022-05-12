@@ -84,7 +84,7 @@ export default class VideoLogic {
   async watchTogether(data, time) {
     // this.videoSize = fs.statSync(data).size;
     const stream = fs.createWriteStream(data);
-    console.log(stream);
+    // console.log(stream);
 
     const response = await axios.post('http://localhost:3001/stream', {
       stream,

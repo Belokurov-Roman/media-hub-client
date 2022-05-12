@@ -15,6 +15,7 @@ function PlayerVideo({ videoRef, newPath }) {
   });
 
   const togglePlay = () => {
+    console.log(videoRef);
     setPlayerState({
       ...playerState,
       isPlaying: !playerState.isPlaying,
