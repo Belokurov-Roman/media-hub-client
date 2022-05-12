@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext,useEffect, useState } from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
 import LogotipIcon from 'LogoTest.svg';
 import { useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
+import { IoLogoGameControllerA } from 'react-icons/io';
+import { RiVideoLine } from 'react-icons/ri';
+import { BsFillPersonFill } from 'react-icons/bs';
+import { Context } from '../../../../context/GameContext';
 
 function NavBar() {
-  const [user, setUser] = useState();
-  const [link, setLink] = useState('');
+  const { active, setActive } = useContext(Context);
+
+    const { active, setActive } = useContext(Context);
+
+    const [user, setUser] = useState();
   useSelector((store) => {
     try {
       setUser(store.user.id);
@@ -30,24 +37,52 @@ function NavBar() {
     }
   }, [user]);
   function getEndPoint() {
-
+    return window.location.href.replace('file://', '');
   }
-
-  useEffect(() => {
-
-  }, [user]);
 
   return (
     <div className="navbar">
       <LogotipIcon className="Logo" viewBox="0 0 1100 265.86" />
       <div className="links-nav-bar">
-        <Link className="link TextLinks" to="/">МЕДИА</Link>
-        <Link className="link TextLinks" to="/game">ИГРЫ</Link>
-        <Link className="link TextLinks" onClick={checkOnline} to={link}>ПРОФИЛЬ</Link>
+        <Link
+          onClick={() => setActive('ВИДЕО')}
+          className={active === 'ВИДЕО' ? 'active link' : 'link'}
+          to="/"
+        >
+          <h4>
+            <RiVideoLine style={{ marginRight: '5px' }} />
+          </h4>
+          ВИДЕО
+        </Link>
+        <Link
+          onClick={() => setActive('ИГРЫ')}
+          className={active === 'ИГРЫ' ? 'active link' : 'link'}
+          to="/game"
+        >
+          <h4>
+            <IoLogoGameControllerA size="1.5rem" style={{ marginRight: '5px' }} />
+          </h4>
+          ИГРЫ
+        </Link>
+        <Link
+
+          onClick={() => {
+            setActive('ПРОФИЛЬ')
+            checkOnline()
+          }}
+          className={active === 'ПРОФИЛЬ' ? 'active link' : 'link'}
+          to="/profile"
+        >
+          <h4>
+            <BsFillPersonFill style={{ marginRight: '5px' }} />
+          </h4>
+          ПРОФИЛЬ
+        </Link>
       </div>
     </div>
   );
-}
+}// onClick={checkOnline} to={user ? '/profile' : getEndPoint()}
+
 // <Link className="link" to="/">ВЫХОД</Link>
 
 export default NavBar;

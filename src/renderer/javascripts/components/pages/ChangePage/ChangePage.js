@@ -2,11 +2,13 @@ import { useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ipcRenderer } from 'electron';
+import { useNavigate } from 'react-router-dom';
 
 function ChangePage() {
   // const [user, setUser] = useState('');
   const [input, setInput] = useState('');
   const [id, setId] = useState();
+  const navigate = useNavigate();
   useSelector(async (store) => {
     try {
       setId(store.user.id);
@@ -28,6 +30,7 @@ function ChangePage() {
     if (id) {
       const response = await axios.put(`http://localhost:3001/users/profile/${id}`, input);
       setInput(response.data);
+      navigate('/profile');
     }
   }
 
@@ -38,13 +41,13 @@ function ChangePage() {
   // } = useSelector((store) => store.user);
   // console.log(name, avatar, description, email, password, id);
   return (
-    <form onSubmit={putProfile}>
+    <form>
       <input name="img" onChange={(e) => setInput({ ...input, avatar: e.target.value })} value={input.avatar} />
       <input name="email" onChange={(e) => setInput({ ...input, email: e.target.value })} value={input.email} />
       <input name="name" onChange={(e) => setInput({ ...input, name: e.target.value })} value={input.name} />
       <input name="password" type="password" onChange={(e) => setInput({ ...input, password: e.target.value })} value={input.password} />
       <input name="text" onChange={(e) => setInput({ ...input, description: e.target.value })} value={input.description} />
-      <button type="submit">Сохранить</button>
+      <button onClick={putProfile} type="button">Сохранить</button>
 
     </form>
   );

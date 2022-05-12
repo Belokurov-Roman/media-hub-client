@@ -16,8 +16,8 @@ body {
   height: 30px;
   line-height: 30px;
   width: 100%;
-  background-color: #190061;
-  color: #5b5454;
+  background-color: #1e254e;
+  color: #1e254e;
   text-align: center;
   -webkit-app-region: drag;
 }
@@ -40,20 +40,31 @@ body {
 }
 .NameParams{
   cursor: pointer;
+  color: #a9abb8;
   margin: 5px;
+  height: 30px;
+  width: 80px;
   padding: 0 20px 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+h4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .NameParams:hover{
-  background-color: #3500D3;
+  background-color: white;
   border-radius: 5px;
 }
 
  .NameParamsLeft{
    margin: 5px;
    padding: 0 20px 0 20px;
-   color: #190061
+   color: #1e254e
  }
 
 .listButton{
