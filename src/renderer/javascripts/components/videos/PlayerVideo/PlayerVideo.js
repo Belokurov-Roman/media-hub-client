@@ -1,10 +1,76 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './PlayerVideo.css';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 function PlayerVideo({ videoRef }) {
   const [playHover, setPlayHover] = useState(false);
+
+  const [playerState, setPlayerState] = useState({
+    isPlaying: false,
+    progress: 0,
+    speed: 1,
+    isMuted: false,
+  });
+
+  const togglePlay = () => {
+    setPlayerState({
+      ...playerState,
+      isPlaying: !playerState.isPlaying,
+    });
+  };
+
+  useEffect(() => {
+    playerState.isPlaying
+      ? videoRef.current.play()
+      : videoRef.current.pause();
+  }, [playerState.isPlaying, videoRef]);
+
+  const handleOnTimeUpdate = () => {
+    const progress = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+    setPlayerState({
+      ...playerState,
+      progress,
+    });
+  };
+
+  const handleVideoProgress = (event) => {
+    const manualChange = Number(event);
+    videoRef.current.currentTime = (videoRef.current.duration / 100) * manualChange;
+    setPlayerState({
+      ...playerState,
+      progress: manualChange,
+    });
+  };
+  const handleVideoSpeed = (event) => {
+    const speed = Number(event.target.value);
+    videoRef.current.playbackRate = speed;
+    setPlayerState({
+      ...playerState,
+      speed,
+    });
+  };
+
+  const toggleMute = () => {
+    setPlayerState({
+      ...playerState,
+      isMuted: !playerState.isMuted,
+    });
+  };
+
+  useEffect(() => {
+    playerState.isMuted
+      ? (videoRef.current.muted = true)
+      : (videoRef.current.muted = false);
+  }, [playerState.isMuted, videoRef]);
+
+  const fullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      videoRef.current.requestFullscreen();
+    }
+  };
 
   const play = () => {
     if (videoRef.current.paused) {
@@ -15,21 +81,63 @@ function PlayerVideo({ videoRef }) {
       setPlayHover(false);
     }
   };
+  const [hover, setHover] = useState('ControlVideo1');
+  useEffect(() => {
+    console.log(hover);
+  }, [hover]);
   return (
     <div className="PlayerVideo">
-      <video ref={videoRef} className="video-block">
+      <video ref={videoRef} className="video-block" onTimeUpdate={handleOnTimeUpdate}>
         <track kind="subtitles" src={null} />
       </video>
-      <div className="ControlVideo">
+      <div onMouseOver={() => setHover('ControlVideo')} onMouseLeave={() => setHover('ControlVideo1')} className={hover}>
         <div className="ControlButton">
-          <button onClick={play} type="button">{playHover ? 'Пауза' : 'Плей'}</button>
+          <button type="button" onClick={togglePlay}>
+            {!playerState.isPlaying ? (
+              <span>p</span>
+            ) : (
+              <span>z</span>
+            )}
+
+          </button>
+          <button type="button" onClick={fullscreen}>123</button>
         </div>
-        <div className="progress-container">
-          <Slider />
-        </div>
+        <Slider
+          step="0.1"
+          value={playerState.progress}
+          onChange={(e) => handleVideoProgress(e)}
+        />
+        <select
+          className="velocity"
+          value={playerState.speed}
+          onChange={(e) => handleVideoSpeed(e)}
+        >
+          <option value="0.50">0.50x</option>
+          <option value="1">1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="2">2x</option>
+        </select>
+        <button type="button" className="mute-btn" onClick={toggleMute}>
+          {!playerState.isMuted ? (
+            <span>M</span>
+          ) : (
+            <span>NM</span>)}
+        </button>
       </div>
 
     </div>
   );
 }
+// min="0"
+// max="100"
+// value={playerState.progress}
+
+// <div className="ControlVideo">
+//   <div className="ControlButton">
+//     <button onClick={play} type="button">{playHover ? 'Пауза' : 'Плей'}</button>
+//   </div>
+//   <div className="progress-container">
+//     <Slider />
+//   </div>
+// </div>
 export default PlayerVideo;

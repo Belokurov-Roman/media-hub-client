@@ -11,12 +11,10 @@ function GameCard({ el }) {
   return (
     <div
       className={detail?.name === name ? 'game g-selected' : 'game'}
-      onClick={() => {
-        setDetail(el);
-      }}
+      onClick={() => { setDetail(el); }}
     >
-      {name}
-      <div className={detail?.name === name ? 'b-selected' : 'border'} />
+      <div style={{ padding: '0px 2px 0px 2px' }}>{name}</div>
+      {/* <div className={detail?.name === name ? 'b-selected' : 'border'} /> */}
     </div>
   );
 }

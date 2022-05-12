@@ -20,6 +20,14 @@ export default class Storage {
     return this.write(key, data);
   }
 
+  setUser(key, data) {
+    return writeFileSync(this.file(key), JSON.stringify([data]));
+  }
+
+  rewriteUser(key, data) {
+    return writeFileSync(this.file(key), JSON.stringify([{ ...this.get(key)[0], ...data }]));
+  }
+
   read(key) {
     if (readFileSync(this.file(key)).toString() === '') {
       return '';

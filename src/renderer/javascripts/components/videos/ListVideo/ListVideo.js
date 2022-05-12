@@ -37,7 +37,6 @@ function ListVideo({
               {el.name}
             </div>
           ))}
-
         </div>
       </div>
     </div>

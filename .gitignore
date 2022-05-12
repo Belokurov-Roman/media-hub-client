@@ -8,12 +8,4 @@ bower_components
 ./idea
 ../.idea
 
-.DS_store
-./.DS_store
-../.DS_store
-../../.DS_store
-../../../.DS_store
 
-package-lock.json
-./package-lock.json
-../.package-lock.json

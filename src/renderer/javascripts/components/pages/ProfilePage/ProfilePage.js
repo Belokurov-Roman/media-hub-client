@@ -1,21 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { ipcRenderer } from 'electron';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { deleteUser } from '../../../../../redux/action/userAction';
 
 function ProfilePage() {
-  const id = useSelector((store) => store.user.id);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [id, setId] = useState();
+  try {
+    setId(useSelector((store) => store.user.id));
+  } catch (e) {
+    ipcRenderer.invoke('get-user').then((res) => {
+      console.log(res.id);
+      setId(res.id);
+    });
+  }
   const [input, setInput] = useState('');
   async function getProfile() {
-    const response = await axios.get(`http://localhost:3001/users/${id}`);
-    console.log(response.data.name);
-    setInput(response.data);
+    console.log(id);
+    if (id) {
+      const response = await axios.get(`http://localhost:3001/users/${id}`);
+      console.log(response);
+      console.log(response.data.name);
+      setInput(response.data);
+    }
+  }
+  async function logOut() {
+    const response = await axios.get('http://localhost:3001/users/logout');
+    console.log('====+++++++++++++++++++++++++++++++++++', response);
+    dispatch(deleteUser());
+    navigate('/auth');
   }
 
   useEffect(() => { getProfile(); }, [setInput]);
+  const addChange = () => {
+    navigate('/profile/change');
+  };
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: '18rem', color: 'white' }}>
       <Card.Img variant="top" src={input.avatar} style={{ width: '16rem' }} />
       <Card.Body>
         <Card.Title>{input.name}</Card.Title>
@@ -31,6 +58,8 @@ function ProfilePage() {
       <Card.Body>
         <Card.Link href="https://ru.wikipedia.org/wiki/%D0%90%D1%80%D0%B0%D0%BC%D0%B8%D1%81">Арамис</Card.Link>
 
+        <button type="submit" onClick={addChange}>Изменить профиль</button>
+        <button type="submit" onClick={logOut}>Выход</button>
       </Card.Body>
     </Card>
   );
