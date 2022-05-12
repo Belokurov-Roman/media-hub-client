@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import { FaSignInAlt } from 'react-icons/fa';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { deleteUser } from '../../../../redux/action/userAction';
 
 function TitleBar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [list, setList] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams('');
   const modalParams = searchParams.get('modalWin');
@@ -13,10 +18,10 @@ function TitleBar() {
     (function () {
       ipcRenderer.invoke('get-user')
         .then((res) => {
-          setOnline(res?.online);
+          setOnline(res.online);
         });
     }());
-  });
+  }, [list]);
 
   function hideDropdownMenu() {
     setList({ displayMenu: false }, () => {
@@ -40,7 +45,9 @@ function TitleBar() {
   }
   function leaveUser() {
     setList(false);
-    ipcRenderer.send('leave-user');
+    axios.get('http://localhost:3001/users/logout')
+      .then(() => { dispatch(deleteUser()); })
+      .then(() => { ipcRenderer.send('leave-user'); });
   }
 
   return (

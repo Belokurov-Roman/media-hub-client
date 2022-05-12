@@ -1,67 +1,73 @@
 import React, { useEffect, useState } from 'react';
+import { MdEmail } from 'react-icons/md';
+import { BsFillChatFill } from 'react-icons/bs';
+import { AiFillEdit } from 'react-icons/ai';
 import axios from 'axios';
-import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { ipcRenderer } from 'electron';
-
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteUser } from '../../../../../redux/action/userAction';
+import './ProfilePage.css';
 
 function ProfilePage() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [id, setId] = useState();
-  try {
-    setId(useSelector((store) => store.user.id));
-  } catch (e) {
-    ipcRenderer.invoke('get-user').then((res) => {
-      console.log(res.id);
-      setId(res.id);
-    });
-  }
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    (function () {
+      ipcRenderer.invoke('get-user')
+        .then((res) => {
+          setUser(res);
+        });
+    }());
+  }, []);
   const [input, setInput] = useState('');
   async function getProfile() {
-    console.log(id);
-    if (id) {
-      const response = await axios.get(`http://localhost:3001/users/${id}`);
-      console.log(response);
-      console.log(response.data.name);
+    if (user.id) {
+      const response = await axios.get(`http://localhost:3001/users/find/${user.id}`);
       setInput(response.data);
     }
   }
-  async function logOut() {
-    const response = await axios.get('http://localhost:3001/users/logout');
-    console.log('====+++++++++++++++++++++++++++++++++++', response);
-    dispatch(deleteUser());
-    navigate('/auth');
-  }
 
-  useEffect(() => { getProfile(); }, [setInput]);
+  useEffect(() => {
+    getProfile();
+  }, [user]);
   const addChange = () => {
     navigate('/profile/change');
   };
 
   return (
-    <Card style={{ width: '18rem', color: 'white' }}>
-      <Card.Img variant="top" src={input.avatar} style={{ width: '16rem' }} />
-      <Card.Body>
-        <Card.Title>{input.name}</Card.Title>
-        <Card.Text>
-          {input.description}
-        </Card.Text>
-      </Card.Body>
-      <ListGroup className="list-group-flush">
-        <ListGroupItem>{input.email}</ListGroupItem>
-        {/* <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-        <ListGroupItem>Vestibulum at eros</ListGroupItem> */}
-      </ListGroup>
-      <Card.Body>
-        <Card.Link href="https://ru.wikipedia.org/wiki/%D0%90%D1%80%D0%B0%D0%BC%D0%B8%D1%81">Арамис</Card.Link>
-
-        <button type="submit" onClick={addChange}>Изменить профиль</button>
-        <button type="submit" onClick={logOut}>Выход</button>
-      </Card.Body>
-    </Card>
+    <div className="prof">
+      {user?.online && (
+      <div className="page">
+        <div className="photo">
+          <img
+            variant="top"
+            src={input.avatar}
+            alt="avatar"
+            style={{ width: '100%', height: '100%' }}
+          />
+        </div>
+        <div className="about">
+          <h4>{`${input.name}`}</h4>
+          <h5 className="string">
+            {' '}
+            <BsFillChatFill style={{ marginRight: '7px' }} />
+            {`Статус: ${input.description}`}
+          </h5>
+          <h5 className="string">
+            <MdEmail style={{ marginRight: '7px' }} />
+            {`Email: ${input.email}`}
+          </h5>
+          <button className="edit string" type="submit" onClick={addChange}>
+            <h5 className="string">
+              <AiFillEdit style={{ marginRight: '7px' }} />
+              Изменить профиль
+            </h5>
+          </button>
+        </div>
+      </div>
+      )}
+    </div>
   );
 }
 

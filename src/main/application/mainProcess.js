@@ -26,7 +26,7 @@ export default class MainProcess {
       height: 600,
       minWidth: 1000,
       minHeight: 600,
-      backgroundColor: '#000000',
+      backgroundColor: '#1e254e',
       titleBarStyle: 'hidden',
       center: true,
       webPreferences: {
@@ -37,7 +37,7 @@ export default class MainProcess {
         preload: path.join(app.getAppPath(), 'preload', 'index.js'),
       },
     });
-
+    // s
     this.win.loadFile('renderer/index.html');
 
     this.win.webContents.on('did-finish-load', () => {
@@ -68,7 +68,7 @@ export default class MainProcess {
   subscribeForCreateModalWin() {
     ipcMain.on('create-win-add', () => {
       this.modalWindowAdd = new ModalWindowAdd();
-      this.modalWindowAdd.startWin(this.win);
+      this.modalWindowAdd.startWin();
     });
 
     ipcMain.on('create-win-aut', () => {
@@ -78,6 +78,7 @@ export default class MainProcess {
 
     ipcMain.on('close-win-aut', () => {
       this.modalWindowAut.winModal.hide();
+      this.win.webContents.send('navigate-app', { test: true });
     });
 
     ipcMain.on('close-win-reg', () => {

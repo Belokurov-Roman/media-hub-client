@@ -22,10 +22,12 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'react/react-in-jsx-scope': 0,
     'react/prop-types': 0,
-    'camelcase': 0,
+    camelcase: 0,
     'jsx-a11y/no-static-element-interactions': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'react/jsx-no-bind': 0,
     'max-len': 0,
+    'jsx-a11y/mouse-events-have-key-events': 0,
+    'react/jsx-no-useless-fragment': 0,
   },
 };

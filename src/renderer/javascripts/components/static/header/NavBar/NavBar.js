@@ -1,14 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect, useState } from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
 import LogotipIcon from 'LogoTest.svg';
+import { useSelector } from 'react-redux';
+import { ipcRenderer } from 'electron';
 import { IoLogoGameControllerA } from 'react-icons/io';
 import { RiVideoLine } from 'react-icons/ri';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { Context } from '../../../../context/GameContext';
 
-function NavBar({ searchParams }) {
-  const { active, setActive } = useContext(Context);
+function NavBar() {
+    const { active, setActive } = useContext(Context);
+
+    const [user, setUser] = useState();
+  useSelector((store) => {
+    try {
+      setUser(store.user.id);
+    } catch (error) {
+      ipcRenderer.invoke('get-user')
+        .then((res) => setUser(res.online));
+    }
+  });
+
+  function checkOnline() {
+    if (!user) ipcRenderer.send('create-win-aut');
+  }
+
+  function getEndPoint() {
+    return window.location.href.replace('file://', '');
+  }
 
   return (
     <div className="navbar">
@@ -48,7 +68,7 @@ function NavBar({ searchParams }) {
     </div>
   );
 }
-// <Link className="link" to="/">ВЫХОД</Link>
+// onClick={checkOnline} to={user ? '/profile' : getEndPoint()}
 
 export default NavBar;
 // <div className="link" />
