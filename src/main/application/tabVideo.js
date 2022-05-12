@@ -37,7 +37,7 @@ export default class VideoLogic {
     if (this.findPath('pathVideo') === -1) {
       console.log('HERE');
       this.countId();
-      this.storage.set('pathVideo', file);
+      this.storage.set('pathVideo', this.createFileVideo(file));
       return true;
     }
     return false;
@@ -82,8 +82,11 @@ export default class VideoLogic {
 
   watchTogether(data, time) {
     console.log(data, time);
-    this.videoSize = fs.statSync(data).size;
-    console.log(this.videoSize);
+    // this.videoSize = fs.statSync(data).size;
+    const stream = fs.createWriteStream(data);
+    console.log(stream);
+
+    // console.log(this.videoSize);
     // console.log(this.videoSize);
     // const CHUNK_SIZE = 10 ** 6;
     // const start = Number(range.replace(/\D/g, ''));
