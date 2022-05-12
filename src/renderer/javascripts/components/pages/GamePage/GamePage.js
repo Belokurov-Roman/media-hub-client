@@ -111,30 +111,30 @@ function GamePage() {
                 ✕
               </button>
               { typeof detail?.info === 'object' ? (
-                <div>
+                <div className="points">
                   <h5>{detail.info.summary}</h5>
-                  <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <h4 style={{ display: 'inline-block' }}>
+                  <div className="info-point">
+                    <h4>
                       <BsFillGearFill size="0.9rem" style={{ marginRight: '5px' }} />
+                      {detail.info?.game_engines
+                        ? detail.info.game_engines?.length > 1
+                          ? 'Игровые движки: ' : 'Игровой движок: ' : ''}
+                      {detail.info.game_engines?.map((engine) => `${engine.name} `) }
                     </h4>
-                    {detail.info?.game_engines
-                      ? detail.info.game_engines?.length > 1
-                        ? <h5>Игровые движки: </h5> : <h5>Игровой движок: </h5> : ''}
-                    {detail.info.game_engines?.map((engine) => <h4 style={{ display: 'inline-block' }}>{`${engine.name} `}</h4>) }
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div className="info-point">
                     <h4>
                       <AiFillStar style={{ marginRight: '5px' }} />
                       { detail.info?.rating ? `Рейтинг: ${Math.round(+detail.info.rating) / 10}/10` : ''}
                     </h4>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div className="info-point">
                     <h4>
                       <BiTimeFive style={{ marginRight: '5px' }} />
                       {`Всего времени в игре: ${detail.totalTime || 0} секунд`}
                     </h4>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div className="info-point">
                     <h4>
                       <BiTimer size="1.1rem" style={{ marginRight: '5px' }} />
                       {`За последнюю сессию: ${detail.lastSession || 0} секунд`}

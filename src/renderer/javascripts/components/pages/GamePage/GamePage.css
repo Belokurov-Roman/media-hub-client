@@ -31,6 +31,19 @@
 
 }
 
+.info-point {
+  display: 'flex';
+  flex-direction: 'row';
+  height: '30px';
+  justify-content: start;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
 .play {
   position: fixed;
   bottom: 115px;
