@@ -43,15 +43,18 @@ function ChangePage() {
   // } = useSelector((store) => store.user);
   // console.log(name, avatar, description, email, password, id);
   return (
-    <form className="changePage">
-      <input name="img" onChange={(e) => setInput({ ...input, avatar: e.target.value })} value={input.avatar} />
-      <input name="email" onChange={(e) => setInput({ ...input, email: e.target.value })} value={input.email} />
-      <input name="name" onChange={(e) => setInput({ ...input, name: e.target.value })} value={input.name} />
-      <input name="password" type="password" onChange={(e) => setInput({ ...input, password: e.target.value })} value={input.password} />
-      <input name="text" onChange={(e) => setInput({ ...input, description: e.target.value })} value={input.description} />
-      <button className="changeButton" onClick={putProfile} type="button">Сохранить</button>
-
-    </form>
+    <div>
+      <div className="changePage">
+        <input name="img" onChange={(e) => setInput({ ...input, avatar: e.target.value })} value={input.avatar} />
+        <input name="email" onChange={(e) => setInput({ ...input, email: e.target.value })} value={input.email} />
+        <input name="name" onChange={(e) => setInput({ ...input, name: e.target.value })} value={input.name} />
+        <input name="password" type="password" onChange={(e) => setInput({ ...input, password: e.target.value })} value={input.password} />
+        <input name="text" onChange={(e) => setInput({ ...input, description: e.target.value })} value={input.description} />
+      </div>
+      <div className="changeButton">
+        <button onClick={putProfile} type="button">Сохранить</button>
+      </div>
+    </div>
   );
 }
 
