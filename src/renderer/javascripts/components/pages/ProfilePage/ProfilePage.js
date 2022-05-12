@@ -51,7 +51,7 @@ function ProfilePage() {
         <ListGroupItem>Vestibulum at eros</ListGroupItem> */}
           </ListGroup>
           <Card.Body>
-            <Card.Link href="https://ru.wikipedia.org/wiki/%D0%90%D1%80%D0%B0%D0%BC%D0%B8%D1%81">Арамис</Card.Link>
+            {/* <Card.Link>Арамис</Card.Link> */}
             <button type="submit" onClick={addChange}>Изменить профиль</button>
           </Card.Body>
         </Card>

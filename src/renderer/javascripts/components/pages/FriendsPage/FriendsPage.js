@@ -19,6 +19,7 @@ function FriendsPage() {
   const [users, setUsers] = useState('');
   const [friends, setFriends] = useState('');
   const navigate = useNavigate();
+  // const ref = useRef(null);
 
   async function getAllUsers() {
     if (id) {
@@ -50,7 +51,7 @@ function FriendsPage() {
   return (
     <div className="allUsers">
       <div>
-        <h2 style={{ color: 'white' }}>AllUsers</h2>
+        <h2 style={{ color: 'white' }}>Все пользователи</h2>
         {users && users.map((el) => (
           <Card className="friend" key={el.id} style={{ width: '18rem', color: 'white' }}>
             <Card.Img variant="top" src={el.avatar} style={{ width: '18rem' }} />
@@ -68,7 +69,7 @@ function FriendsPage() {
         )) }
       </div>
       <div>
-        <h2 style={{ color: 'white' }}>Friends</h2>
+        <h2 style={{ color: 'white' }}>Друзья</h2>
         {friends && friends.map((el) => (
           <Card className="friend" key={el.id} style={{ width: '18rem', color: 'white' }}>
             <Card.Img variant="top" src={el.avatar} style={{ width: '18rem' }} />
@@ -81,7 +82,7 @@ function FriendsPage() {
             <ListGroup className="list-group-flush">
               <ListGroupItem>{el.email}</ListGroupItem>
             </ListGroup>
-            <button type="submit" onClick={setChat}>Зайти в чат</button>
+            <button type="submit" onClick={setChat}>Присоедениться к чату</button>
             <button type="submit" onClick={setStream}>Стрим</button>
           </Card>
         )) }
