@@ -1,4 +1,4 @@
-import React, { useContext,useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
 import LogotipIcon from 'LogoTest.svg';
@@ -11,10 +11,8 @@ import { Context } from '../../../../context/GameContext';
 
 function NavBar() {
   const { active, setActive } = useContext(Context);
-
-    const { active, setActive } = useContext(Context);
-
-    const [user, setUser] = useState();
+  const [link, setLink] = useState('');
+  const [user, setUser] = useState();
   useSelector((store) => {
     try {
       setUser(store.user.id);
@@ -67,8 +65,8 @@ function NavBar() {
         <Link
 
           onClick={() => {
-            setActive('ПРОФИЛЬ')
-            checkOnline()
+            setActive('ПРОФИЛЬ');
+            checkOnline();
           }}
           className={active === 'ПРОФИЛЬ' ? 'active link' : 'link'}
           to="/profile"
