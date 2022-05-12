@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './PlayerVideo.css';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import { ipcRenderer } from 'electron';
 
-function PlayerVideo({ videoRef }) {
+function PlayerVideo({ videoRef, newPath }) {
   const [playHover, setPlayHover] = useState(false);
 
   const [playerState, setPlayerState] = useState({
@@ -14,6 +15,7 @@ function PlayerVideo({ videoRef }) {
   });
 
   const togglePlay = () => {
+    console.log(videoRef);
     setPlayerState({
       ...playerState,
       isPlaying: !playerState.isPlaying,
@@ -36,6 +38,7 @@ function PlayerVideo({ videoRef }) {
 
   const handleVideoProgress = (event) => {
     const manualChange = Number(event);
+
     videoRef.current.currentTime = (videoRef.current.duration / 100) * manualChange;
     setPlayerState({
       ...playerState,
@@ -85,6 +88,12 @@ function PlayerVideo({ videoRef }) {
   useEffect(() => {
     console.log(hover);
   }, [hover]);
+
+  function watchTogether() {
+    console.log(newPath);
+    ipcRenderer.send('watch-together', newPath, videoRef.current.duration);
+  }
+
   return (
     <div className="PlayerVideo">
       <video ref={videoRef} className="video-block" onTimeUpdate={handleOnTimeUpdate}>
@@ -122,9 +131,10 @@ function PlayerVideo({ videoRef }) {
             <span>M</span>
           ) : (
             <span>NM</span>)}
-        </button>
-      </div>
 
+        </button>
+        <button type="button" onClick={watchTogether}>Совместный просмотр</button>
+      </div>
     </div>
   );
 }

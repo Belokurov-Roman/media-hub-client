@@ -4,6 +4,9 @@ function StreamPage() {
   return (
     <div style={{ color: 'red' }}>
       STREAM
+        <video src''>
+
+        </video>
     </div>
   );
 }

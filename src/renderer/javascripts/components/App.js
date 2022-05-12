@@ -9,6 +9,7 @@ import ModalWindowAdd from './pages/ModalWindowAdd/ModalWindowAdd';
 import WindowApp from './WindowApp/WindowApp';
 import AuthPage from './pages/AuthPage/AuthPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
+import FriendsPage from './pages/FriendsPage/FriendsPage';
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams('');
@@ -23,7 +24,7 @@ function App() {
       case 'addVideo':
         return (<ModalWindowAdd />);
       case 'friends':
-        return (<AuthPage />);
+        return (<FriendsPage />);
       case 'chat':
         return (<ModalWindowAdd />);
       case 'autor':
