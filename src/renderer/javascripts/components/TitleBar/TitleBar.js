@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
+import { FaSignInAlt } from 'react-icons/fa';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { deleteUser } from '../../../../redux/action/userAction';
@@ -53,7 +54,12 @@ function TitleBar() {
 
   return (
     <div onMouseLeave={() => { setList(false); }} onMouseOver={() => { setList(true); }}>
-      <div className={modalParams === null ? 'NameParams' : 'NameParamsLeft'} onClick={showDropdownMenu}> Параметры </div>
+      <div className={modalParams === null ? 'NameParams' : 'NameParamsLeft'} onClick={showDropdownMenu}>
+        Войти
+        <h4>
+          <FaSignInAlt style={{ marginLeft: '7px' }} />
+        </h4>
+      </div>
       { list && (
         <div className="listDragDrop">
           {online

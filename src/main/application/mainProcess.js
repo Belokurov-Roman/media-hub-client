@@ -37,7 +37,7 @@ export default class MainProcess {
         preload: path.join(app.getAppPath(), 'preload', 'index.js'),
       },
     });
-
+    // s
     this.win.loadFile('renderer/index.html');
 
     this.win.webContents.on('did-finish-load', () => {

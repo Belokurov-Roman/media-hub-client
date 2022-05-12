@@ -3,6 +3,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+
 import App from './components/App';
 import store from '../../redux/store/store';
 import TitleBar from './components/TitleBar/TitleBar';
@@ -20,7 +21,9 @@ window.onload = (entries) => {
       <BrowserRouter>
         <div className="titleBar">
           <div className="titleContainer">
-            <div className="NameParamsLeft">Параметры</div>
+            <div className="NameParamsLeft">
+              Параметры
+            </div>
             <span>Media Hub</span>
             <TitleBar />
           </div>
