@@ -84,6 +84,7 @@ function FriendsPage() {
             </ListGroup>
             <button type="submit" onClick={setChat}>Присоедениться к чату</button>
             <button type="submit" onClick={setStream}>Стрим</button>
+            <button type="submit">Удалить</button>
           </Card>
         )) }
       </div>
