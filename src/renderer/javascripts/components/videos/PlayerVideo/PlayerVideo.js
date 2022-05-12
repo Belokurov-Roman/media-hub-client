@@ -89,7 +89,7 @@ function PlayerVideo({ videoRef, newPath }) {
   };
   const [hover, setHover] = useState('ControlVideo1');
   useEffect(() => {
-    console.log(hover);
+    console.log(videoRef);
   }, [hover]);
 
   function watchTogether() {
