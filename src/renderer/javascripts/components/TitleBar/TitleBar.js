@@ -48,6 +48,8 @@ function TitleBar() {
     axios.get('http://localhost:3001/users/logout')
       .then(() => { dispatch(deleteUser()); })
       .then(() => { ipcRenderer.send('leave-user'); });
+    setOnline(false);
+    navigate('/auth');
   }
 
   return (

@@ -24,7 +24,8 @@ function GameContextProvider({ children }) {
   };
 
   const handleDelete = (path, name) => {
-    setDetail(files[0]);
+    const ind = files.findIndex((el) => el.name === name);
+    setDetail(files[ind + 1]);
     ipcRenderer.invoke('delete-game', path, name)
       .then((res) => setFiles(res));
   };

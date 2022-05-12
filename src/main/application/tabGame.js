@@ -134,7 +134,8 @@ export default class GameLogic {
 
   updateTime(programName) {
     this.end = this.getTimeStampInSeconds();
-    const bTotalTime = this.storage.read('gameInfo').find((el) => el.name === programName).totalTime;
+    const bTotalTime = this.storage.read('gameInfo').find((el) => el.name === programName).totalTime || 0;
+    console.log(bTotalTime);
     this.storage.updateSeveral(
       'gameInfo',
       programName,

@@ -4,6 +4,8 @@ import axios from 'axios';
 import { ipcRenderer } from 'electron';
 import { useNavigate } from 'react-router-dom';
 
+import './ChangePage.css';
+
 function ChangePage() {
   // const [user, setUser] = useState('');
   const [input, setInput] = useState('');
@@ -41,13 +43,13 @@ function ChangePage() {
   // } = useSelector((store) => store.user);
   // console.log(name, avatar, description, email, password, id);
   return (
-    <form>
+    <form className="changePage">
       <input name="img" onChange={(e) => setInput({ ...input, avatar: e.target.value })} value={input.avatar} />
       <input name="email" onChange={(e) => setInput({ ...input, email: e.target.value })} value={input.email} />
       <input name="name" onChange={(e) => setInput({ ...input, name: e.target.value })} value={input.name} />
       <input name="password" type="password" onChange={(e) => setInput({ ...input, password: e.target.value })} value={input.password} />
       <input name="text" onChange={(e) => setInput({ ...input, description: e.target.value })} value={input.description} />
-      <button onClick={putProfile} type="button">Сохранить</button>
+      <button className="changeButton" onClick={putProfile} type="button">Сохранить</button>
 
     </form>
   );

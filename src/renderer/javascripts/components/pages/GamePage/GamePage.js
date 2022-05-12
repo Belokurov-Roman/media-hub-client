@@ -113,8 +113,8 @@ function GamePage() {
               { typeof detail?.info === 'object' ? (
                 <div className="points">
                   <h5>{detail.info.summary}</h5>
-                  <div className="info-point">
-                    <h4>
+                  <div style={{ height: '30px' }}>
+                    <h4 className="info-point">
                       <BsFillGearFill size="0.9rem" style={{ marginRight: '5px' }} />
                       {detail.info?.game_engines
                         ? detail.info.game_engines?.length > 1
@@ -122,25 +122,33 @@ function GamePage() {
                       {detail.info.game_engines?.map((engine) => `${engine.name} `) }
                     </h4>
                   </div>
-                  <div className="info-point">
-                    <h4>
+                  <div style={{ height: '30px' }}>
+                    <h4 className="info-point">
                       <AiFillStar style={{ marginRight: '5px' }} />
                       { detail.info?.rating ? `Рейтинг: ${Math.round(+detail.info.rating) / 10}/10` : ''}
                     </h4>
                   </div>
-                  <div className="info-point">
-                    <h4>
+                  <div style={{ height: '30px' }}>
+                    <h4 className="info-point">
                       <BiTimeFive style={{ marginRight: '5px' }} />
                       {`Всего времени в игре: ${detail.totalTime || 0} секунд`}
                     </h4>
                   </div>
-                  <div className="info-point">
-                    <h4>
+                  <div style={{ height: '30px' }}>
+                    <h4 className="info-point">
                       <BiTimer size="1.1rem" style={{ marginRight: '5px' }} />
                       {`За последнюю сессию: ${detail.lastSession || 0} секунд`}
                     </h4>
                   </div>
-                  {detail.info.screenshots?.map((id) => <img src={`https://images.igdb.com/igdb/image/upload/t_screenshot_med/${id.image_id}.jpg`} alt={id} />)}
+                  <div className="screenshots">
+                    {detail.info.screenshots?.map((id) => (
+                      <img
+                        className="screen"
+                        src={`https://images.igdb.com/igdb/image/upload/t_screenshot_med/${id.image_id}.jpg`}
+                        alt={id}
+                      />
+                    ))}
+                  </div>
                 </div>
               )
                 : ''}

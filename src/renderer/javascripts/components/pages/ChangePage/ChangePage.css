@@ -1,0 +1,26 @@
+.changePage {
+  display: flex;
+  height: 500px;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: #1e254e;
+  /* overflow-y: scroll; */
+}
+/* .changeButton {
+  bottom: 115px;
+  right: 30px;
+  width: 70px;
+  height: 70px;
+  border: none;
+} */
+
+.changeButton:hover{
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(145deg, #192042, #1e254e);
+}
+.buttonAdd:active{
+  background-color: #282828 ;
+  box-shadow: inset 5px 5px 10px #161a38,
+              inset -5px -5px 10px #1e244c;
+}
