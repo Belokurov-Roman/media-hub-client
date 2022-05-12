@@ -19,6 +19,7 @@ function FriendsPage() {
   const [users, setUsers] = useState('');
   const [friends, setFriends] = useState('');
   const navigate = useNavigate();
+  // const ref = useRef(null);
 
   async function getAllUsers() {
     if (id) {
@@ -38,9 +39,13 @@ function FriendsPage() {
   }
   useEffect(() => {
     friendsSubmit();
+    getAllUsers();
   }, [id]);
   const setChat = () => {
     navigate('/friends/chat');
+  };
+  const setStream = () => {
+    navigate('/stream');
   };
 
   return (
@@ -78,6 +83,8 @@ function FriendsPage() {
               <ListGroupItem>{el.email}</ListGroupItem>
             </ListGroup>
             <button type="submit" onClick={setChat}>Присоедениться к чату</button>
+            <button type="submit" onClick={setStream}>Стрим</button>
+            <button type="submit">Удалить</button>
           </Card>
         )) }
       </div>
