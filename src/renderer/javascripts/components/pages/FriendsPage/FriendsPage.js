@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BsFillPersonPlusFill, BsFillPersonXFill, BsFillChatTextFill } from 'react-icons/bs';
+// import MdRadio from 'react-icons/md';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
@@ -49,42 +51,44 @@ function FriendsPage() {
   };
 
   return (
-    <div className="allUsers">
-      <div>
+    <div className="subPage">
+      <div className="lists allUsers">
         <h2 style={{ color: 'white' }}>Все пользователи</h2>
         {users && users.map((el) => (
-          <Card className="friend" key={el.id} style={{ width: '18rem', color: 'white' }}>
-            <Card.Img variant="top" src={el.avatar} style={{ width: '18rem' }} />
+          <Card className="person" key={el.id} style={{ color: 'white' }}>
+            <div className="avatar">
+              <Card.Img className="picture" variant="top" src={el.avatar} />
+            </div>
             <Card.Body>
-              <Card.Title>{el.name}</Card.Title>
-              <Card.Text>
-                {el.description}
-              </Card.Text>
+              <Card.Title className="name">{el.name}</Card.Title>
             </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroupItem>{el.email}</ListGroupItem>
-            </ListGroup>
-            <button type="submit">Добавить в друзья</button>
+            <button className="follow" type="submit">
+              <BsFillPersonPlusFill style={{ position: 'absolute' }} size="0.9rem" />
+            </button>
           </Card>
         )) }
       </div>
-      <div>
-        <h2 style={{ color: 'white' }}>Друзья</h2>
+      <div className="lists subscriptions">
+        <h2 style={{ color: 'white' }}>Мои подсписки</h2>
         {friends && friends.map((el) => (
-          <Card className="friend" key={el.id} style={{ width: '18rem', color: 'white' }}>
-            <Card.Img variant="top" src={el.avatar} style={{ width: '18rem' }} />
+          <Card className="person" key={el.id} style={{ color: 'white' }}>
+            <div className="avatar">
+              <Card.Img className="picture" variant="top" src={el.avatar} />
+            </div>
             <Card.Body>
-              <Card.Title>{el.name}</Card.Title>
-              <Card.Text>
-                {el.description}
-              </Card.Text>
+              <Card.Title className="name">{el.name}</Card.Title>
             </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroupItem>{el.email}</ListGroupItem>
-            </ListGroup>
-            <button type="submit" onClick={setChat}>Присоедениться к чату</button>
-            <button type="submit" onClick={setStream}>Стрим</button>
-            <button type="submit">Удалить</button>
+            <button className="chat" type="submit" onClick={setChat}>
+              Чат
+              <BsFillChatTextFill style={{ marginLeft: '6px' }} />
+            </button>
+            <button className="stream" type="submit" onClick={setStream}>
+              Стрим
+              {/* <MdRadio /> */}
+            </button>
+            <button className="unfollow" type="submit">
+              <BsFillPersonXFill style={{ position: 'absolute' }} size="0.9rem" />
+            </button>
           </Card>
         )) }
       </div>
