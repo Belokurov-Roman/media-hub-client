@@ -116,6 +116,7 @@ export default class GameLogic {
     setTimeout(async () => {
       const newProcs = [];
       const procAfterLauch = await psList();
+      console.log('procAfterLauch', procAfterLauch.filter((el) => el.name));
       procAfterLauch.forEach((el) => (procsBefore[el.name] ? '' : newProcs.push(el)));
       console.table(newProcs);
       const { pid } = newProcs.filter((el) => el.ppid === 1)[0];
