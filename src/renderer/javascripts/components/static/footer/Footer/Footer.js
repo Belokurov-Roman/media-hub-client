@@ -1,11 +1,11 @@
+import './Footer.css';
+
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineVideoCameraAdd } from 'react-icons/ai';
 import { BsChatTextFill } from 'react-icons/bs';
 import { ipcRenderer } from 'electron';
 import { Context } from '../../../../context/GameContext';
-
-import './Footer.css';
 
 function Footer({ createWindowAdd }) {
   function createWindowFriends() {
