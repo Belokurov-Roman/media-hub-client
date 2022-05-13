@@ -19,28 +19,38 @@ function FriendsPage() {
   const [users, setUsers] = useState('');
   const [friends, setFriends] = useState('');
   const navigate = useNavigate();
-  // const ref = useRef(null);
 
   async function getAllUsers() {
     if (id) {
       const response = await axios.get('http://localhost:3001/users');
       const allUsers = response.data.filter((el) => el.id !== id);
-      console.log(response.data);
+      // console.log(response.data);
       setUsers(allUsers);
     }
   }
 
+  async function addFriend(e) {
+    const response = await axios.post('http://localhost:3001/friends/all', { currentUser: id, id: e.target.id });
+    console.log(response);
+  }
   async function friendsSubmit() {
     if (id) {
       const response = await axios.get(`http://localhost:3001/friends/${id}`);
-      console.log(response.data);
+      // console.log(response.data);
       setFriends(response.data);
     }
   }
+  // async function deleteFriend(e) {
+  //   const response = await axios.delete('http://localhost:3001/friends/delete', { currentUser: id, id: e.target.id });
+  //   console.log('!!!!!!!', response, id, e.target.id);
+  //   if (response) {
+  //     friendsSubmit();
+  //   }
+  // }
   useEffect(() => {
     friendsSubmit();
     getAllUsers();
-  }, [id]);
+  }, [id, friends]);
   const setChat = () => {
     navigate('/friends/chat');
   };
@@ -64,7 +74,7 @@ function FriendsPage() {
             <ListGroup className="list-group-flush">
               <ListGroupItem>{el.email}</ListGroupItem>
             </ListGroup>
-            <button type="submit">Добавить в друзья</button>
+            <button id={el.id} onClick={(e) => addFriend(e)} type="submit">Добавить в друзья</button>
           </Card>
         )) }
       </div>
@@ -84,7 +94,7 @@ function FriendsPage() {
             </ListGroup>
             <button type="submit" onClick={setChat}>Присоедениться к чату</button>
             <button type="submit" onClick={setStream}>Стрим</button>
-            <button type="submit">Удалить</button>
+            <button id={el.id} type="submit">Удалить из друзей</button>
           </Card>
         )) }
       </div>
