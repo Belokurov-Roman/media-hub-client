@@ -22,17 +22,19 @@
   height: 400px;
 }
 .ControlVideoA{
-   position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 90%;
+  margin-left: 5%;
 }
 
 .ControlVideoH{
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
+  width: 90%;
+  margin-left: 5%;
   height: 0px;
   overflow: hidden;
 }
@@ -64,7 +66,7 @@
 .play-stop {
   position: absolute;
   bottom: 10px;
-  right: 310px;
+  right: 32 0px;
   height: 30px;
   width: 30px;
   background-color: transparent;
