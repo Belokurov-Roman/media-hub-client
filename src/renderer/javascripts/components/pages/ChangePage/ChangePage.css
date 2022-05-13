@@ -2,11 +2,9 @@
   font-size: 30px;
   font-style: italic;
   font-weight: 600;
-  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
 }
 
 .ChangePage__inputs_wrapper {

@@ -2,5 +2,7 @@
     display: flex;
     justify-content: space-between;
     position: relative;
+    height:67%;
     flex-grow: 1;
+    background-color: #1e254e;
 }
