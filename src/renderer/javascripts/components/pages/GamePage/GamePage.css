@@ -28,7 +28,33 @@
   background-color: #1c2349;
   box-shadow: inset 7px 7px 10px #1a1f42,
               inset -7px -7px 5px #202854;
+}
 
+.info-point {
+  display: 'flex';
+  flex-direction: 'row';
+  height: '20px';
+  justify-content: start;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+}
+
+.screenshots {
+  margin-top: 30px;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.screen {
+  width: 48%;
+  border-radius: 5px;
+  margin: 5px 0px 5px 0px;
 }
 
 .play {
