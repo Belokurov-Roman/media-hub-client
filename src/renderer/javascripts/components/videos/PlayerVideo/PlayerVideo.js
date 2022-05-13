@@ -89,7 +89,7 @@ function PlayerVideo({ videoRef, newPath }) {
   };
   const [hover, setHover] = useState('ControlVideo1');
   useEffect(() => {
-    console.log(videoRef);
+    console.log(videoRef, '<=======');
   }, [hover]);
 
   function watchTogether() {
@@ -98,58 +98,60 @@ function PlayerVideo({ videoRef, newPath }) {
   }
 
   return (
-    <div
-      onMouseOver={() => setHover('ControlVideoA')}
-      onMouseLeave={() => setHover('ControlVideoH')}
-      className="PlayerVideo"
-    >
-      {/* {videoRef
-      ?
-      :
-      } */}
-      <video ref={videoRef} className="video-block" onTimeUpdate={handleOnTimeUpdate}>
-        <track kind="subtitles" src={null} />
-      </video>
-      <div
-        className={hover}
-      >
-        <Slider
-          step="0.1"
-          value={playerState.progress}
-          onChange={(e) => handleVideoProgress(e)}
-        />
-        <div className="ControlButton">
-          <select
-            className="velocity"
-            value={playerState.speed}
-            onChange={(e) => handleVideoSpeed(e)}
+    <div className="videoPart">
+      {videoRef
+        ? (
+          <div
+            onMouseOver={() => setHover('ControlVideoA')}
+            onMouseLeave={() => setHover('ControlVideoH')}
+            className="PlayerVideo"
           >
-            <option value="0.50">0.50x</option>
-            <option value="1">1x</option>
-            <option value="1.25">1.25x</option>
-            <option value="2">2x</option>
-          </select>
-          <button className="mute-unmute flex ctrl-style" type="button" onClick={toggleMute}>
-            {!playerState.isMuted ? (
-              <h4><BsVolumeDownFill size="1.3rem" /></h4>
-            ) : (
-              <h4><BsFillVolumeMuteFill size="1.3rem" /></h4>)}
-          </button>
-          <button className="stream flex ctrl-style" type="button" onClick={watchTogether}>
-            Совместный просмотр
-          </button>
-          <button className="play-stop flex ctrl-style" type="button" onClick={togglePlay}>
-            {!playerState.isPlaying ? (
-              <h4>▶</h4>
-            ) : (
-              <h4><IoMdPause /></h4>
-            )}
-          </button>
-          <button className="fullscreen flex ctrl-style" type="button" onClick={fullscreen}>
-            <h4><BiFullscreen size="1.2rem" /></h4>
-          </button>
-        </div>
-      </div>
+            <video ref={videoRef} className="video-block" onTimeUpdate={handleOnTimeUpdate}>
+              <track kind="subtitles" src={null} />
+            </video>
+            <div
+              className={hover}
+            >
+              <Slider
+                step="0.1"
+                value={playerState.progress}
+                onChange={(e) => handleVideoProgress(e)}
+              />
+              <div className="ControlButton">
+                <select
+                  className="velocity"
+                  value={playerState.speed}
+                  onChange={(e) => handleVideoSpeed(e)}
+                >
+                  <option value="0.50">0.50x</option>
+                  <option value="1">1x</option>
+                  <option value="1.25">1.25x</option>
+                  <option value="2">2x</option>
+                </select>
+                <button className="mute-unmute flex ctrl-style" type="button" onClick={toggleMute}>
+                  {!playerState.isMuted ? (
+                    <h4><BsVolumeDownFill size="1.3rem" /></h4>
+                  ) : (
+                    <h4><BsFillVolumeMuteFill size="1.3rem" /></h4>)}
+                </button>
+                <button className="stream flex ctrl-style" type="button" onClick={watchTogether}>
+                  Совместный просмотр
+                </button>
+                <button className="play-stop flex ctrl-style" type="button" onClick={togglePlay}>
+                  {!playerState.isPlaying ? (
+                    <h4>▶</h4>
+                  ) : (
+                    <h4><IoMdPause /></h4>
+                  )}
+                </button>
+                <button className="fullscreen flex ctrl-style" type="button" onClick={fullscreen}>
+                  <h4><BiFullscreen size="1.2rem" /></h4>
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+        : ''}
     </div>
   );
 }

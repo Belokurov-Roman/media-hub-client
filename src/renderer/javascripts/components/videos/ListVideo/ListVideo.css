@@ -1,7 +1,7 @@
 .ListVideo{
     color: white;
-    width: 30%;
-    background-color: #0C0032;
+    width: 17%;
+    background-color: #1e254e;
 }
 
 .ContainerList{
@@ -9,6 +9,7 @@
     flex-direction: column;
     height: 100%;
 }
+
 .inputSearch{
     width: 80%;
     color: white;
@@ -41,11 +42,7 @@
 .OneList:active{
     background-color: #0C0032 ;
     border-bottom: 1px solid #0C0032;
-
-
 }
-
-
 
 .ControlListGroup{
     display: flex;
