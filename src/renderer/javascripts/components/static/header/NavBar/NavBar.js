@@ -1,4 +1,4 @@
-import React, { useContext,useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
 import LogotipIcon from 'LogoTest.svg';
@@ -10,15 +10,15 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { Context } from '../../../../context/GameContext';
 
 function NavBar() {
-    const { active, setActive } = useContext(Context);
-
-    const [user, setUser] = useState();
+  const { active, setActive } = useContext(Context);
+  const [link, setLink] = useState('');
+  const [user, setUser] = useState();
   useSelector((store) => {
     try {
       setUser(store.user.id);
     } catch (error) {
       ipcRenderer.invoke('get-user')
-        .then((res) => setUser(res.online));
+        .then((res) => setUser(res?.online));
     }
   });
 
@@ -26,6 +26,14 @@ function NavBar() {
     if (!user) ipcRenderer.send('create-win-aut');
   }
 
+  useEffect(() => {
+    if (user) {
+      setLink('/profile');
+    } else {
+      const endPoint = window.location.href.replace('file://', '');
+      setLink(endPoint);
+    }
+  }, [user]);
   function getEndPoint() {
     return window.location.href.replace('file://', '');
   }
@@ -55,7 +63,11 @@ function NavBar() {
           ИГРЫ
         </Link>
         <Link
-          onClick={() => setActive('ПРОФИЛЬ')}
+
+          onClick={() => {
+            setActive('ПРОФИЛЬ');
+            checkOnline();
+          }}
           className={active === 'ПРОФИЛЬ' ? 'active link' : 'link'}
           to="/profile"
         >
@@ -67,8 +79,9 @@ function NavBar() {
       </div>
     </div>
   );
-}
-// onClick={checkOnline} to={user ? '/profile' : getEndPoint()}
+}// onClick={checkOnline} to={user ? '/profile' : getEndPoint()}
+
+// <Link className="link" to="/">ВЫХОД</Link>
 
 export default NavBar;
 // <div className="link" />

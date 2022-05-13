@@ -116,6 +116,7 @@ export default class GameLogic {
     setTimeout(async () => {
       const newProcs = [];
       const procAfterLauch = await psList();
+      console.log('procAfterLauch', procAfterLauch.filter((el) => el.name));
       procAfterLauch.forEach((el) => (procsBefore[el.name] ? '' : newProcs.push(el)));
       console.table(newProcs);
       const { pid } = newProcs.filter((el) => el.ppid === 1)[0];
@@ -134,7 +135,8 @@ export default class GameLogic {
 
   updateTime(programName) {
     this.end = this.getTimeStampInSeconds();
-    const bTotalTime = this.storage.read('gameInfo').find((el) => el.name === programName).totalTime;
+    const bTotalTime = this.storage.read('gameInfo').find((el) => el.name === programName).totalTime || 0;
+    console.log(bTotalTime);
     this.storage.updateSeveral(
       'gameInfo',
       programName,

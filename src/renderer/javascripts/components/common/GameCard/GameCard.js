@@ -14,7 +14,6 @@ function GameCard({ el }) {
       onClick={() => { setDetail(el); }}
     >
       <div style={{ padding: '0px 2px 0px 2px' }}>{name}</div>
-      {/* <div className={detail?.name === name ? 'b-selected' : 'border'} /> */}
     </div>
   );
 }

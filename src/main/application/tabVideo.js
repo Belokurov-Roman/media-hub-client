@@ -3,12 +3,13 @@ import path from 'path';
 import * as http from 'http';
 import fs from 'fs';
 
+import axios from 'axios';
 import Storage from './storage';
 
 export default class VideoLogic {
   constructor() {
     this.storage = new Storage();
-    this.id = (+Object.keys(this.storage.get('pathVideo')).slice(-1) + 1);
+    this.id = this.getLastId();
   }
 
   async getPathVideo(win) {
@@ -20,6 +21,7 @@ export default class VideoLogic {
       properties: ['openFile'],
     });
     // this.extensionVideo = path.getExtension(this.files.filePaths[0]);
+    console.log(this.files.filePaths[0]);
     this.writeVideoPathToStorage(this.files.filePaths[0]);
     this.nameVideo = path.basename(this.files.filePaths[0]);
 
@@ -34,8 +36,9 @@ export default class VideoLogic {
 
   writeVideoPathToStorage(file) {
     if (this.findPath('pathVideo') === -1) {
+      console.log('HERE');
       this.countId();
-      this.storage.set('pathVideo', file);
+      this.storage.set('pathVideo', this.createFileVideo(file));
       return true;
     }
     return false;
@@ -47,24 +50,24 @@ export default class VideoLogic {
   }
 
   ctxMenuDelete(win, id) {
-    const deleteOneVideo = () => {
-      console.log(id);
-      this.storage.rewrite('pathVideo', this.storage.get('pathVideo')
-        .filter((el) => el.id !== +id));
-      win.webContents.send('delete-path-video', Math.random());
-    };
+    // const deleteOneVideo = () => {
+    //   console.log(id);
+    //   this.storage.rewrite('pathVideo', this.storage.get('pathVideo')
+    //     .filter((el) => el.id !== +id));
+    //   win.webContents.send('delete-path-video', Math.random());
+    // };
 
-    const conMenu = new Menu();
-    conMenu.append(new MenuItem({
-      label: 'Удалить',
-      click() {
-        deleteOneVideo();
-      },
-    }));
+    // const conMenu = new Menu();
+    // conMenu.append(new MenuItem({
+    //   label: 'Удалить',
+    //   click() {
+    //     deleteOneVideo();
+    //   },
+    // }));
 
-    win.webContents.on('context-menu', (e, params) => {
-      conMenu.popup(win, params.x, params.y);
-    });
+    // win.webContents.on('context-menu', (e, params) => {
+    //   conMenu.popup(win, params.x, params.y);
+    // });
   }
 
   getLastId() {
@@ -76,6 +79,22 @@ export default class VideoLogic {
 
   countId() {
     this.id += 1;
+  }
+
+  async watchTogether(data, time) {
+    // this.videoSize = fs.statSync(data).size;
+    const stream = fs.createWriteStream(data);
+    // console.log(stream);
+
+    const response = await axios.post('http://localhost:3001/stream', {
+      stream,
+    });
+
+    // console.log(this.videoSize);
+    // console.log(this.videoSize);
+    // const CHUNK_SIZE = 10 ** 6;
+    // const start = Number(range.replace(/\D/g, ''));
+    // const end = Math.min(start + CHUNK_SIZE, this.videoSize - 1);
   }
 }
 

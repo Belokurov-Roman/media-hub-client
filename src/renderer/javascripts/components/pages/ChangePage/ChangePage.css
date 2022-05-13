@@ -1,0 +1,43 @@
+.ChangePage__container {
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ChangePage__inputs_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.ChangePage__input {
+  height: 25px;
+  width: 350px;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.ChangePage__btn_wrapper {
+  margin-top: 20px;
+}
+
+.ChangePage__editBtn {
+  font-size: 20px;
+  border-radius: 10px;
+}
+.ChangePage__editBtn:hover{
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(145deg, #485cc0, #485cc0);
+}
+.ChangePage__editBtn:active{
+  background-color: #282828 ;
+  box-shadow: inset 5px 5px 10px #161a38,
+              inset -5px -5px 10px #1e244c;
+}

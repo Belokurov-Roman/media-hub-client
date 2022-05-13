@@ -1,57 +1,103 @@
 .PlayerVideo{
-    display: flex;
-    color: white;
-    position: absolute;
-    align-items: flex-start;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 65%;
-    height: 90%;
-    right: 0;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+
+.videoPart {
+  width: 80%;
+  border-radius: 20px;
+  background-color: #1c2349;
+  box-shadow: inset 7px 7px 10px #1a1f42,
+              inset -7px -7px 5px #202854;
 }
 
 .video-block{
-    background-color: #ffffff;
-    width: 100%;
-    height: 100%;
+  background-color: #1c2349;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
 }
-.ControlVideo{
-   position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+.ControlVideoA{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 90%;
+  margin-left: 5%;
 }
 
-.ControlVideo1{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: red;
+.ControlVideoH{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 90%;
+  margin-left: 5%;
+  height: 0px;
+  overflow: hidden;
 }
 .ControlButton{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ctrl-style {
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.844);
+  position: absolute;
+}
+.ctrl-style:hover {
+  color: white;
+  border: 1px solid rgba(128, 128, 128, 0.405);
+}
+
+.play-stop {
+  position: absolute;
+  bottom: 10px;
+  right: 32 0px;
+  height: 30px;
+  width: 30px;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.fullscreen {
+  right: 10px;
+  bottom: 10px;
+  height: 30px;
+  width: 30px;
+}
+
+.mute-unmute {
+  left: 70px;
+  bottom: 10px;
+  height: 30px;
+  width: 30px;
+}
+
+.velocity {
+  position: absolute;
+  left: 10px;
+  bottom: 15px;
+}
+
+.stream {
+  right: 40px;
+  bottom: 15px;
 }
 
 .progress-container{
     margin: 0 10px 10px 10px;
-}
-
-
-
-
-
-.mute-btn {
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-}
-
-.mute-btn i {
-    background-color: none;
-    color: white;
-    font-size: 20px;
 }
