@@ -10,7 +10,11 @@ function StreamPage() {
   });
 
   const streamRef = useRef();
+  const [videoState, setVideoState] = useState(false);
   useEffect(() => {
+    setTimeout(() => {
+      // setVideoState(true);
+    }, 2000);
     setTimeout(() => {
       ipcRenderer.invoke('get-path-video')
         .then((res) => {
@@ -27,14 +31,16 @@ function StreamPage() {
           streamRef.current.play();
           streamRef.current.currentTime = 5000;
         });
-    }, 2000);
+    }, 5000);
   }, []);
   return (
-    <div style={{ color: 'red' }}>
-      <video style={{ width: '400px', height: '400px' }} ref={streamRef}>
-        <track kind="subtitles" src={null} />
-      </video>
 
+    <div style={{ color: 'red' }}>
+      {videoState ? (
+        <video style={{ width: '400px', height: '400px' }} ref={streamRef}>
+          <track kind="subtitles" src={null} />
+        </video>
+      ) : <div>СТРИМА НЕТ</div>}
     </div>
   );
 }
