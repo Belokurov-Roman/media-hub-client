@@ -41,7 +41,7 @@ function PlayerVideo({ videoRef, newPath }) {
 
   const handleVideoProgress = (event) => {
     const manualChange = Number(event);
-
+    console.log(videoRef.current.currentTime);
     videoRef.current.currentTime = (videoRef.current.duration / 100) * manualChange;
     setPlayerState({
       ...playerState,
