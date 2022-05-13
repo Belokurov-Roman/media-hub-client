@@ -11,6 +11,7 @@ import AuthPage from './pages/AuthPage/AuthPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import FriendsPage from './pages/FriendsPage/FriendsPage';
 
+
 function App() {
   const [searchParams, setSearchParams] = useSearchParams('');
   const modalParams = searchParams.get('modalWin');
