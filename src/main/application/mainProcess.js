@@ -102,6 +102,7 @@ export default class MainProcess {
     ipcMain.handle('get-path-video', () => this.storage.get('pathVideo'));
     ipcMain.on('context-menu-delete', (_, id) => console.log(id));
     ipcMain.on('watch-together', (_, data, time) => (this.videoLogic.watchTogether(data, time)));
+    // ipcMain.on('get-stream-video', ()=>this.storage.get())
   }
 
   subscribeForAppGame() {
