@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BsFillPersonPlusFill, BsFillPersonXFill, BsFillChatTextFill } from 'react-icons/bs';
-// import MdRadio from 'react-icons/md';
-import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './friend.css';
 import { ipcRenderer } from 'electron';
 
@@ -21,13 +20,11 @@ function FriendsPage() {
   const [users, setUsers] = useState('');
   const [friends, setFriends] = useState('');
   const navigate = useNavigate();
-  // const ref = useRef(null);
 
   async function getAllUsers() {
     if (id) {
       const response = await axios.get('http://localhost:3001/users');
       const allUsers = response.data.filter((el) => el.id !== id);
-      console.log(response.data);
       setUsers(allUsers);
     }
   }
@@ -35,7 +32,6 @@ function FriendsPage() {
   async function friendsSubmit() {
     if (id) {
       const response = await axios.get(`http://localhost:3001/friends/${id}`);
-      console.log(response.data);
       setFriends(response.data);
     }
   }

@@ -4,10 +4,6 @@ import { ipcRenderer } from 'electron';
 import ListVideo from '../../videos/ListVideo/ListVideo';
 import PlayerVideo from '../../videos/PlayerVideo/PlayerVideo';
 
-// window.getPathVideo((_, data) => {
-//   console.log(data);
-// });
-
 function VideoPage() {
   const videoRef = useRef(null);
   const [newPath, setNewPath] = useState('');
@@ -22,7 +18,6 @@ function VideoPage() {
 
   const upload = async () => {
     const currentFile = await ipcRenderer.invoke('select-video');
-    console.log(currentFile);
     setNewPath(currentFile);
     videoRef.current.src = currentFile;
   };
@@ -40,6 +35,3 @@ function VideoPage() {
 }
 
 export default VideoPage;
-
-// const videoExtensions = ['.mp4', '.mov', '.avi', '.mkv', '.webm', '.m4v'];
-// const [videoPath, setVideoPath] = useState({});

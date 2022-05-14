@@ -1,9 +1,10 @@
+import { ipcRenderer } from 'electron';
+
 import io from 'socket.io-client';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Chat from './Chat';
 import './style.css';
-import { ipcRenderer } from 'electron';
 
 const socket = io.connect('http://localhost:3001');
 
@@ -22,8 +23,6 @@ function ChatLogic() {
     }
   });
 
-  // const [input, setInput] = useState('');
-
   const joinRoom = () => {
     if (username !== '' && room !== '') {
       socket.emit('join_room', room);
@@ -41,9 +40,7 @@ function ChatLogic() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Name..."
-            // onChange={(event) => {
-            //   setUsername(event.target.value);
-            // }}
+
           />
           <input
             type="text"
@@ -52,7 +49,7 @@ function ChatLogic() {
               setRoom(event.target.value);
             }}
           />
-          <button onClick={joinRoom}>Join a Room</button>
+          <button type="button" onClick={joinRoom}>Join a Room</button>
         </div>
       ) : (
         <Chat socket={socket} username={username} room={room} />

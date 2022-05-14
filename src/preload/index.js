@@ -17,10 +17,6 @@ window.modalWindow = (callback) => {
   ipcRenderer.on('createModal', callback);
 };
 
-// window.navigateList = (callback) => {
-//
-// };
-
 // window.deleteOneVideo = (callback) => {
 //   ipcRenderer.on('delete-path-video', callback);
 // };

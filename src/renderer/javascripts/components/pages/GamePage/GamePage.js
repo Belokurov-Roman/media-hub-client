@@ -1,14 +1,10 @@
-/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useContext } from 'react';
-// import fileIcon from 'extract-file-icon';
 import { BsFillGearFill } from 'react-icons/bs';
 import { AiFillStar } from 'react-icons/ai';
 import { BiTimer, BiTimeFive } from 'react-icons/bi';
 import GameCard from '../../common/GameCard/GameCard';
 import './GamePage.css';
 import { Context } from '../../../context/GameContext';
-
-// const icon = await app.getFileIcon(iconPath, { size: 'large' })
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
@@ -23,9 +19,7 @@ function GamePage() {
   ipcRenderer.on('updatedData', (e, data) => {
     setFiles(data);
     const ind = files.findIndex((el) => el.name === detail.name);
-    console.log(files[ind]);
     setDetail(data[ind]);
-    console.log(files, data, '<-----+');
   });
 
   useEffect(() => {
@@ -61,10 +55,8 @@ function GamePage() {
       }));
     setFiles(filesToSend);
 
-    console.log(filesToSend, '<---------');
     ipcRenderer.invoke('set-game-data', filesToSend)
       .then((res) => {
-        console.log(res);
         setFiles(res);
       });
   }

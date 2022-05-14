@@ -1,5 +1,5 @@
 import {
-  app, BrowserWindow, dialog, ipcMain,
+  app, BrowserWindow, ipcMain,
 } from 'electron';
 import path from 'path';
 import GameLogic from './tabGame';
@@ -15,7 +15,7 @@ export default class ModalWindowReg {
     app.whenReady().then(() => this.createModalWindow(win));
   }
 
-  createModalWindow(win) {
+  createModalWindow() {
     this.winModal = new BrowserWindow(
       {
         width: 500,
@@ -50,9 +50,5 @@ export default class ModalWindowReg {
       ipcMain.removeHandler('save-video-file');
       ipcMain.removeHandler('video-added');
     });
-  }
-
-  subscribeForAddFile() {
-
   }
 }

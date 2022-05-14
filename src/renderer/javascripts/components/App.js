@@ -3,7 +3,6 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
-import { useSelector } from 'react-redux';
 import './App.css';
 import ModalWindowAdd from './pages/ModalWindowAdd/ModalWindowAdd';
 import WindowApp from './WindowApp/WindowApp';
@@ -28,7 +27,6 @@ function App() {
       case 'chat':
         return (<ModalWindowAdd />);
       case 'autor':
-        console.log('here autor');
         return (<AuthPage />);
       case 'registr':
         return (<RegistrationPage />);

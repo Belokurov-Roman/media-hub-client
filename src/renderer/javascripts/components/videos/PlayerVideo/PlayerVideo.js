@@ -155,16 +155,5 @@ function PlayerVideo({ videoRef, newPath }) {
     </div>
   );
 }
-// min="0"
-// max="100"
-// value={playerState.progress}
 
-// <div className="ControlVideo">
-//   <div className="ControlButton">
-//     <button onClick={play} type="button">{playHover ? 'Пауза' : 'Плей'}</button>
-//   </div>
-//   <div className="progress-container">
-//     <Slider />
-//   </div>
-// </div>
 export default PlayerVideo;
