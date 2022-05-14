@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +15,6 @@ function RegistrationPage() {
   const { user } = useSelector((store) => store);
 
   useEffect(() => {
-    console.log(user);
     if (user) {
       navigate('/profile');
     }
@@ -39,11 +37,9 @@ function RegistrationPage() {
       if (response.ok) {
         const result = await response.json();
         dispatch(addUser(result));
-        console.log(result);
         ipcRenderer.send('save-user', { ...result, online: true });
         ipcRenderer.send('close-win-reg');
       }
-      console.log(response.status);
       if (response.status === 401) {
         setError('Этот email занят');
       }
@@ -52,8 +48,6 @@ function RegistrationPage() {
       }
     } catch (err) {
       setError(err);
-      console.log('============================', err);
-      // console.log(name, email, password);
     }
   }
 

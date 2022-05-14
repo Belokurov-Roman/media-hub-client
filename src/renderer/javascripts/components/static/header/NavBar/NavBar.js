@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
+import LogotipIcon from 'LogoTest.svg';
+
 import './NavBar.css';
 import { Link } from 'react-router-dom';
-import LogotipIcon from 'LogoTest.svg';
 import { useSelector } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import { IoLogoGameControllerA } from 'react-icons/io';

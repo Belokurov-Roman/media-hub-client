@@ -20,7 +20,7 @@ function StreamPage() {
   useEffect(() => {
     setTimeout(() => {
       setSpinner(true);
-    }, 2000);
+    }, 8000);
     // setTimeout(() => {
     //   setVideoState(true);
     // }, 5000);
@@ -41,39 +41,13 @@ function StreamPage() {
         })
         .then(() => {
           streamRef.current.play();
-          // streamRef.current.currentTime = 7000;
         });
-    }, 5500);
-    // setTimeout(() => {
-    //   setVideoState(false);
-    //   setSpinner(true);
-    // }, 30000);
-
-    // setTimeout(() => {
-    //   setVideoState(true);
-    //   setSpinner(false);
-    //   ipcRenderer.invoke('get-path-video')
-    //     .then((res) => {
-    //       streamRef.current.src = res[0].path;
-    //       setPath(res[0].path);
-    //     })
-    //     .then(() => {
-    //       streamRef.current.currentTime = (streamRef.current.duration / 100) + 10000;
-    //     });
-    // }, 40000);
-
-    // setTimeout(() => {
-    //   streamRef.current.play();
-    // }, 50000);
+    }, 12000);
 
     setTimeout(() => {
       setVideoState(false);
       setSpinner(false);
-    }, 70000);
-
-    // setTimeout(() => {
-    //   streamRef.current.currentTime = 80000;
-    // }, 15000);
+    }, 26000);
   }, []);
 
   useEffect(() => {

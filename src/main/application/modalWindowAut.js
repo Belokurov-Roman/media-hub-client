@@ -1,5 +1,5 @@
 import {
-  app, BrowserWindow, dialog, ipcMain,
+  app, BrowserWindow, ipcMain,
 } from 'electron';
 import path from 'path';
 import GameLogic from './tabGame';
@@ -52,7 +52,7 @@ export default class ModalWindowAut {
     });
   }
 
-  subscribeForAddFile() {
-
-  }
+  // subscribeForAddFile() {
+  //
+  // }
 }

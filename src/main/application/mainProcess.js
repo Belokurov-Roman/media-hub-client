@@ -38,7 +38,7 @@ export default class MainProcess {
         preload: path.join(app.getAppPath(), 'preload', 'index.js'),
       },
     });
-    // s
+
     this.win.loadFile('renderer/index.html');
 
     this.win.webContents.on('did-finish-load', () => {
@@ -100,9 +100,8 @@ export default class MainProcess {
   subscribeForAppVideo() {
     ipcMain.handle('select-video', () => this.videoLogic.getPathVideo(this.win));
     ipcMain.handle('get-path-video', () => this.storage.get('pathVideo'));
-    ipcMain.on('context-menu-delete', (_, id) => console.log(id));
+    // ipcMain.on('context-menu-delete', (_, id) => console.log(id));
     ipcMain.on('watch-together', (_, data, time) => (this.videoLogic.watchTogether(data, time)));
-    // ipcMain.on('get-stream-video', ()=>this.storage.get())
   }
 
   subscribeForAppGame() {

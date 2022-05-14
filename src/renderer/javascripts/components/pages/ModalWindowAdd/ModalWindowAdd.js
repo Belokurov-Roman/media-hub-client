@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState } from 'react';
 import './ModalWindowAdd.css';
 import { ipcRenderer } from 'electron';
-import GameCard from '../../common/GameCard/GameCard';
-import { Context } from '../../../context/GameContext';
+
 import AddingFiles from './AddingFiles/AddingFiles';
 import ChangeAddFile from './ChangeAddFile/ChangeAddFile';
 
@@ -41,7 +40,6 @@ function ModalWindowAdd() {
   async function DropHandler(event) {
     event.preventDefault();
     event.stopPropagation();
-    console.log(event);
   }
   return (
     addedFile

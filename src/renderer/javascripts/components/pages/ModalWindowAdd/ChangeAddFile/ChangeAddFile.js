@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { ipcRenderer } from 'electron';
-import { useNavigate } from 'react-router-dom';
 import './ChangeAddFile.css';
-import { re } from '@babel/core/lib/vendor/import-meta-resolve';
 
 function ChangeAddFile({ currentFile, setCurrentFile }) {
   const [nameFile, setNameFile] = useState(currentFile.name);
-  const [savedFile, setSavedFile] = useState('');
   const [tag, setTag] = useState('');
-  const navigate = useNavigate();
 
   function changeTag(e) {
     setTag(e.target.value);

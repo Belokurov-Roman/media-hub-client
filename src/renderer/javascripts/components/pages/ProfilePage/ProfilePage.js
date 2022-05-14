@@ -15,9 +15,7 @@ function ProfilePage() {
   useEffect(() => {
     (function () {
       ipcRenderer.invoke('get-user')
-        .then((res) => {
-          setUser(res);
-        });
+        .then((res) => { setUser(res); });
     }());
   }, []);
   const [input, setInput] = useState('');

@@ -1,5 +1,5 @@
 import {
-  app, BrowserWindow, ipcMain,
+  app, BrowserWindow,
 } from 'electron';
 import path from 'path';
 import GameLogic from './tabGame';
@@ -49,9 +49,5 @@ export default class ModalWindowFriends {
     this.winModal.on('closed', (event) => {
       event.preventDefault();
     });
-  }
-
-  subscribeForAddFile() {
-
   }
 }
