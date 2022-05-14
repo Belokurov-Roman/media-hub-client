@@ -1,21 +1,32 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useContext } from 'react';
+// import fileIcon from 'extract-file-icon';
+import { BsFillGearFill } from 'react-icons/bs';
+import { AiFillStar } from 'react-icons/ai';
+import { BiTimer, BiTimeFive } from 'react-icons/bi';
 import GameCard from '../../common/GameCard/GameCard';
 import './GamePage.css';
 import { Context } from '../../../context/GameContext';
 
 // const icon = await app.getFileIcon(iconPath, { size: 'large' })
-// const fileIcon = require('extract-file-icon');
-// Говорят нельзя запускать Си в браузере
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
 function GamePage() {
-  const { files, setFiles, getFiles } = useContext(Context);
-
+  const {
+    files, setFiles, getFiles, detail, handleStart, handleDelete, setDetail,
+  } = useContext(Context);
   const [drag, setDrag] = useState(false);
   const [onZone, setOnZone] = useState(false);
+
+  ipcRenderer.on('updatedData', (e, data) => {
+    setFiles(data);
+    const ind = files.findIndex((el) => el.name === detail.name);
+    console.log(files[ind]);
+    setDetail(data[ind]);
+    console.log(files, data, '<-----+');
+  });
 
   useEffect(() => {
     getFiles();
@@ -45,22 +56,23 @@ function GamePage() {
     const obj = {};
     f.forEach((el) => { obj[el.name] = el; });
     const filesToSend = [...Object.values(obj)].map((el) => (
-      { name: el.name, path: el.path, totalTime: el.totalTime }));
+      {
+        name: el.name, path: el.path, totalTime: el.totalTime, info: el.info,
+      }));
     setFiles(filesToSend);
 
+    console.log(filesToSend, '<---------');
     ipcRenderer.invoke('set-game-data', filesToSend)
-      .then((res) => setFiles(res));
+      .then((res) => {
+        console.log(res);
+        setFiles(res);
+      });
   }
 
   return (
     <div
       onDragEnter={(e) => startDragHandler(e)}
     >
-      <h1
-        style={{ color: 'white' }}
-      >
-        Ваши файлы:
-      </h1>
       {drag
         ? (
           <div
@@ -72,16 +84,77 @@ function GamePage() {
             }}
             className={`dropZone ${onZone ? 'onDropZone' : 'offDropZone'}`}
           >
-            Перетащи сюда файл
+            Перетащите сюда файл
           </div>
         )
-        : files ? files.map((el) => (
-          <GameCard
-            key={el.name}
-            el={el}
-          />
-        ))
-          : ''}
+        : (
+          <div className="GamePage">
+            <div className="list">
+              {files?.length
+                ? files.map((el) => <GameCard key={el.name} el={el} />)
+                : <GameCard el={{ name: 'Перетащите игру в окно программы' }} />}
+            </div>
+            <div className="info">
+              <h1>{detail?.name?.split('.')[0]}</h1>
+              <button
+                className="play"
+                onClick={() => handleStart(detail?.path, detail?.name)}
+                type="button"
+              >
+                ▶
+              </button>
+              <button
+                className="delete"
+                onClick={() => handleDelete(detail?.path, detail?.name)}
+                type="button"
+              >
+                ✕
+              </button>
+              { typeof detail?.info === 'object' ? (
+                <div className="points">
+                  <h5>{detail.info.summary}</h5>
+                  <div style={{ height: '30px' }}>
+                    <h4 className="info-point">
+                      <BsFillGearFill size="0.9rem" style={{ marginRight: '5px' }} />
+                      {detail.info?.game_engines
+                        ? detail.info.game_engines?.length > 1
+                          ? 'Игровые движки: ' : 'Игровой движок: ' : ''}
+                      {detail.info.game_engines?.map((engine) => `${engine.name} `) }
+                    </h4>
+                  </div>
+                  <div style={{ height: '30px' }}>
+                    <h4 className="info-point">
+                      <AiFillStar style={{ marginRight: '5px' }} />
+                      { detail.info?.rating ? `Рейтинг: ${Math.round(+detail.info.rating) / 10}/10` : ''}
+                    </h4>
+                  </div>
+                  <div style={{ height: '30px' }}>
+                    <h4 className="info-point">
+                      <BiTimeFive style={{ marginRight: '5px' }} />
+                      {`Всего времени в игре: ${detail.totalTime || 0} секунд`}
+                    </h4>
+                  </div>
+                  <div style={{ height: '30px' }}>
+                    <h4 className="info-point">
+                      <BiTimer size="1.1rem" style={{ marginRight: '5px' }} />
+                      {`За последнюю сессию: ${detail.lastSession || 0} секунд`}
+                    </h4>
+                  </div>
+                  <div className="screenshots">
+                    {detail.info.screenshots?.map((id) => (
+                      <img
+                        className="screen"
+                        src={`https://images.igdb.com/igdb/image/upload/t_screenshot_med/${id.image_id}.jpg`}
+                        alt={id}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )
+                : ''}
+            </div>
+          </div>
+        )}
     </div>
 
   );

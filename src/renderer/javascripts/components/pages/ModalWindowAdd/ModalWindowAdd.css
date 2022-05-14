@@ -1,0 +1,23 @@
+.ModalWindowAdd{
+    margin: 50px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+.AddingBut{
+    margin: 20px;
+}
+
+.DropZona{
+    width: 400px;
+    height: 200px;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+

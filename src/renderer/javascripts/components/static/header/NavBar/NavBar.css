@@ -1,42 +1,52 @@
 .navbar {
-    background-color: #190061;
+    background-color: #1e254e;
+    justify-content: space-between;
     display: flex;
     align-items: center;
     height: 100px;
-    justify-content: space-around;
+    box-shadow: 0px -20px 60px #292c5c;
 }
-
-
 
 .links-nav-bar {
-    display: flex;
+  display: flex;
+  width: 60%;
 }
+
+h4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .link {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 10px 16px;
-    position: relative;
-    width: 60px;
-    height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  padding: 10px 16px;
+  position: relative;
+  width: 60px;
+  height: 20px;
+  color: #a9abb8;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+  align-items: center;
+  font-weight: 500;
 }
-.TextLinks{
-    color: white;
-    text-decoration: none;
-    align-items: center;
+.active{
+  border-bottom: 2px solid #f34666;
+  color: white;
 }
-
 .link:hover {
-    background: #3500D3;
-    border-radius: 8px;
-    color: white;
-    box-shadow: 10px 5px 5px #0C0032;
+  color: white;
 }
+
 .link:not(:last-of-type) {
     margin-right: 28px;
 }
 .Logo{
     height: 40px;
+    width: 30%;
     fill: #fff;
 }

@@ -2,22 +2,35 @@ import 'application.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './components/App';
+import { Provider } from 'react-redux';
 
-window.getPathVideo((_, data) => {
-  console.log('123', data);
-});
+import App from './components/App';
+import store from '../../redux/store/store';
+import TitleBar from './components/TitleBar/TitleBar';
+
+// window.getPathVideo((_, data) => {
+//   console.log('123', data);
+// });
 
 window.onload = (entries) => {
   const container = document.getElementById('root');
-  const modalWindow = document.getElementById('modalWindow');
-  const rootWindow = createRoot(modalWindow);
 
   const root = createRoot(container);
   root.render(
-    <BrowserRouter>
-      <App entries={entries} tab="home" />
-    </BrowserRouter>,
+    <Provider store={store}>
+      <BrowserRouter>
+        <div className="titleBar">
+          <div className="titleContainer">
+            <div className="NameParamsLeft">
+              Параметры
+            </div>
+            <span>Media Hub</span>
+            <TitleBar />
+          </div>
+        </div>
+        <App entries={entries} tab="home" />
+      </BrowserRouter>
+    </Provider>,
   );
 };
 

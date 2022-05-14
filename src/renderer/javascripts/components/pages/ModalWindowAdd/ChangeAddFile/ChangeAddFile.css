@@ -1,0 +1,25 @@
+.styleChange{
+    width: 250px;
+    height: 35px;
+    color: white;
+    background-color: #240090;
+    outline: none;
+    border: none;
+}
+
+.blockInputChange{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.styleThisBlock{
+    justify-content: space-around;
+    color: white;
+}
+
+.blockInputChange span{
+    margin: 10px;
+}

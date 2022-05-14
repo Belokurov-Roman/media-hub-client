@@ -1,0 +1,124 @@
+/* .friend{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  flex-grow: 1;
+  margin: 0 20px 0 20px;
+} */
+.subPage {
+  display: flex;
+  justify-content: space-around;
+  height: 60%;
+  background-color: #1e254e;
+}
+
+h2 {
+  margin-left: 90px;
+  display: inline-block;
+}
+
+.lists {
+  overflow-x: scroll;
+  width: 40%;
+  border-radius: 20px;
+  background-color: #1c2349;
+  box-shadow: inset 7px 7px 10px #1a1f42,
+              inset -7px -7px 5px #202854;
+}
+
+.allUsers {
+}
+
+.subscriptions {
+}
+
+.person {
+  position: relative;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.avatar{
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.picture {
+  height: 100%;
+  width: 100%;
+}
+
+.name {
+  margin-left: 20px;
+}
+
+.follow {
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 20px;
+  border-radius: 100%;
+  color: white;
+  font-family: Ubuntu;
+  font-weight: 600;
+  border: 3px solid #00beff;
+  background-image: linear-gradient(to right bottom, #42a6ff, #1fb3ff, #00beff, #00caff, #00d4ff);
+  box-shadow: 4px 4px 10px #161a38, -4px -4px 6px #2d356b;
+}
+
+.unfollow {
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 100px;
+  border: 2px solid #f34666;
+  color: white;
+  background-color: #ff4668;
+  box-shadow:  4px 4px 5px #161a38,
+              -4px -4px 6px #2d356b;
+}
+
+.chat {
+  height: 25px;
+  position: absolute;
+  right: 60px;
+  border-radius: 5px;
+  color: #cccedc;
+  background-color: transparent;
+}
+.chat:hover {
+  color: white;
+}
+
+
+.stream {
+  height: 25px;
+  position: absolute;
+  right: 120px;
+  bottom: 18px;
+  border-radius: 5px;
+  color: #cccedc;
+  background-color: transparent;
+}
+
+.stream:hover {
+  color: white;
+}

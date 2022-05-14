@@ -20,6 +20,15 @@ export default class Storage {
     return this.write(key, data);
   }
 
+  setUser(key, data) {
+    console.log(data);
+    return writeFileSync(this.file(key), JSON.stringify([data]));
+  }
+
+  rewriteUser(key, data) {
+    return writeFileSync(this.file(key), JSON.stringify([{ ...this.get(key)[0], ...data }]));
+  }
+
   read(key) {
     if (readFileSync(this.file(key)).toString() === '') {
       return '';
@@ -45,15 +54,28 @@ export default class Storage {
   updateOne(key, elName, kluch, znachenie) {
     const updatedArr = this.read(key).map((el) => {
       if (el.name === elName) {
-        if (el.totalTime) {
+        if (el[kluch]) {
           return { ...el, [kluch]: el[kluch] + znachenie };
         }
         return { ...el, [kluch]: znachenie };
       }
       return el;
     });
-    console.log(updatedArr);
     this.rewrite(key, updatedArr);
+  }
+
+  updateSeveral(_key, elName, data) {
+    const keys = Object.keys(data);
+    const updatedArr = this.read(_key).map((el) => {
+      const obj = el;
+      if (el.name === elName) {
+        keys.forEach((key) => {
+          obj[key] = data[key];
+        });
+      }
+      return obj;
+    });
+    this.rewrite(_key, updatedArr);
   }
 
   file(key) {
@@ -61,7 +83,6 @@ export default class Storage {
     if (!existsSync(file)) {
       writeFileSync(file, '[]', { flag: 'wx' });
     }
-    console.log(file);
     return file;
   }
 }
