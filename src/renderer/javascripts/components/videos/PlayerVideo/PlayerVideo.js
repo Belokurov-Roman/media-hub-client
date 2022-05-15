@@ -89,11 +89,9 @@ function PlayerVideo({ videoRef, newPath }) {
   };
   const [hover, setHover] = useState('ControlVideo1');
   useEffect(() => {
-    console.log(videoRef, '<=======');
   }, [hover]);
 
   function watchTogether() {
-    console.log(newPath);
     ipcRenderer.send('watch-together', newPath, videoRef.current.duration);
   }
 
@@ -151,7 +149,7 @@ function PlayerVideo({ videoRef, newPath }) {
             </div>
           </div>
         )
-        : ''}
+        : <div>ВИДЕО НЕТ</div>}
     </div>
   );
 }

@@ -39,7 +39,9 @@ export default class MainProcess {
       },
     });
 
-    this.win.loadFile('renderer/index.html');
+    const indexPath = `file://${path.join(app.getAppPath(), '/renderer/index.html')}?modalWin=main`;
+
+    this.win.loadURL(indexPath);
 
     this.win.webContents.on('did-finish-load', () => {
       this.win.webContents.send('createModal', false);
