@@ -4,7 +4,7 @@ import { ipcRenderer } from 'electron';
 import { FaSignInAlt } from 'react-icons/fa';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { deleteUser } from '../../../../redux/action/userAction';
+import { deleteUser } from '../../../../../redux/action/userAction';
 
 function TitleBar() {
   const dispatch = useDispatch();

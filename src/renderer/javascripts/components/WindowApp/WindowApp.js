@@ -1,5 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
-import React from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
 
 import NavBar from '../static/header/NavBar/NavBar';
 import VideoPage from '../pages/VideoPage/VideoPage';
@@ -15,6 +15,12 @@ import ChangePage from '../pages/ChangePage/ChangePage';
 import StreamPage from '../pages/StreamPage/StreamPage';
 
 function WindowApp({ createWindowAdd }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/');
+  }, []);
+
   return (
     <GameContextProvider>
       <NavBar />

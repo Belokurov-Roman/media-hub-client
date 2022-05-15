@@ -39,6 +39,12 @@ function NavBar() {
     return window.location.href.replace('file://', '');
   }
 
+  useEffect(() => {
+    setActive('ВИДЕО');
+    ipcRenderer.invoke('get-user')
+      .then((res) => setUser(res?.online));
+  }, []);
+
   return (
     <div className="navbar">
       <LogotipIcon className="Logo" viewBox="0 0 1100 265.86" />
