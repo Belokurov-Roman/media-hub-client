@@ -20,7 +20,7 @@ function StreamPage() {
   useEffect(() => {
     setTimeout(() => {
       setSpinner(true);
-    }, 2000);
+    }, 8000);
     // setTimeout(() => {
     //   setVideoState(true);
     // }, 5000);
@@ -43,7 +43,7 @@ function StreamPage() {
           streamRef.current.play();
           // streamRef.current.currentTime = 7000;
         });
-    }, 5500);
+    }, 12000);
     // setTimeout(() => {
     //   setVideoState(false);
     //   setSpinner(true);
@@ -69,7 +69,7 @@ function StreamPage() {
     setTimeout(() => {
       setVideoState(false);
       setSpinner(false);
-    }, 70000);
+    }, 26000);
 
     // setTimeout(() => {
     //   streamRef.current.currentTime = 80000;
