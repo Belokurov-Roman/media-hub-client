@@ -2,18 +2,13 @@ import React from 'react';
 import './ListVideo.css';
 import { ipcRenderer } from 'electron';
 
-// const electron = window.require('electron');
-// const { ipcRenderer } = electron;
-
 function ListVideo({
   setNewPath, allPath, upload, getPathVideo,
 }) {
   const handleClick = (e) => {
     if (e.type === 'contextmenu') {
-      console.log(e.target.id);
       ipcRenderer.send('context-menu-delete', e.target.id);
       ipcRenderer.on('delete-path-video', (_, data) => {
-        console.log(data);
         setNewPath(data);
       });
     }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './friend.css';
 import { ipcRenderer } from 'electron';
 import { BsFillChatTextFill, BsFillPersonPlusFill, BsFillPersonXFill } from 'react-icons/bs';

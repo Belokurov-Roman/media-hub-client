@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import './ChangePage.css';
 
 function ChangePage() {
-  // const [user, setUser] = useState('');
   const [input, setInput] = useState('');
   const [id, setId] = useState();
   const navigate = useNavigate();
@@ -38,10 +37,6 @@ function ChangePage() {
 
   useEffect(() => { getProfile(); }, [id]);
 
-  // const {
-  //   name, avatar, description, email, password, id,
-  // } = useSelector((store) => store.user);
-  // console.log(name, avatar, description, email, password, id);
   return (
     <div className="ChangePage__container">
       <div className="ChangePage__inputs_wrapper">

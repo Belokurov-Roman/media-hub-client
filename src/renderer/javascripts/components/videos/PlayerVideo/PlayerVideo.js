@@ -89,11 +89,9 @@ function PlayerVideo({ videoRef, newPath }) {
   };
   const [hover, setHover] = useState('ControlVideo1');
   useEffect(() => {
-    console.log(videoRef, '<=======');
   }, [hover]);
 
   function watchTogether() {
-    console.log(newPath);
     ipcRenderer.send('watch-together', newPath, videoRef.current.duration);
   }
 
@@ -151,20 +149,9 @@ function PlayerVideo({ videoRef, newPath }) {
             </div>
           </div>
         )
-        : ''}
+        : <div>ВИДЕО НЕТ</div>}
     </div>
   );
 }
-// min="0"
-// max="100"
-// value={playerState.progress}
 
-// <div className="ControlVideo">
-//   <div className="ControlButton">
-//     <button onClick={play} type="button">{playHover ? 'Пауза' : 'Плей'}</button>
-//   </div>
-//   <div className="progress-container">
-//     <Slider />
-//   </div>
-// </div>
 export default PlayerVideo;

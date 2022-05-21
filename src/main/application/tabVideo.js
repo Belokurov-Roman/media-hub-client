@@ -1,6 +1,5 @@
 import { dialog } from 'electron';
 import path from 'path';
-import * as http from 'http';
 import fs from 'fs';
 
 import axios from 'axios';
@@ -20,11 +19,8 @@ export default class VideoLogic {
       ],
       properties: ['openFile'],
     });
-    // this.extensionVideo = path.getExtension(this.files.filePaths[0]);
-    console.log(this.files.filePaths[0]);
     this.writeVideoPathToStorage(this.files.filePaths[0]);
     this.nameVideo = path.basename(this.files.filePaths[0]);
-
     return this.files.filePaths[0] ? this.files.filePaths[0] : null;
   }
 
@@ -36,7 +32,6 @@ export default class VideoLogic {
 
   writeVideoPathToStorage(file) {
     if (this.findPath('pathVideo') === -1) {
-      console.log('HERE');
       this.countId();
       this.storage.set('pathVideo', this.createFileVideo(file));
       return true;
@@ -97,5 +92,3 @@ export default class VideoLogic {
     // const end = Math.min(start + CHUNK_SIZE, this.videoSize - 1);
   }
 }
-
-// .find((name) => name === this.files.filePaths[0] && name === this.nameVideo)

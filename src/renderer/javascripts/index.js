@@ -6,11 +6,7 @@ import { Provider } from 'react-redux';
 
 import App from './components/App';
 import store from '../../redux/store/store';
-import TitleBar from './components/TitleBar/TitleBar';
-
-// window.getPathVideo((_, data) => {
-//   console.log('123', data);
-// });
+import TitleBar from './components/static/TitleBar/TitleBar';
 
 window.onload = (entries) => {
   const container = document.getElementById('root');
@@ -33,7 +29,3 @@ window.onload = (entries) => {
     </Provider>,
   );
 };
-
-// window.subscribeForEntries((_, data) => {
-//   renderApp(data);
-// });

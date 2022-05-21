@@ -41,7 +41,6 @@ function StreamPage() {
         })
         .then(() => {
           streamRef.current.play();
-          // streamRef.current.currentTime = 7000;
         });
     }, 12000);
     // setTimeout(() => {

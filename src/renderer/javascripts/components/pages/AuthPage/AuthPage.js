@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -24,17 +23,13 @@ function AuthPage() {
   }, [user]);
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log('132');
     dispatch(THUNK_addUser(email, password));
     if (!error) {
       ipcRenderer.send('close-win-aut');
     }
   }
-  // const addNavigate = () => {
-  //   navigate(navigate('/game'));
-  // };
+
   const formValidation = () => {
-    console.log(email, password);
     if (password && email) {
       setFormValid(true);
     }
@@ -51,7 +46,6 @@ function AuthPage() {
     }
   };
   const passwordHandler = (e) => {
-    console.log('PASSWORD -> ', e.target.value);
     setPassword(e.target.value);
     if (e.target.value.length < 3 || e.target.value.length > 12) {
       setFormValid(false);
@@ -74,7 +68,6 @@ function AuthPage() {
         break;
     }
   };
-  console.log({ email, password, formValid });
   return (
     <div className="ModalWindowAdd styleThisBlock">
       <form className="ModalWindowAdd styleThisBlock" onSubmit={(e) => handleSubmit(e)}>
