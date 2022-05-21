@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BsFillPersonPlusFill, BsFillPersonXFill, BsFillChatTextFill } from 'react-icons/bs';
-// import MdRadio from 'react-icons/md';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import './friend.css';
 import { ipcRenderer } from 'electron';
+import { BsFillChatTextFill, BsFillPersonPlusFill, BsFillPersonXFill } from 'react-icons/bs';
 
 function FriendsPage() {
   const [id, setId] = useState();
@@ -34,22 +33,23 @@ function FriendsPage() {
 
   async function friendsSubmit() {
     if (id) {
-      console.log('@@@@', id);
+      // console.log('@@@@', id);
       const response = await axios.get(`http://localhost:3001/friends/${id}`);
       // console.log(response.data);
       setFriends(response.data);
     }
   }
-  async function addFriend(e) {
-    const response = await axios.post('http://localhost:3001/friends/all', { currentUser: id, id: e.target.id });
+  async function addFriend(target) {
+    console.log('!!!!!!!', id, target.id);
+    const response = await axios.post('http://localhost:3001/friends/all', { currentUser: id, id: target.id });
     console.log(response);
     if (response) {
       friendsSubmit();
     }
   }
-  async function deleteFriend(e) {
-    console.log('!!!!!!!', id, e.target.id);
-    const response = await axios.delete('http://localhost:3001/friends/delete', { data: { currentUser: id, id: e.target.id } });
+  async function deleteFriend(target) {
+    console.log('!!!!!!!', id, target.id);
+    const response = await axios.delete('http://localhost:3001/friends/delete', { data: { currentUser: id, id: target.id } });
     if (response) {
       friendsSubmit();
     }
@@ -78,7 +78,7 @@ function FriendsPage() {
             <Card.Body>
               <Card.Title className="name">{el.name}</Card.Title>
             </Card.Body>
-            <button onClick={(e) => addFriend(e)} className="follow" type="submit">
+            <button id={el.id} onClick={(e) => addFriend(e.target)} className="follow" type="submit">
               <BsFillPersonPlusFill style={{ position: 'absolute' }} size="0.9rem" />
             </button>
           </Card>
@@ -102,8 +102,8 @@ function FriendsPage() {
               Стрим
               {/* <MdRadio /> */}
             </button>
-            <button onClick={(e) => deleteFriend(e)} className="unfollow" type="submit">
-              <BsFillPersonXFill style={{ position: 'absolute' }} size="0.9rem" />
+            <button id={el.id} onClick={(e) => deleteFriend(e.target)} className="unfollow" type="submit">
+              <BsFillPersonXFill id={el.id} onClick={(e) => console.log(e)} style={{ position: 'absolute' }} size="0.9rem" />
             </button>
           </Card>
         )) }

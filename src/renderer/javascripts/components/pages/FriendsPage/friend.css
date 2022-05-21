@@ -78,6 +78,9 @@ h2 {
   background-image: linear-gradient(to right bottom, #42a6ff, #1fb3ff, #00beff, #00caff, #00d4ff);
   box-shadow: 4px 4px 10px #161a38, -4px -4px 6px #2d356b;
 }
+.follow > * {
+pointer-events: none;
+}
 
 .unfollow {
   cursor: pointer;
@@ -95,6 +98,9 @@ h2 {
   box-shadow:  4px 4px 5px #161a38,
               -4px -4px 6px #2d356b;
 }
+.unfollow > * {
+  pointer-events: none;
+  }
 
 .chat {
   height: 25px;
