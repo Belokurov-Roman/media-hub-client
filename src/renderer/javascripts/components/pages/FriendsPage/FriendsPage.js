@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BsFillPersonPlusFill, BsFillPersonXFill, BsFillChatTextFill } from 'react-icons/bs';
-// import MdRadio from 'react-icons/md';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import './friend.css';
 import { ipcRenderer } from 'electron';
+import { BsFillChatTextFill, BsFillPersonPlusFill, BsFillPersonXFill } from 'react-icons/bs';
 
 function FriendsPage() {
   const [id, setId] = useState();
+  const [users, setUsers] = useState([]);
+  const [friends, setFriends] = useState([]);
   useSelector(async (store) => {
     try {
       setId(store.user.id);
@@ -18,8 +19,7 @@ function FriendsPage() {
       setId(result.id);
     }
   });
-  const [users, setUsers] = useState('');
-  const [friends, setFriends] = useState('');
+
   const navigate = useNavigate();
 
   async function getAllUsers() {
@@ -31,28 +31,34 @@ function FriendsPage() {
     }
   }
 
-  async function addFriend(e) {
-    const response = await axios.post('http://localhost:3001/friends/all', { currentUser: id, id: e.target.id });
-    console.log(response);
-  }
   async function friendsSubmit() {
     if (id) {
+      // console.log('@@@@', id);
       const response = await axios.get(`http://localhost:3001/friends/${id}`);
       // console.log(response.data);
       setFriends(response.data);
     }
   }
-  // async function deleteFriend(e) {
-  //   const response = await axios.delete('http://localhost:3001/friends/delete', { currentUser: id, id: e.target.id });
-  //   console.log('!!!!!!!', response, id, e.target.id);
-  //   if (response) {
-  //     friendsSubmit();
-  //   }
-  // }
+  async function addFriend(target) {
+    console.log('!!!!!!!', id, target.id);
+    const response = await axios.post('http://localhost:3001/friends/all', { currentUser: id, id: target.id });
+    console.log(response);
+    if (response) {
+      friendsSubmit();
+    }
+  }
+  async function deleteFriend(target) {
+    console.log('!!!!!!!', id, target.id);
+    const response = await axios.delete('http://localhost:3001/friends/delete', { data: { currentUser: id, id: target.id } });
+    if (response) {
+      friendsSubmit();
+    }
+  }
   useEffect(() => {
     friendsSubmit();
     getAllUsers();
-  }, [id, friends]);
+    console.log('123');
+  }, [id]);
   const setChat = () => {
     navigate('/friends/chat');
   };
@@ -72,7 +78,7 @@ function FriendsPage() {
             <Card.Body>
               <Card.Title className="name">{el.name}</Card.Title>
             </Card.Body>
-            <button className="follow" type="submit">
+            <button id={el.id} onClick={(e) => addFriend(e.target)} className="follow" type="submit">
               <BsFillPersonPlusFill style={{ position: 'absolute' }} size="0.9rem" />
             </button>
           </Card>
@@ -96,8 +102,8 @@ function FriendsPage() {
               Стрим
               {/* <MdRadio /> */}
             </button>
-            <button className="unfollow" type="submit">
-              <BsFillPersonXFill style={{ position: 'absolute' }} size="0.9rem" />
+            <button id={el.id} onClick={(e) => deleteFriend(e.target)} className="unfollow" type="submit">
+              <BsFillPersonXFill id={el.id} onClick={(e) => console.log(e)} style={{ position: 'absolute' }} size="0.9rem" />
             </button>
           </Card>
         )) }
